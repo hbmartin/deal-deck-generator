@@ -58,7 +58,7 @@ def render_money_card(card: MoneyCard) -> Image.Image:
 
     # Draw denomination text
     denom_font = get_font("Arial", size=60, bold=True)
-    denom_text = f"₼{card.denomination}M"
+    denom_text = f"${card.denomination}M"
     draw_text(draw, denom_text, (width // 2, circle_center_y), denom_font, anchor="mm")
 
     # Draw value badges (top-left and bottom-right)
