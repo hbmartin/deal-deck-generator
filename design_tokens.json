@@ -1,0 +1,256 @@
+{
+  "version": "1.0.0",
+  "description": "Design tokens extracted from card image analysis",
+  
+  "global": {
+    "card": {
+      "width": 413,
+      "height": 455,
+      "aspect_ratio": 0.908,
+      "corner_radius": 20,
+      "border_width": 3,
+      "border_color": "#000000",
+      "shadow": {
+        "offset_x": 3,
+        "offset_y": 3,
+        "blur": 5,
+        "color": "#00000080"
+      }
+    },
+    
+    "colors": {
+      "white": "#FFFFFF",
+      "black": "#000000",
+      "light_gray": "#D8E3F0",
+      "medium_gray": "#A8B8C8",
+      "dark_gray": "#505050",
+      
+      "property_sets": {
+        "brown": "#8B4513",
+        "light_blue": "#ADD8E6",
+        "pink": "#FF1493",
+        "orange": "#FF8C00",
+        "red": "#DC143C",
+        "yellow": "#FFD700",
+        "green": "#228B22",
+        "dark_blue": "#00008B",
+        "railroad": "#000000",
+        "utility": "#FFD700"
+      },
+      
+      "action_card_bg": "#C8B4D8",
+      "money_card_bg": "#C8B4D8",
+      "rent_card_bg": "#E8E8D0"
+    },
+    
+    "typography": {
+      "font_family_primary": "Arial",
+      "font_family_bold": "Arial Bold",
+      "font_family_black": "Arial Black",
+      
+      "sizes": {
+        "title_large": 28,
+        "title_medium": 24,
+        "title_small": 20,
+        "body": 14,
+        "caption": 12,
+        "value_badge": 20,
+        "property_name": 16,
+        "rent_value": 18
+      },
+      
+      "weights": {
+        "normal": 400,
+        "bold": 700,
+        "black": 900
+      },
+      
+      "line_height": 1.2
+    },
+    
+    "spacing": {
+      "card_padding": 15,
+      "section_gap": 10,
+      "text_padding": 8,
+      "icon_spacing": 5
+    },
+    
+    "value_badge": {
+      "diameter": 50,
+      "border_width": 3,
+      "border_color": "#000000",
+      "bg_color": "#FFFFFF",
+      "position": {
+        "top_left": {"x": 25, "y": 25},
+        "bottom_right": {"x": -25, "y": -25}
+      }
+    }
+  },
+  
+  "card_types": {
+    "property": {
+      "description": "Property cards with color-coded header and rent table",
+      "layout": {
+        "header_bar": {
+          "height": 80,
+          "padding": 10,
+          "border_width": 2
+        },
+        "rent_section": {
+          "start_y": 140,
+          "row_height": 60,
+          "icon_size": 45,
+          "label_width": 150,
+          "value_width": 80
+        },
+        "value_badges": ["top_left"],
+        "footer_text": {
+          "y": 430,
+          "size": 10,
+          "color": "#505050"
+        }
+      },
+      "colors": {
+        "background": "#D8E3F0",
+        "header": "property_set_color",
+        "text": "#000000",
+        "rent_label": "#505050"
+      }
+    },
+    
+    "action": {
+      "description": "Action cards with decorative border and centered text",
+      "layout": {
+        "decorative_border": {
+          "width": 15,
+          "pattern": "chain_link",
+          "color": "#505050"
+        },
+        "title_bar": {
+          "y": 80,
+          "height": 40
+        },
+        "title_circle": {
+          "diameter": 200,
+          "center_y": 240,
+          "border_width": 4
+        },
+        "description_area": {
+          "start_y": 350,
+          "width": 300,
+          "padding": 10
+        },
+        "value_badges": ["top_left", "bottom_right"],
+        "footer_text": {
+          "y": 430,
+          "size": 10
+        }
+      },
+      "colors": {
+        "background": "#C8B4D8",
+        "circle_bg": "#D8E3F0",
+        "text": "#000000"
+      }
+    },
+    
+    "rent": {
+      "description": "Rent cards with color circles and center text",
+      "layout": {
+        "decorative_border": {
+          "width": 15,
+          "pattern": "chain_link"
+        },
+        "title_bar": {
+          "y": 80,
+          "height": 40
+        },
+        "color_circles": {
+          "outer_diameter": 200,
+          "inner_diameter": 120,
+          "center_y": 220
+        },
+        "description_area": {
+          "start_y": 340,
+          "width": 280
+        },
+        "value_badges": ["top_left", "bottom_right"]
+      },
+      "colors": {
+        "background": "#E8E8D0",
+        "text": "#000000"
+      }
+    },
+    
+    "wildcard": {
+      "description": "Wildcard property cards with color stripe header",
+      "layout": {
+        "color_stripe_header": {
+          "height": 40,
+          "y": 30,
+          "stripe_count": "variable"
+        },
+        "title_bar": {
+          "y": 75,
+          "height": 35
+        },
+        "character_area": {
+          "center_y": 240,
+          "width": 200,
+          "height": 200
+        },
+        "description_area": {
+          "start_y": 360,
+          "width": 300
+        },
+        "footer_text": {
+          "y": 430,
+          "size": 10
+        }
+      },
+      "colors": {
+        "background": "#D8E3F0",
+        "text": "#000000"
+      }
+    },
+    
+    "money": {
+      "description": "Money cards with large denomination display",
+      "layout": {
+        "decorative_border": {
+          "width": 15,
+          "pattern": "chain_link"
+        },
+        "denomination_circle": {
+          "diameter": 220,
+          "center_y": 240,
+          "border_width": 4
+        },
+        "value_badges": ["top_left", "bottom_right"],
+        "footer_text": {
+          "y": 430,
+          "size": 10
+        }
+      },
+      "colors": {
+        "background": "#C8B4D8",
+        "circle_bg": "#FFFFFF",
+        "text": "#000000"
+      }
+    }
+  },
+  
+  "icons": {
+    "house": {
+      "size": 45,
+      "color": "#228B22"
+    },
+    "hotel": {
+      "size": 45,
+      "color": "#DC143C"
+    },
+    "money_symbol": {
+      "size": 40,
+      "font": "Arial Black"
+    }
+  }
+}

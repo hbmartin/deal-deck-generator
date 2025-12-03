@@ -1,0 +1,4032 @@
+{
+  "global": {
+    "dimensions": {
+      "typical_width": 413,
+      "typical_height": 455,
+      "width_range": [
+        298,
+        1116
+      ],
+      "height_range": [
+        451,
+        455
+      ],
+      "typical_aspect_ratio": 1.139
+    },
+    "color_tokens": {}
+  },
+  "cards": {
+    "$10M-money-card": {
+      "filename": "$10M-money-card.png",
+      "type": "money",
+      "dimensions": {
+        "width": 300,
+        "height": 451,
+        "aspect_ratio": 0.665
+      },
+      "dominant_colors": [
+        "#becddf",
+        "#aca078",
+        "#b19449",
+        "#b09147",
+        "#a68e4a",
+        "#9d8647"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 139.7
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 125.1
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 128.8
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 120.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 121.5
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 120.2
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 121.9
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 125.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 118.2
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 111.2
+        }
+      ]
+    },
+    "$1M-money-card": {
+      "filename": "$1M-money-card.png",
+      "type": "money",
+      "dimensions": {
+        "width": 754,
+        "height": 455,
+        "aspect_ratio": 1.657
+      },
+      "dominant_colors": [
+        "#e8eff6",
+        "#b3c8e1",
+        "#b2c4d0",
+        "#b7beb0",
+        "#b5bdab",
+        "#b1bcac"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 158.5
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 159.8
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 159.6
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 154.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 151.2
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 152.2
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 151.1
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 153.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 149.2
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 128.6
+        }
+      ]
+    },
+    "$2M-money-card": {
+      "filename": "$2M-money-card.png",
+      "type": "money",
+      "dimensions": {
+        "width": 649,
+        "height": 455,
+        "aspect_ratio": 1.426
+      },
+      "dominant_colors": [
+        "#d9e3f1",
+        "#aebed4",
+        "#b2afb4",
+        "#aea9b0",
+        "#a9a8af",
+        "#a29ea5"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 156.0
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 144.7
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 144.4
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 137.9
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 140.0
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 139.1
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 140.3
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 142.0
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 141.3
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 126.6
+        }
+      ]
+    },
+    "$3M-money-card": {
+      "filename": "$3M-money-card.png",
+      "type": "money",
+      "dimensions": {
+        "width": 472,
+        "height": 455,
+        "aspect_ratio": 1.037
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#c7c8d9",
+        "#bdbdcf",
+        "#b7bac3",
+        "#b4b6bd",
+        "#afb3b5"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 179.3
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 162.7
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 161.2
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 155.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 152.4
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 154.4
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 155.0
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 158.2
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 152.2
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 144.0
+        }
+      ]
+    },
+    "$4M-money-card": {
+      "filename": "$4M-money-card.png",
+      "type": "money",
+      "dimensions": {
+        "width": 461,
+        "height": 455,
+        "aspect_ratio": 1.013
+      },
+      "dominant_colors": [
+        "#f8f8fb",
+        "#d4d3e8",
+        "#bfcbe3",
+        "#afc3df",
+        "#a8c1de",
+        "#a3bfdc"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 160.3
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 164.9
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 166.0
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 156.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 156.1
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 155.4
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 154.6
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 157.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 150.0
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 137.1
+        }
+      ]
+    },
+    "$5M-money-card": {
+      "filename": "$5M-money-card.png",
+      "type": "money",
+      "dimensions": {
+        "width": 413,
+        "height": 455,
+        "aspect_ratio": 0.908
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#b1c7dd",
+        "#a2b0ce",
+        "#8881bf",
+        "#877ebd",
+        "#817bbb"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 150.1
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 124.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 125.8
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 119.5
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 122.9
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 120.8
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 119.3
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 120.7
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 115.2
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 121.1
+        }
+      ]
+    },
+    "all-color-wild-rent-card": {
+      "filename": "all-color-wild-rent-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 449,
+        "height": 455,
+        "aspect_ratio": 0.987
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#bfc9e7",
+        "#b7c1e3",
+        "#b3bbcd",
+        "#a9b7c7",
+        "#abb5b6"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 169.2
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 161.2
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 151.9
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 142.1
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 132.4
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 129.8
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 142.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 143.3
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 143.6
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 167.6
+        }
+      ]
+    },
+    "blue-and-green-rent-card": {
+      "filename": "blue-and-green-rent-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 323,
+        "height": 455,
+        "aspect_ratio": 0.71
+      },
+      "dominant_colors": [
+        "#e1e7f4",
+        "#a8b6da",
+        "#b0afa1",
+        "#a1a4a2",
+        "#90918b",
+        "#3c5761"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 125.7
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 146.3
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 144.3
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 135.7
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 117.5
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 111.8
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 108.8
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 120.7
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 126.4
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 122.9
+        }
+      ]
+    },
+    "brown-and-light-blue-rent-card": {
+      "filename": "brown-and-light-blue-rent-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 385,
+        "height": 455,
+        "aspect_ratio": 0.846
+      },
+      "dominant_colors": [
+        "#f4f6fb",
+        "#a7b4d5",
+        "#a7afc4",
+        "#aca997",
+        "#959fa4",
+        "#8f8f88"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 103.8
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 120.9
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 120.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 116.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 113.7
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 123.3
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 132.6
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 138.1
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 142.7
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 74.4
+        }
+      ]
+    },
+    "brown-property-card": {
+      "filename": "brown-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 594,
+        "height": 455,
+        "aspect_ratio": 1.305
+      },
+      "dominant_colors": [
+        "#f5f8fb",
+        "#c0d7eb",
+        "#bad4e9",
+        "#bad2e8",
+        "#b6d2e7",
+        "#b4d1e7"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 187.6
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 113.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 122.0
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 193.9
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 185.9
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 187.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 183.2
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 195.2
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 195.3
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 146.8
+        }
+      ]
+    },
+    "dark-blue-and-green-wildcard-card": {
+      "filename": "dark-blue-and-green-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 307,
+        "height": 455,
+        "aspect_ratio": 0.675
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#d5dee8",
+        "#cfd8e6",
+        "#ccd8e4",
+        "#ccd5e3",
+        "#c8d5e2"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 195.2
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 117.2
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 137.8
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 192.5
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 182.2
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 195.7
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 197.7
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 130.9
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 136.7
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 158.7
+        }
+      ]
+    },
+    "dark-blue-property-card": {
+      "filename": "dark-blue-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 600,
+        "height": 455,
+        "aspect_ratio": 1.319
+      },
+      "dominant_colors": [
+        "#e2e8ed",
+        "#abbbcc",
+        "#a6b8ca",
+        "#a4b5c9",
+        "#a0b5c8",
+        "#a1b2c8"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 157.9
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 103.4
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 113.2
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 166.7
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 159.8
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 162.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 157.6
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 169.0
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 169.6
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 141.4
+        }
+      ]
+    },
+    "deal-breaker-action-card": {
+      "filename": "deal-breaker-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 400,
+        "height": 455,
+        "aspect_ratio": 0.879
+      },
+      "dominant_colors": [
+        "#dfe9f1",
+        "#abbed4",
+        "#a3a4d1",
+        "#8b88bd",
+        "#7c77ae",
+        "#4f4f78"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 107.6
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 148.0
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 133.5
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 131.7
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 135.6
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 123.7
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 115.2
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 102.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 101.6
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 86.7
+        }
+      ]
+    },
+    "debt-collector-action-card": {
+      "filename": "debt-collector-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 436,
+        "height": 455,
+        "aspect_ratio": 0.958
+      },
+      "dominant_colors": [
+        "#e4eaf2",
+        "#c6d2df",
+        "#bdcad2",
+        "#afbebf",
+        "#99a5aa",
+        "#4d4f59"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 116.9
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 158.8
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 169.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 156.1
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 150.0
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 133.8
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 129.1
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 118.4
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 109.6
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 96.1
+        }
+      ]
+    },
+    "double-the-rent-action-card": {
+      "filename": "double-the-rent-action-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 415,
+        "height": 455,
+        "aspect_ratio": 0.912
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#ced5e1",
+        "#cccdc0",
+        "#c4cee1",
+        "#c2c2b0",
+        "#b9bbae"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 167.2
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 188.3
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 177.8
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 175.2
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 168.1
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 162.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 167.3
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 164.0
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 161.8
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 133.7
+        }
+      ]
+    },
+    "force-deal-action-card": {
+      "filename": "force-deal-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 503,
+        "height": 455,
+        "aspect_ratio": 1.105
+      },
+      "dominant_colors": [
+        "#dfdfe8",
+        "#c1c2d2",
+        "#bcbec7",
+        "#b2b6b8",
+        "#a5a7aa",
+        "#7c7c83"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 117.0
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 159.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 151.3
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 150.4
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 141.3
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 145.1
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 145.8
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 140.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 140.5
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 98.9
+        }
+      ]
+    },
+    "green-property-card": {
+      "filename": "green-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 848,
+        "height": 455,
+        "aspect_ratio": 1.864
+      },
+      "dominant_colors": [
+        "#e8eff6",
+        "#c1d2e7",
+        "#becfe5",
+        "#bccce4",
+        "#bacbe3",
+        "#b7cbe3"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 172.8
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 124.6
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 118.9
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 187.3
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 179.1
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 180.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 179.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 171.3
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 192.1
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 149.7
+        }
+      ]
+    },
+    "hotel-action-card": {
+      "filename": "hotel-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 556,
+        "height": 455,
+        "aspect_ratio": 1.222
+      },
+      "dominant_colors": [
+        "#eceef7",
+        "#d8def0",
+        "#bfd3e9",
+        "#afc8e1",
+        "#9fb3ce",
+        "#6b627d"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 130.7
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 177.0
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 174.7
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 166.3
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 150.4
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 156.7
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 147.3
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 141.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 136.4
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 98.2
+        }
+      ]
+    },
+    "house-action-card": {
+      "filename": "house-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 553,
+        "height": 455,
+        "aspect_ratio": 1.215
+      },
+      "dominant_colors": [
+        "#dedfea",
+        "#c7cada",
+        "#c1c4cb",
+        "#b3b7b8",
+        "#9fa2a6",
+        "#555d61"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 97.8
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 170.7
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 161.3
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 156.3
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 138.6
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 136.4
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 129.1
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 126.9
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 117.0
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 92.0
+        }
+      ]
+    },
+    "it's-my-birthday-action-card": {
+      "filename": "it's-my-birthday-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 506,
+        "height": 455,
+        "aspect_ratio": 1.112
+      },
+      "dominant_colors": [
+        "#edf0f5",
+        "#b7c2d7",
+        "#bbb0b1",
+        "#aba7ad",
+        "#9b9396",
+        "#635c66"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 110.2
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 148.4
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 155.6
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 143.1
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 132.3
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 126.0
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 123.0
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 113.6
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 105.8
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 138.8
+        }
+      ]
+    },
+    "just-say-no-action-card": {
+      "filename": "just-say-no-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 400,
+        "height": 455,
+        "aspect_ratio": 0.879
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#adc1d6",
+        "#a3b9d2",
+        "#8baeca",
+        "#73a4c3",
+        "#6a91af"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 111.8
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 146.1
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 139.5
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 134.0
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 129.3
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 121.2
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 117.6
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 107.1
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 104.7
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 83.0
+        }
+      ]
+    },
+    "light-blue-and-brown-wildcard-card": {
+      "filename": "light-blue-and-brown-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 302,
+        "height": 455,
+        "aspect_ratio": 0.664
+      },
+      "dominant_colors": [
+        "#fdfdfe",
+        "#bcc5d3",
+        "#bac1d1",
+        "#b7c1cf",
+        "#b7becd",
+        "#b3becd"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 179.9
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 150.8
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 155.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 174.5
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 172.8
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 167.0
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 175.9
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 113.7
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 100.4
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 145.2
+        }
+      ]
+    },
+    "light-blue-property-card": {
+      "filename": "light-blue-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 873,
+        "height": 455,
+        "aspect_ratio": 1.919
+      },
+      "dominant_colors": [
+        "#fefefe",
+        "#c7d7e4",
+        "#c2d1e0",
+        "#c2cedf",
+        "#bfcede",
+        "#bdcedd"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 190.1
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 167.4
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 172.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 189.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 185.7
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 188.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 185.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 178.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 194.8
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 152.9
+        }
+      ]
+    },
+    "multicolor-wildcard-card": {
+      "filename": "multicolor-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 440,
+        "height": 455,
+        "aspect_ratio": 0.967
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#d4e2ef",
+        "#cadced",
+        "#cadbea",
+        "#c5d8ea",
+        "#c8d9e7"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 174.8
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 145.9
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 145.9
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 180.0
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 182.0
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 174.0
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 174.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 183.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 198.2
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 138.5
+        }
+      ]
+    },
+    "orange-and-pink-rent-card": {
+      "filename": "orange-and-pink-rent-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 402,
+        "height": 455,
+        "aspect_ratio": 0.884
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#bbc3e4",
+        "#b9babf",
+        "#afbbdf",
+        "#b3b09f",
+        "#a3a3a5"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 150.2
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 152.0
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 145.4
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 133.6
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 130.3
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 130.4
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 131.4
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 140.7
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 138.1
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 124.5
+        }
+      ]
+    },
+    "orange-and-pink-wildcard-card": {
+      "filename": "orange-and-pink-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 416,
+        "height": 455,
+        "aspect_ratio": 0.914
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#bfc7d2",
+        "#b8becd",
+        "#b3bdcb",
+        "#b2bac9",
+        "#afb9c7"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 169.1
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 152.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 124.8
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 174.3
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 163.2
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 160.7
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 162.9
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 119.9
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 98.3
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 130.5
+        }
+      ]
+    },
+    "orange-property-card": {
+      "filename": "orange-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 864,
+        "height": 455,
+        "aspect_ratio": 1.899
+      },
+      "dominant_colors": [
+        "#f3f8fb",
+        "#ccdeeb",
+        "#c9dbe9",
+        "#c7d8e7",
+        "#c3d8e6",
+        "#c5d6e6"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 184.8
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 155.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 156.6
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 195.8
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 191.3
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 194.6
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 193.6
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 186.0
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 204.4
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 154.5
+        }
+      ]
+    },
+    "pass-go-action-card": {
+      "filename": "pass-go-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 367,
+        "height": 455,
+        "aspect_ratio": 0.807
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#d8deea",
+        "#d3d8e7",
+        "#d4d4c8",
+        "#ccd6ed",
+        "#c8c9c3"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 168.9
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 188.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 181.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 178.6
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 168.1
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 159.7
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 165.8
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 163.0
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 160.1
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 147.4
+        }
+      ]
+    },
+    "pink-property-card": {
+      "filename": "pink-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 853,
+        "height": 455,
+        "aspect_ratio": 1.875
+      },
+      "dominant_colors": [
+        "#e6f2fa",
+        "#bedef1",
+        "#bcdaef",
+        "#b7daef",
+        "#b6d8ee",
+        "#b4d7ee"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 183.6
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 132.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 141.4
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 194.2
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 188.7
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 192.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 190.3
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 182.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 201.9
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 142.6
+        }
+      ]
+    },
+    "railraod-and-green-wildcard-card": {
+      "filename": "railraod-and-green-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 308,
+        "height": 455,
+        "aspect_ratio": 0.677
+      },
+      "dominant_colors": [
+        "#ebedf1",
+        "#c4c8d4",
+        "#bec4d2",
+        "#bdc1d0",
+        "#bbc0d0",
+        "#b8c0cf"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 164.6
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 112.1
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 126.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 168.2
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 170.2
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 166.0
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 176.6
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 117.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 93.5
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 134.2
+        }
+      ]
+    },
+    "railraod-and-light-blue-wildcard-card": {
+      "filename": "railraod-and-light-blue-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 298,
+        "height": 455,
+        "aspect_ratio": 0.655
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#c7d0dc",
+        "#c1c9d9",
+        "#bec9d7",
+        "#bec6d6",
+        "#bbc6d5"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 185.2
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 157.8
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 160.3
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 173.3
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 175.5
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 175.3
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 183.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 114.2
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 98.3
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 162.5
+        }
+      ]
+    },
+    "railroad-and-utility-rent-card": {
+      "filename": "railroad-and-utility-rent-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 378,
+        "height": 455,
+        "aspect_ratio": 0.831
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#b0badd",
+        "#a7b1d0",
+        "#b2ac9e",
+        "#9da7b8",
+        "#aaa795"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 149.5
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 146.1
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 142.0
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 119.1
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 119.4
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 137.2
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 133.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 133.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 133.2
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 112.0
+        }
+      ]
+    },
+    "railroad-and-utility-wildcard-card": {
+      "filename": "railroad-and-utility-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 302,
+        "height": 455,
+        "aspect_ratio": 0.664
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#c6ceda",
+        "#bfc7d4",
+        "#bcc2d2",
+        "#b8c1d1",
+        "#b9c1cd"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 189.5
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 155.6
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 164.5
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 170.1
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 169.8
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 179.1
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 179.9
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 107.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 91.6
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 145.1
+        }
+      ]
+    },
+    "railroad-property-card": {
+      "filename": "railroad-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 1116,
+        "height": 455,
+        "aspect_ratio": 2.453
+      },
+      "dominant_colors": [
+        "#fefefe",
+        "#d9e4f0",
+        "#d4e1ed",
+        "#d3deec",
+        "#d1deec",
+        "#cfddeb"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 180.5
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 120.0
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 115.7
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 200.7
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 197.9
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 194.3
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 192.7
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 196.5
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 198.4
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 145.3
+        }
+      ]
+    },
+    "red-and-yellow-rent-card": {
+      "filename": "red-and-yellow-rent-card.png",
+      "type": "rent",
+      "dimensions": {
+        "width": 380,
+        "height": 455,
+        "aspect_ratio": 0.835
+      },
+      "dominant_colors": [
+        "#d3daee",
+        "#a9b6dc",
+        "#a7b2cb",
+        "#afaca0",
+        "#a6a9a7",
+        "#a9a575"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 133.0
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 143.4
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 137.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 127.0
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 117.9
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 122.5
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 129.4
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 127.9
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 125.8
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 114.6
+        }
+      ]
+    },
+    "red-and-yellow-wildcard-card": {
+      "filename": "red-and-yellow-wildcard-card.png",
+      "type": "wildcard",
+      "dimensions": {
+        "width": 413,
+        "height": 455,
+        "aspect_ratio": 0.908
+      },
+      "dominant_colors": [
+        "#e8edf2",
+        "#c5d0dd",
+        "#bfcdda",
+        "#becada",
+        "#bacada",
+        "#bdcad3"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 167.0
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 151.5
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 156.8
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 173.5
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 171.2
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 174.7
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 185.0
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 111.8
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 115.3
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 127.9
+        }
+      ]
+    },
+    "red-property-card": {
+      "filename": "red-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 852,
+        "height": 455,
+        "aspect_ratio": 1.873
+      },
+      "dominant_colors": [
+        "#f8fafc",
+        "#c9d8e4",
+        "#c7d4e2",
+        "#c3d3e1",
+        "#c4d1df",
+        "#c0d1de"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 174.0
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 125.3
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 122.1
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 189.7
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 183.4
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 187.1
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 186.5
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 178.4
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 198.6
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 164.9
+        }
+      ]
+    },
+    "sly-deal-action-card": {
+      "filename": "sly-deal-action-card.png",
+      "type": "action",
+      "dimensions": {
+        "width": 402,
+        "height": 455,
+        "aspect_ratio": 0.884
+      },
+      "dominant_colors": [
+        "#ffffff",
+        "#c6c7d6",
+        "#bfc1d7",
+        "#bebfc7",
+        "#b8bcc1",
+        "#b1b4b7"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 127.7
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 172.6
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 167.7
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 162.2
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 163.3
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 158.9
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 161.4
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 154.9
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 155.3
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 158.2
+        }
+      ]
+    },
+    "utility-property-card": {
+      "filename": "utility-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 593,
+        "height": 455,
+        "aspect_ratio": 1.303
+      },
+      "dominant_colors": [
+        "#e9ebf3",
+        "#cdd1e3",
+        "#cbcfe2",
+        "#c9cde2",
+        "#c8cddf",
+        "#c7cae0"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 188.6
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 173.0
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 173.3
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 192.0
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 187.4
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 189.6
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 181.8
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 195.2
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 195.9
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 155.5
+        }
+      ]
+    },
+    "yellow-property-card": {
+      "filename": "yellow-property-card.png",
+      "type": "property",
+      "dimensions": {
+        "width": 851,
+        "height": 455,
+        "aspect_ratio": 1.87
+      },
+      "dominant_colors": [
+        "#f4fafe",
+        "#d4e6f4",
+        "#cfe5f3",
+        "#d1e4f2",
+        "#cde4f2",
+        "#d1e4e2"
+      ],
+      "brightness_profile": [
+        {
+          "band": 0,
+          "y_range": [
+            0,
+            45
+          ],
+          "mean_brightness": 182.3
+        },
+        {
+          "band": 1,
+          "y_range": [
+            45,
+            90
+          ],
+          "mean_brightness": 185.9
+        },
+        {
+          "band": 2,
+          "y_range": [
+            90,
+            135
+          ],
+          "mean_brightness": 189.2
+        },
+        {
+          "band": 3,
+          "y_range": [
+            135,
+            180
+          ],
+          "mean_brightness": 207.5
+        },
+        {
+          "band": 4,
+          "y_range": [
+            180,
+            225
+          ],
+          "mean_brightness": 203.1
+        },
+        {
+          "band": 5,
+          "y_range": [
+            225,
+            270
+          ],
+          "mean_brightness": 207.2
+        },
+        {
+          "band": 6,
+          "y_range": [
+            270,
+            315
+          ],
+          "mean_brightness": 204.1
+        },
+        {
+          "band": 7,
+          "y_range": [
+            315,
+            360
+          ],
+          "mean_brightness": 197.3
+        },
+        {
+          "band": 8,
+          "y_range": [
+            360,
+            405
+          ],
+          "mean_brightness": 212.1
+        },
+        {
+          "band": 9,
+          "y_range": [
+            405,
+            450
+          ],
+          "mean_brightness": 158.6
+        }
+      ]
+    }
+  },
+  "by_type": {
+    "property": [
+      "brown-property-card",
+      "dark-blue-property-card",
+      "green-property-card",
+      "light-blue-property-card",
+      "orange-property-card",
+      "pink-property-card",
+      "railroad-property-card",
+      "red-property-card",
+      "utility-property-card",
+      "yellow-property-card"
+    ],
+    "wildcard": [
+      "dark-blue-and-green-wildcard-card",
+      "light-blue-and-brown-wildcard-card",
+      "multicolor-wildcard-card",
+      "orange-and-pink-wildcard-card",
+      "railraod-and-green-wildcard-card",
+      "railraod-and-light-blue-wildcard-card",
+      "railroad-and-utility-wildcard-card",
+      "red-and-yellow-wildcard-card"
+    ],
+    "rent": [
+      "all-color-wild-rent-card",
+      "blue-and-green-rent-card",
+      "brown-and-light-blue-rent-card",
+      "double-the-rent-action-card",
+      "orange-and-pink-rent-card",
+      "railroad-and-utility-rent-card",
+      "red-and-yellow-rent-card"
+    ],
+    "action": [
+      "deal-breaker-action-card",
+      "debt-collector-action-card",
+      "force-deal-action-card",
+      "hotel-action-card",
+      "house-action-card",
+      "it's-my-birthday-action-card",
+      "just-say-no-action-card",
+      "pass-go-action-card",
+      "sly-deal-action-card"
+    ],
+    "money": [
+      "$10M-money-card",
+      "$1M-money-card",
+      "$2M-money-card",
+      "$3M-money-card",
+      "$4M-money-card",
+      "$5M-money-card"
+    ]
+  }
+}
