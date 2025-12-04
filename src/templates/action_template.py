@@ -8,11 +8,11 @@ from PIL import Image
 from ..renderer.primitives import (
     create_card_base,
     draw_text,
-    get_font,
     draw_multiline_text,
 )
 from ..renderer.elements import draw_value_badge, draw_decorative_border, draw_circle
 from ..models import ActionCard
+from .utils import get_template_font
 
 
 def load_design_tokens():
@@ -49,7 +49,7 @@ def render_action_card(card: ActionCard) -> Image.Image:
 
     # Draw "ACTION CARD" title bar
     title_y = action_config["layout"]["title_bar"]["y"]
-    title_font = get_font("Arial", size=16, bold=True)
+    title_font = get_template_font("Arial", size=16, bold=True)
     draw_text(draw, "ACTION CARD", (width // 2, title_y), title_font, anchor="mm")
 
     # Draw title circle with action name
@@ -67,7 +67,7 @@ def render_action_card(card: ActionCard) -> Image.Image:
     )
 
     # Draw action name in circle
-    action_font = get_font("Arial", size=28, bold=True)
+    action_font = get_template_font("Arial", size=28, bold=True)
     action_text = card.action_name or card.title
 
     # Split long titles into multiple lines
@@ -102,7 +102,7 @@ def render_action_card(card: ActionCard) -> Image.Image:
     # Draw description
     if card.description:
         desc_config = action_config["layout"]["description_area"]
-        desc_font = get_font("Arial", size=12)
+        desc_font = get_template_font("Arial", size=12)
         desc_x = (width - desc_config["width"]) // 2
         desc_y = desc_config["start_y"]
 
@@ -136,7 +136,7 @@ def render_action_card(card: ActionCard) -> Image.Image:
         )
 
     # Draw footer text
-    footer_font = get_font("Arial", size=10)
+    footer_font = get_template_font("Arial", size=10)
     footer_y = action_config["layout"]["footer_text"]["y"]
     footer_text = "© 1935, 2008 HASBRO"
     draw_text(

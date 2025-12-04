@@ -38,12 +38,14 @@ def render_card(card: Card, output_path: str | Path | None = None) -> Image.Imag
         img = render_money_card(card)
 
     elif card.card_type == "rent":
-        # TODO: Implement rent card template
-        raise NotImplementedError("Rent card rendering not yet implemented")
+        from ..templates.rent_template import render_rent_card
+
+        img = render_rent_card(card)
 
     elif card.card_type == "wildcard":
-        # TODO: Implement wildcard template
-        raise NotImplementedError("Wildcard card rendering not yet implemented")
+        from ..templates.wildcard_template import render_wildcard_card
+
+        img = render_wildcard_card(card)
 
     else:
         raise ValueError(f"Unknown card type: {card.card_type}")

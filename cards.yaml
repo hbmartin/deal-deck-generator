@@ -1,0 +1,394 @@
+# Complete Card Deck Definitions
+# Total: 106 cards
+
+# Property Cards (28 total)
+property_cards:
+  - id: brown-01
+    name: "Mediterranean Avenue"
+    color: brown
+    value: 1
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 2
+    
+  - id: brown-02
+    name: "Baltic Avenue"
+    color: brown
+    value: 1
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 1
+
+  - id: light_blue-01
+    name: "Oriental Avenue"
+    color: light_blue
+    value: 1
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 3]]
+    quantity: 1
+    
+  - id: light_blue-02
+    name: "Vermont Avenue"
+    color: light_blue
+    value: 1
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 3]]
+    quantity: 1
+    
+  - id: light_blue-03
+    name: "Connecticut Avenue"
+    color: light_blue
+    value: 1
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 3]]
+    quantity: 1
+
+  - id: pink-01
+    name: "St. Charles Place"
+    color: pink
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 4]]
+    quantity: 1
+    
+  - id: pink-02
+    name: "States Avenue"
+    color: pink
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 4]]
+    quantity: 1
+    
+  - id: pink-03
+    name: "Virginia Avenue"
+    color: pink
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 4]]
+    quantity: 1
+
+  - id: orange-01
+    name: "St. James Place"
+    color: orange
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 3], [3, 5]]
+    quantity: 1
+    
+  - id: orange-02
+    name: "Tennessee Avenue"
+    color: orange
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 3], [3, 5]]
+    quantity: 1
+    
+  - id: orange-03
+    name: "New York Avenue"
+    color: orange
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 3], [3, 5]]
+    quantity: 1
+
+  - id: red-01
+    name: "Kentucky Avenue"
+    color: red
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+    
+  - id: red-02
+    name: "Indiana Avenue"
+    color: red
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+    
+  - id: red-03
+    name: "Illinois Avenue"
+    color: red
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: yellow-01
+    name: "Atlantic Avenue"
+    color: yellow
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+    
+  - id: yellow-02
+    name: "Ventnor Avenue"
+    color: yellow
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+    
+  - id: yellow-03
+    name: "Marvin Gardens"
+    color: yellow
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: green-01
+    name: "Pacific Avenue"
+    color: green
+    value: 4
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 7]]
+    quantity: 1
+    
+  - id: green-02
+    name: "North Carolina Avenue"
+    color: green
+    value: 4
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 7]]
+    quantity: 1
+    
+  - id: green-03
+    name: "Pennsylvania Avenue"
+    color: green
+    value: 4
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 7]]
+    quantity: 1
+
+  - id: dark_blue-01
+    name: "Park Place"
+    color: dark_blue
+    value: 4
+    set_size: 2
+    rent_values: [[1, 3], [2, 8]]
+    quantity: 1
+    
+  - id: dark_blue-02
+    name: "Boardwalk"
+    color: dark_blue
+    value: 4
+    set_size: 2
+    rent_values: [[1, 3], [2, 8]]
+    quantity: 1
+
+  - id: railroad-01
+    name: "Railroad"
+    color: railroad
+    value: 2
+    set_size: 4
+    rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
+    quantity: 4
+
+  - id: utility-01
+    name: "Utility"
+    color: utility
+    value: 2
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 2
+
+# Action Cards (34 total)
+action_cards:
+  - id: deal-breaker
+    name: "Deal Breaker"
+    value: 5
+    description: "Steal a complete set of properties from any player. (Includes any buildings.) Play into center to use."
+    quantity: 2
+    
+  - id: just-say-no
+    name: "Just Say No"
+    value: 4
+    description: "Use this card to cancel any action card played against you. Play immediately when an action card is used against you."
+    quantity: 3
+    
+  - id: sly-deal
+    name: "Sly Deal"
+    value: 3
+    description: "Steal a property from any other player. Play into center to use."
+    quantity: 3
+    
+  - id: forced-deal
+    name: "Forced Deal"
+    value: 3
+    description: "Swap any property with another player. (Cannot be part of a full set.) Play into center to use."
+    quantity: 4
+    
+  - id: debt-collector
+    name: "Debt Collector"
+    value: 3
+    description: "Force any player to pay you 5M. Play into center to use."
+    quantity: 3
+    
+  - id: its-my-birthday
+    name: "It's My Birthday"
+    value: 2
+    description: "All players pay you 2M as a 'gift'. Play into center to use."
+    quantity: 3
+    
+  - id: pass-go
+    name: "Pass Go"
+    value: 1
+    description: "Draw 2 extra cards. Play into center to use."
+    quantity: 10
+    
+  - id: house
+    name: "House"
+    value: 3
+    description: "Add onto any full property set you own. Adds 3M to the rent value. Play into your property collection."
+    quantity: 3
+    
+  - id: hotel
+    name: "Hotel"
+    value: 4
+    description: "Add onto any full property set you own that has a house. Adds 4M to the rent value. Play into your property collection."
+    quantity: 2
+    
+  - id: double-the-rent
+    name: "Double The Rent"
+    value: 1
+    description: "Needs to be played with a rent card. Play into center on another player on your turn."
+    quantity: 2
+
+# Rent Cards (13 total)
+rent_cards:
+  - id: rent-pink-orange
+    name: "Rent"
+    colors: [pink, orange]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors. Play into center to use."
+    quantity: 2
+    
+  - id: rent-railroad-utility
+    name: "Rent"
+    colors: [railroad, utility]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors. Play into center to use."
+    quantity: 2
+    
+  - id: rent-green-dark_blue
+    name: "Rent"
+    colors: [green, dark_blue]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors. Play into center to use."
+    quantity: 2
+    
+  - id: rent-brown-light_blue
+    name: "Rent"
+    colors: [brown, light_blue]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors. Play into center to use."
+    quantity: 2
+    
+  - id: rent-red-yellow
+    name: "Rent"
+    colors: [red, yellow]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors. Play into center to use."
+    quantity: 2
+    
+  - id: rent-wild
+    name: "Rent"
+    colors: []
+    value: 3
+    is_wild: true
+    description: "All players pay you rent for properties you own in one of these colors. Play into center to use."
+    quantity: 3
+
+# Wildcard Property Cards (11 total)
+wildcard_cards:
+  - id: wildcard-pink-orange
+    name: "Property Wild Card"
+    allowed_colors: [pink, orange]
+    is_multicolor: false
+    value: 2
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 2
+    
+  - id: wildcard-light_blue-brown
+    name: "Property Wild Card"
+    allowed_colors: [light_blue, brown]
+    is_multicolor: false
+    value: 1
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 1
+    
+  - id: wildcard-light_blue-railroad
+    name: "Property Wild Card"
+    allowed_colors: [light_blue, railroad]
+    is_multicolor: false
+    value: 4
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 1
+    
+  - id: wildcard-dark_blue-green
+    name: "Property Wild Card"
+    allowed_colors: [dark_blue, green]
+    is_multicolor: false
+    value: 4
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 1
+    
+  - id: wildcard-railroad-green
+    name: "Property Wild Card"
+    allowed_colors: [railroad, green]
+    is_multicolor: false
+    value: 4
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 1
+    
+  - id: wildcard-red-yellow
+    name: "Property Wild Card"
+    allowed_colors: [red, yellow]
+    is_multicolor: false
+    value: 3
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 2
+    
+  - id: wildcard-railroad-utility
+    name: "Property Wild Card"
+    allowed_colors: [railroad, utility]
+    is_multicolor: false
+    value: 2
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 1
+    
+  - id: wildcard-multicolor
+    name: "Property Wild Card"
+    allowed_colors: [brown, light_blue, pink, orange, red, yellow, green, dark_blue, railroad, utility]
+    is_multicolor: true
+    value: 0
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 2
+
+# Money Cards (20 total)
+money_cards:
+  - denomination: 10
+    quantity: 1
+    
+  - denomination: 5
+    quantity: 2
+    
+  - denomination: 4
+    quantity: 3
+    
+  - denomination: 3
+    quantity: 3
+    
+  - denomination: 2
+    quantity: 5
+    
+  - denomination: 1
+    quantity: 6

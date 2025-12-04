@@ -9,10 +9,10 @@ from ..renderer.primitives import (
     create_card_base,
     draw_rounded_rectangle,
     draw_text,
-    get_font,
 )
 from ..renderer.elements import draw_value_badge, draw_property_rent_row
 from ..models import PropertyCard
+from .utils import get_template_font
 
 
 def load_design_tokens():
@@ -62,7 +62,7 @@ def render_property_card(card: PropertyCard) -> Image.Image:
     )
 
     # Draw property name in header
-    header_font = get_font("Arial", size=18, bold=True)
+    header_font = get_template_font("Arial", size=18, bold=True)
     property_text = card.property_name or card.title
     text_y = header_padding + header_height // 2
     draw_text(
@@ -71,14 +71,14 @@ def render_property_card(card: PropertyCard) -> Image.Image:
 
     # Draw "RENT" label
     rent_label_y = property_config["layout"]["rent_section"]["start_y"] - 30
-    rent_label_font = get_font("Arial", size=24, bold=True)
+    rent_label_font = get_template_font("Arial", size=24, bold=True)
     draw_text(draw, "RENT", (width // 2, rent_label_y), rent_label_font, anchor="mm")
 
     # Draw rent table
     rent_start_y = property_config["layout"]["rent_section"]["start_y"]
     row_height = property_config["layout"]["rent_section"]["row_height"]
 
-    label_font = get_font("Arial", size=12)
+    label_font = get_template_font("Arial", size=12)
     label_y = rent_start_y - 20
     draw_text(
         draw,
@@ -112,7 +112,7 @@ def render_property_card(card: PropertyCard) -> Image.Image:
         )
 
     # Draw footer text
-    footer_font = get_font("Arial", size=10)
+    footer_font = get_template_font("Arial", size=10)
     footer_y = property_config["layout"]["footer_text"]["y"]
     footer_text = "© 1935, 2008 HASBRO"
     draw_text(

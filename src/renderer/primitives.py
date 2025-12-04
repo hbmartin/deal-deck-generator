@@ -6,6 +6,7 @@ Provides utilities for rendering card elements.
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 import textwrap
+import math
 
 
 def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -92,18 +93,122 @@ def draw_circle(
     draw.ellipse(bbox, fill=fill, outline=outline, width=width)
 
 
-def get_font(font_name: str = "Arial", size: int = 14, bold: bool = False):
+def draw_pie_slice(
+    draw: ImageDraw.ImageDraw,
+    center: tuple[int, int],
+    radius: int,
+    start_angle: float,
+    end_angle: float,
+    fill: str | None = None,
+    outline: str | None = None,
+    width: int = 1,
+):
     """
-    Load a font. Falls back to default if not found.
+    Draw a pie slice (arc segment).
 
     Args:
-        font_name: Font family name
+        draw: ImageDraw object
+        center: Center point as (x, y)
+        radius: Circle radius
+        start_angle: Start angle in degrees (0 = right, 90 = bottom)
+        end_angle: End angle in degrees
+        fill: Fill color
+        outline: Outline color
+        width: Outline width
+    """
+    cx, cy = center
+
+    # Convert hex colors to RGB if needed
+    if fill and isinstance(fill, str) and fill.startswith("#"):
+        fill = hex_to_rgb(fill)
+    if outline and isinstance(outline, str) and outline.startswith("#"):
+        outline = hex_to_rgb(outline)
+
+    # Convert angles to radians and adjust for Pillow's coordinate system
+    # Pillow uses 0 degrees at 3 o'clock, positive clockwise
+    start_rad = math.radians(start_angle - 90)  # Adjust so 0 is at top
+    end_rad = math.radians(end_angle - 90)
+
+    # Calculate bounding box
+    bbox = (cx - radius, cy - radius, cx + radius, cy + radius)
+
+    # Calculate points for the pie slice
+    # Start point
+    start_x = cx + radius * math.cos(start_rad)
+    start_y = cy + radius * math.sin(start_rad)
+
+    # End point
+    end_x = cx + radius * math.cos(end_rad)
+    end_y = cy + radius * math.sin(end_rad)
+
+    # Create polygon points: center, start point, arc points, end point
+    points = [(cx, cy)]
+
+    # Add points along the arc
+    num_points = max(8, int(abs(end_angle - start_angle) / 5))
+    for i in range(num_points + 1):
+        angle = start_angle + (end_angle - start_angle) * i / num_points
+        angle_rad = math.radians(angle - 90)
+        px = cx + radius * math.cos(angle_rad)
+        py = cy + radius * math.sin(angle_rad)
+        points.append((px, py))
+
+    # Draw filled polygon
+    if fill:
+        draw.polygon(points, fill=fill, outline=None)
+
+    # Draw outline
+    if outline:
+        # Draw arc
+        draw.arc(
+            bbox, start=start_angle - 90, end=end_angle - 90, fill=outline, width=width
+        )
+        # Draw radial lines
+        draw.line([(cx, cy), (start_x, start_y)], fill=outline, width=width)
+        draw.line([(cx, cy), (end_x, end_y)], fill=outline, width=width)
+
+
+def get_font(
+    font_name: str = "Arial",
+    size: int = 14,
+    bold: bool = False,
+    assets_dir: Path | None = None,
+):
+    """
+    Load a font. Checks assets directory first, then system fonts.
+
+    Args:
+        font_name: Font family name or filename (without extension)
         size: Font size in points
         bold: Whether to use bold variant
+        assets_dir: Optional path to assets directory containing fonts
 
     Returns:
         ImageFont object
     """
+    # Try custom fonts directory first
+    if assets_dir:
+        fonts_dir = assets_dir / "fonts"
+        if fonts_dir.exists():
+            # Try exact filename match
+            for ext in [".ttf", ".otf", ".ttc"]:
+                font_path = fonts_dir / f"{font_name}{ext}"
+                if font_path.exists():
+                    try:
+                        return ImageFont.truetype(str(font_path), size)
+                    except Exception:
+                        continue
+
+            # Try with bold suffix
+            if bold:
+                for ext in [".ttf", ".otf"]:
+                    bold_font_path = fonts_dir / f"{font_name}-Bold{ext}"
+                    if bold_font_path.exists():
+                        try:
+                            return ImageFont.truetype(str(bold_font_path), size)
+                        except Exception:
+                            continue
+
     try:
         # Try to load system font
         if bold and "bold" not in font_name.lower():

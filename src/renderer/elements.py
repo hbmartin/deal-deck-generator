@@ -43,7 +43,7 @@ def draw_value_badge(
 
     # Draw value text with money symbol
     font = get_font("Arial", size=diameter // 3, bold=True)
-    value_text = f"₼{value}M"
+    value_text = f"${value}M"
     draw_text(draw, value_text, position, font, color=text_color, anchor="mm")
 
 
@@ -193,7 +193,7 @@ def draw_property_rent_row(
 
     # Draw rent value
     rent_font = get_font("Arial", size=18, bold=True)
-    rent_text = f"₼{rent_value}M"
+    rent_text = f"${rent_value}M"
     rent_x = x_start + row_width - 50
     draw_text(draw, rent_text, (rent_x, y), rent_font, anchor="rm")
 
