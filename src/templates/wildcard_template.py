@@ -2,8 +2,6 @@
 Template for rendering wildcard property cards.
 """
 
-import json
-from pathlib import Path
 from PIL import Image
 from ..renderer.primitives import (
     create_card_base,
@@ -12,14 +10,7 @@ from ..renderer.primitives import (
 )
 from ..renderer.elements import draw_value_badge, draw_color_stripes
 from ..models import WildcardCard
-from .utils import get_template_font
-
-
-def load_design_tokens():
-    """Load design tokens from JSON file."""
-    tokens_path = Path(__file__).parent.parent.parent / "design_tokens.json"
-    with open(tokens_path) as f:
-        return json.load(f)
+from .utils import get_template_font, load_design_tokens
 
 
 def render_wildcard_card(card: WildcardCard) -> Image.Image:

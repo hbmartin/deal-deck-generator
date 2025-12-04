@@ -2,20 +2,11 @@
 Template for rendering money cards.
 """
 
-import json
-from pathlib import Path
 from PIL import Image
 from ..renderer.primitives import create_card_base, draw_text
 from ..renderer.elements import draw_value_badge, draw_decorative_border, draw_circle
 from ..models import MoneyCard
-from .utils import get_template_font
-
-
-def load_design_tokens():
-    """Load design tokens from JSON file."""
-    tokens_path = Path(__file__).parent.parent.parent / "design_tokens.json"
-    with open(tokens_path) as f:
-        return json.load(f)
+from .utils import get_template_font, load_design_tokens
 
 
 def render_money_card(card: MoneyCard) -> Image.Image:

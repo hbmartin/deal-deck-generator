@@ -4,117 +4,16 @@ CLI tool to render card deck from YAML definitions.
 """
 
 import argparse
-import yaml
 from pathlib import Path
-from src.models import PropertyCard, ActionCard, MoneyCard, RentCard, WildcardCard
+from src.data import (
+    load_card_definitions,
+    create_property_card_instances,
+    create_action_card_instances,
+    create_money_card_instances,
+    create_rent_card_instances,
+    create_wildcard_instances,
+)
 from src.renderer.card_renderer import render_card
-
-
-def load_card_definitions(yaml_path: Path) -> dict:
-    """Load card definitions from YAML file."""
-    with open(yaml_path) as f:
-        return yaml.safe_load(f)
-
-
-def create_property_card_instances(prop_defs: list) -> list:
-    """Create PropertyCard instances from YAML definitions."""
-    cards = []
-    for prop_def in prop_defs:
-        quantity = prop_def.get("quantity", 1)
-        for i in range(quantity):
-            card_id = f"{prop_def['id']}-{i+1}" if quantity > 1 else prop_def["id"]
-            card = PropertyCard(
-                card_id=card_id,
-                card_type="property",
-                title=prop_def["name"],
-                property_name=prop_def["name"],
-                color=prop_def["color"],
-                value=prop_def["value"],
-                rent_values=[tuple(rv) for rv in prop_def["rent_values"]],
-                set_size=prop_def["set_size"],
-            )
-            cards.append(card)
-    return cards
-
-
-def create_action_card_instances(action_defs: list) -> list:
-    """Create ActionCard instances from YAML definitions."""
-    cards = []
-    for action_def in action_defs:
-        quantity = action_def.get("quantity", 1)
-        for i in range(quantity):
-            card_id = f"{action_def['id']}-{i+1}" if quantity > 1 else action_def["id"]
-            card = ActionCard(
-                card_id=card_id,
-                card_type="action",
-                title=action_def["name"],
-                action_name=action_def["name"],
-                value=action_def["value"],
-                description=action_def.get("description", ""),
-            )
-            cards.append(card)
-    return cards
-
-
-def create_money_card_instances(money_defs: list) -> list:
-    """Create MoneyCard instances from YAML definitions."""
-    cards = []
-    for money_def in money_defs:
-        denom = money_def["denomination"]
-        quantity = money_def.get("quantity", 1)
-        for i in range(quantity):
-            card_id = f"money-{denom}m-{i+1}" if quantity > 1 else f"money-{denom}m"
-            card = MoneyCard(
-                card_id=card_id,
-                card_type="money",
-                title=f"${denom}M",
-                denomination=denom,
-                value=denom,
-            )
-            cards.append(card)
-    return cards
-
-
-def create_rent_card_instances(rent_defs: list) -> list:
-    """Create RentCard instances from YAML definitions."""
-    cards = []
-    for rent_def in rent_defs:
-        quantity = rent_def.get("quantity", 1)
-        for i in range(quantity):
-            card_id = f"{rent_def['id']}-{i+1}" if quantity > 1 else rent_def["id"]
-            card = RentCard(
-                card_id=card_id,
-                card_type="rent",
-                title=rent_def["name"],
-                value=rent_def["value"],
-                description=rent_def.get("description", ""),
-                colors=rent_def.get("colors", []),
-                is_wild=rent_def.get("is_wild", False),
-            )
-            cards.append(card)
-    return cards
-
-
-def create_wildcard_instances(wildcard_defs: list) -> list:
-    """Create WildcardCard instances from YAML definitions."""
-    cards = []
-    for wildcard_def in wildcard_defs:
-        quantity = wildcard_def.get("quantity", 1)
-        for i in range(quantity):
-            card_id = (
-                f"{wildcard_def['id']}-{i+1}" if quantity > 1 else wildcard_def["id"]
-            )
-            card = WildcardCard(
-                card_id=card_id,
-                card_type="wildcard",
-                title=wildcard_def["name"],
-                value=wildcard_def.get("value", 0),
-                description=wildcard_def.get("description", ""),
-                allowed_colors=wildcard_def.get("allowed_colors", []),
-                is_multicolor=wildcard_def.get("is_multicolor", False),
-            )
-            cards.append(card)
-    return cards
 
 
 def main():
@@ -155,12 +54,15 @@ def main():
 
     # Load card definitions
     yaml_path = Path(args.cards)
-    if not yaml_path.exists():
-        print(f"Error: Card definitions file not found: {yaml_path}")
+    try:
+        print(f"Loading card definitions from {yaml_path}...")
+        card_defs = load_card_definitions(yaml_path)
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
         return
-
-    print(f"Loading card definitions from {yaml_path}...")
-    card_defs = load_card_definitions(yaml_path)
+    except Exception as e:
+        print(f"Error loading card definitions: {e}")
+        return
 
     # Determine which card types to render
     types_to_render = set(args.types)
@@ -174,55 +76,25 @@ def main():
     # Track statistics
     stats = {"property": 0, "action": 0, "money": 0, "rent": 0, "wildcard": 0}
 
-    # Render property cards
-    if "property" in types_to_render:
-        print("\nRendering property cards...")
-        property_cards = create_property_card_instances(card_defs["property_cards"])
-        for card in property_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["property"] += 1
-        print(f"  ✓ Rendered {stats['property']} property cards")
+    # Configuration mapping for card types
+    CARD_TYPE_CONFIG = {
+        "property": ("property_cards", create_property_card_instances),
+        "action": ("action_cards", create_action_card_instances),
+        "money": ("money_cards", create_money_card_instances),
+        "rent": ("rent_cards", create_rent_card_instances),
+        "wildcard": ("wildcard_cards", create_wildcard_instances),
+    }
 
-    # Render action cards
-    if "action" in types_to_render:
-        print("\nRendering action cards...")
-        action_cards = create_action_card_instances(card_defs["action_cards"])
-        for card in action_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["action"] += 1
-        print(f"  ✓ Rendered {stats['action']} action cards")
-
-    # Render money cards
-    if "money" in types_to_render:
-        print("\nRendering money cards...")
-        money_cards = create_money_card_instances(card_defs["money_cards"])
-        for card in money_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["money"] += 1
-        print(f"  ✓ Rendered {stats['money']} money cards")
-
-    # Render rent cards
-    if "rent" in types_to_render:
-        print("\nRendering rent cards...")
-        rent_cards = create_rent_card_instances(card_defs["rent_cards"])
-        for card in rent_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["rent"] += 1
-        print(f"  ✓ Rendered {stats['rent']} rent cards")
-
-    # Render wildcard cards
-    if "wildcard" in types_to_render:
-        print("\nRendering wildcard cards...")
-        wildcard_cards = create_wildcard_instances(card_defs["wildcard_cards"])
-        for card in wildcard_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["wildcard"] += 1
-        print(f"  ✓ Rendered {stats['wildcard']} wildcard cards")
+    # Render cards using configuration mapping
+    for card_type, (yaml_key, creator_func) in CARD_TYPE_CONFIG.items():
+        if card_type in types_to_render:
+            print(f"\nRendering {card_type} cards...")
+            cards = creator_func(card_defs[yaml_key])
+            for card in cards:
+                output_path = output_dir / f"{card.card_id}.{args.format}"
+                render_card(card, output_path)
+                stats[card_type] += 1
+            print(f"  ✓ Rendered {stats[card_type]} {card_type} cards")
 
     # Print summary
     total = sum(stats.values())
