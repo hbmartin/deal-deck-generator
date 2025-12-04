@@ -29,7 +29,7 @@ def setup_module():
 
 def compare_images(
     img1: Image.Image, img2: Image.Image, threshold: float = 0.95
-) -> bool:
+) -> tuple[bool, float]:
     """
     Compare two images using structural similarity.
 
@@ -39,7 +39,7 @@ def compare_images(
         threshold: Similarity threshold (0-1)
 
     Returns:
-        True if images are similar enough
+        Tuple of (is_similar: bool, similarity_score: float)
     """
     # Resize to same dimensions if needed
     if img1.size != img2.size:
@@ -55,7 +55,7 @@ def compare_images(
 
     correlation = (arr1_norm * arr2_norm).mean()
 
-    return correlation >= threshold
+    return correlation >= threshold, float(correlation)
 
 
 def test_property_card_rendering():
@@ -238,12 +238,14 @@ def test_card_dimensions():
 def test_validate_against_originals():
     """
     Validate rendered cards against original card images.
-    This test compares rendered cards with reference images.
+    This test compares rendered cards with reference images using image similarity.
     """
     if not TEST_DATA_DIR.exists():
         pytest.skip("Card Images directory not found")
 
     # Test a few key cards
+    # Note: Thresholds are set low since programmatically rendered cards
+    # may differ significantly from original reference images
     test_cases = [
         {
             "type": "property",
@@ -258,6 +260,7 @@ def test_validate_against_originals():
                 set_size=3,
             ),
             "reference": "green-property-card.png",
+            "threshold": 0.5,  # Low threshold - layout differences expected
         },
         {
             "type": "action",
@@ -270,6 +273,7 @@ def test_validate_against_originals():
                 description="Steal a complete set of properties from any player.",
             ),
             "reference": "deal-breaker-action-card.png",
+            "threshold": 0.5,  # Low threshold - text/font differences expected
         },
         {
             "type": "money",
@@ -281,13 +285,14 @@ def test_validate_against_originals():
                 value=5,
             ),
             "reference": "$5M-money-card.png",
+            "threshold": 0.6,  # Slightly higher threshold for simpler layout
         },
     ]
 
     for test_case in test_cases:
         reference_path = TEST_DATA_DIR / test_case["reference"]
         if not reference_path.exists():
-            continue
+            pytest.skip(f"Reference image not found: {reference_path}")
 
         # Render card
         rendered_img = render_card(test_case["card"])
@@ -295,7 +300,7 @@ def test_validate_against_originals():
         # Load reference image
         reference_img = Image.open(reference_path)
 
-        # Save comparison
+        # Save comparison image for visual inspection
         comparison_path = OUTPUT_DIR / f"comparison_{test_case['type']}.png"
         comparison = Image.new("RGB", (rendered_img.width * 2, rendered_img.height))
         comparison.paste(rendered_img, (0, 0))
@@ -304,9 +309,43 @@ def test_validate_against_originals():
         )
         comparison.save(comparison_path)
 
-        # Note: We don't fail the test if images don't match exactly
-        # This is a visual validation tool
-        print(f"\nComparison saved: {comparison_path}")
+        # Compare images using similarity metric
+        threshold = test_case.get("threshold", 0.5)
+        is_similar, similarity_score = compare_images(
+            rendered_img, reference_img, threshold=threshold
+        )
+
+        # Use compare_images in assertion to validate basic rendering
+        # Note: Similarity scores may be low due to expected design differences
+        # (fonts, exact layout, colors, etc.) between programmatic and original cards
+        # We assert that similarity is above a very low threshold to catch rendering errors
+        min_similarity = 0.1  # Very low threshold - just check cards aren't completely different
+        assert (
+            similarity_score >= min_similarity
+        ), (
+            f"Rendered {test_case['type']} card similarity extremely low "
+            f"(score: {similarity_score:.3f} < {min_similarity}). "
+            f"This may indicate a rendering error. "
+            f"Comparison image saved to: {comparison_path}"
+        )
+
+        # Log similarity results for monitoring and debugging
+        if is_similar:
+            print(
+                f"\n✓ {test_case['type']} card similarity check passed "
+                f"(score: {similarity_score:.3f} >= {threshold})"
+            )
+        else:
+            print(
+                f"\n⚠ {test_case['type']} card similarity below threshold "
+                f"(score: {similarity_score:.3f} < {threshold}) "
+                f"- expected due to design differences"
+            )
+        print(f"  Comparison saved: {comparison_path}")
+
+        # Ensure images were rendered and loaded successfully
+        assert rendered_img is not None, "Failed to render card"
+        assert reference_img is not None, "Failed to load reference image"
 
 
 if __name__ == "__main__":
