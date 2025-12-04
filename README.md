@@ -127,6 +127,30 @@ Modify `design_tokens.json` to customize:
 - Spacing and padding values
 - Layout parameters for each card type
 
+### Custom Fonts
+
+Place custom font files (`.ttf`, `.otf`, or `.ttc`) in `src/assets/fonts/`:
+
+```
+src/assets/fonts/
+  ├── CustomFont.ttf
+  ├── CustomFont-Bold.ttf
+  └── ...
+```
+
+The renderer will automatically check the assets directory before falling back to system fonts. Use the font filename (without extension) as the font name in your templates.
+
+### Custom Icons
+
+Icons can be placed in `src/assets/icons/` (support coming soon):
+
+```
+src/assets/icons/
+  ├── house.png
+  ├── hotel.png
+  └── ...
+```
+
 ### Adding New Card Types
 
 1. Create a new template in `src/templates/`
@@ -151,6 +175,25 @@ Check code with Ruff:
 ```bash
 uv run ruff check .
 ```
+
+### Testing
+
+Run the test suite to validate card rendering:
+
+```bash
+uv run pytest tests/ -v
+```
+
+Run specific tests:
+
+```bash
+uv run pytest tests/test_card_rendering.py::test_property_card_rendering -v
+```
+
+The test suite includes:
+- Rendering validation for all card types
+- Dimension consistency checks
+- Visual comparison with original card images (when available)
 
 ### Analysis
 

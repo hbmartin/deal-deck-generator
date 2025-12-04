@@ -8,11 +8,11 @@ from PIL import Image
 from ..renderer.primitives import (
     create_card_base,
     draw_text,
-    get_font,
     draw_multiline_text,
 )
 from ..renderer.elements import draw_value_badge, draw_color_stripes
 from ..models import WildcardCard
+from .utils import get_template_font
 
 
 def load_design_tokens():
@@ -82,7 +82,7 @@ def render_wildcard_card(card: WildcardCard) -> Image.Image:
 
     # Draw "PROPERTY WILD CARD" title
     title_y = wildcard_config["layout"]["title_bar"]["y"]
-    title_font = get_font("Arial", size=16, bold=True)
+    title_font = get_template_font("Arial", size=16, bold=True)
     title_text = card.title.upper() if card.title else "PROPERTY WILD CARD"
     draw_text(draw, title_text, (width // 2, title_y), title_font, anchor="mm")
 
@@ -91,7 +91,7 @@ def render_wildcard_card(card: WildcardCard) -> Image.Image:
     char_y = char_config["center_y"]
 
     # Draw "WILD" text in large font
-    wild_font = get_font("Arial", size=64, bold=True)
+    wild_font = get_template_font("Arial", size=64, bold=True)
     draw_text(
         draw,
         "WILD",
@@ -104,7 +104,7 @@ def render_wildcard_card(card: WildcardCard) -> Image.Image:
     # Draw description
     if card.description:
         desc_config = wildcard_config["layout"]["description_area"]
-        desc_font = get_font("Arial", size=11)
+        desc_font = get_template_font("Arial", size=11)
         desc_x = (width - desc_config["width"]) // 2
         desc_y = desc_config["start_y"]
 
@@ -129,7 +129,7 @@ def render_wildcard_card(card: WildcardCard) -> Image.Image:
         )
 
     # Draw footer text
-    footer_font = get_font("Arial", size=10)
+    footer_font = get_template_font("Arial", size=10)
     footer_y = wildcard_config["layout"]["footer_text"]["y"]
     footer_text = "© 1935, 2008 HASBRO"
     draw_text(

@@ -5,9 +5,10 @@ Template for rendering money cards.
 import json
 from pathlib import Path
 from PIL import Image
-from ..renderer.primitives import create_card_base, draw_text, get_font
+from ..renderer.primitives import create_card_base, draw_text
 from ..renderer.elements import draw_value_badge, draw_decorative_border, draw_circle
 from ..models import MoneyCard
+from .utils import get_template_font
 
 
 def load_design_tokens():
@@ -57,7 +58,7 @@ def render_money_card(card: MoneyCard) -> Image.Image:
     )
 
     # Draw denomination text
-    denom_font = get_font("Arial", size=60, bold=True)
+    denom_font = get_template_font("Arial", size=60, bold=True)
     denom_text = f"${card.denomination}M"
     draw_text(draw, denom_text, (width // 2, circle_center_y), denom_font, anchor="mm")
 
@@ -82,7 +83,7 @@ def render_money_card(card: MoneyCard) -> Image.Image:
     )
 
     # Draw footer text
-    footer_font = get_font("Arial", size=10)
+    footer_font = get_template_font("Arial", size=10)
     footer_y = money_config["layout"]["footer_text"]["y"]
     footer_text = "© 1935, 2008 HASBRO"
     draw_text(

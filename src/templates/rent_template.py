@@ -8,12 +8,13 @@ from PIL import Image
 from ..renderer.primitives import (
     create_card_base,
     draw_text,
-    get_font,
     draw_multiline_text,
     draw_circle,
+    draw_pie_slice,
 )
 from ..renderer.elements import draw_value_badge, draw_decorative_border
 from ..models import RentCard
+from .utils import get_template_font
 
 
 def load_design_tokens():
@@ -50,7 +51,7 @@ def render_rent_card(card: RentCard) -> Image.Image:
 
     # Draw "RENT" title bar
     title_y = rent_config["layout"]["title_bar"]["y"]
-    title_font = get_font("Arial", size=20, bold=True)
+    title_font = get_template_font("Arial", size=20, bold=True)
     draw_text(draw, "RENT", (width // 2, title_y), title_font, anchor="mm")
 
     # Get color map
@@ -63,34 +64,75 @@ def render_rent_card(card: RentCard) -> Image.Image:
     inner_radius = circle_config["inner_diameter"] // 2
 
     if card.is_wild:
-        # Wild rent: draw all colors in concentric circles or segments
-        # For now, draw a simple circle with text
+        # Wild rent: draw all colors as segmented pie slices
+        all_colors_list = [
+            "brown",
+            "light_blue",
+            "pink",
+            "orange",
+            "red",
+            "yellow",
+            "green",
+            "dark_blue",
+            "railroad",
+            "utility",
+        ]
+        all_colors = [color_map.get(c, "#228B22") for c in all_colors_list]
+        num_colors = len(all_colors)
+        segment_angle = 360.0 / num_colors
 
-        # Draw outer circle
+        # Draw outer circle border first
         draw_circle(
             draw,
             (width // 2, circle_center_y),
             outer_radius,
-            fill="#FFFFFF",
+            fill=None,
             outline="#000000",
             width=4,
         )
 
+        # Draw each color segment
+        for i, color in enumerate(all_colors):
+            start_angle = i * segment_angle
+            end_angle = (i + 1) * segment_angle
+
+            # Draw pie slice
+            draw_pie_slice(
+                draw,
+                (width // 2, circle_center_y),
+                outer_radius,
+                start_angle,
+                end_angle,
+                fill=color,
+                outline="#000000",
+                width=2,
+            )
+
+        # Draw inner white circle with text
+        draw_circle(
+            draw,
+            (width // 2, circle_center_y),
+            inner_radius,
+            fill="#FFFFFF",
+            outline="#000000",
+            width=3,
+        )
+
         # Draw "ALL" text in center
-        all_font = get_font("Arial", size=48, bold=True)
+        all_font = get_template_font("Arial", size=42, bold=True)
         draw_text(
             draw,
             "ALL",
-            (width // 2, circle_center_y - 20),
+            (width // 2, circle_center_y - 15),
             all_font,
             anchor="mm",
         )
 
-        colors_font = get_font("Arial", size=24, bold=True)
+        colors_font = get_template_font("Arial", size=20, bold=True)
         draw_text(
             draw,
             "COLORS",
-            (width // 2, circle_center_y + 20),
+            (width // 2, circle_center_y + 15),
             colors_font,
             anchor="mm",
         )
@@ -134,7 +176,7 @@ def render_rent_card(card: RentCard) -> Image.Image:
     # Draw description
     if card.description:
         desc_config = rent_config["layout"]["description_area"]
-        desc_font = get_font("Arial", size=12)
+        desc_font = get_template_font("Arial", size=12)
         desc_x = (width - desc_config["width"]) // 2
         desc_y = desc_config["start_y"]
 
@@ -168,7 +210,7 @@ def render_rent_card(card: RentCard) -> Image.Image:
         )
 
     # Draw footer text
-    footer_font = get_font("Arial", size=10)
+    footer_font = get_template_font("Arial", size=10)
     footer_y = 430
     footer_text = "© 1935, 2008 HASBRO"
     draw_text(
