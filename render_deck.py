@@ -76,55 +76,25 @@ def main():
     # Track statistics
     stats = {"property": 0, "action": 0, "money": 0, "rent": 0, "wildcard": 0}
 
-    # Render property cards
-    if "property" in types_to_render:
-        print("\nRendering property cards...")
-        property_cards = create_property_card_instances(card_defs["property_cards"])
-        for card in property_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["property"] += 1
-        print(f"  ✓ Rendered {stats['property']} property cards")
+    # Configuration mapping for card types
+    CARD_TYPE_CONFIG = {
+        "property": ("property_cards", create_property_card_instances),
+        "action": ("action_cards", create_action_card_instances),
+        "money": ("money_cards", create_money_card_instances),
+        "rent": ("rent_cards", create_rent_card_instances),
+        "wildcard": ("wildcard_cards", create_wildcard_instances),
+    }
 
-    # Render action cards
-    if "action" in types_to_render:
-        print("\nRendering action cards...")
-        action_cards = create_action_card_instances(card_defs["action_cards"])
-        for card in action_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["action"] += 1
-        print(f"  ✓ Rendered {stats['action']} action cards")
-
-    # Render money cards
-    if "money" in types_to_render:
-        print("\nRendering money cards...")
-        money_cards = create_money_card_instances(card_defs["money_cards"])
-        for card in money_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["money"] += 1
-        print(f"  ✓ Rendered {stats['money']} money cards")
-
-    # Render rent cards
-    if "rent" in types_to_render:
-        print("\nRendering rent cards...")
-        rent_cards = create_rent_card_instances(card_defs["rent_cards"])
-        for card in rent_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["rent"] += 1
-        print(f"  ✓ Rendered {stats['rent']} rent cards")
-
-    # Render wildcard cards
-    if "wildcard" in types_to_render:
-        print("\nRendering wildcard cards...")
-        wildcard_cards = create_wildcard_instances(card_defs["wildcard_cards"])
-        for card in wildcard_cards:
-            output_path = output_dir / f"{card.card_id}.{args.format}"
-            render_card(card, output_path)
-            stats["wildcard"] += 1
-        print(f"  ✓ Rendered {stats['wildcard']} wildcard cards")
+    # Render cards using configuration mapping
+    for card_type, (yaml_key, creator_func) in CARD_TYPE_CONFIG.items():
+        if card_type in types_to_render:
+            print(f"\nRendering {card_type} cards...")
+            cards = creator_func(card_defs[yaml_key])
+            for card in cards:
+                output_path = output_dir / f"{card.card_id}.{args.format}"
+                render_card(card, output_path)
+                stats[card_type] += 1
+            print(f"  ✓ Rendered {stats[card_type]} {card_type} cards")
 
     # Print summary
     total = sum(stats.values())
