@@ -1,75 +1,115 @@
 # Business Deal Card Generator
 
-A Python card-rendering engine that reproduces Business Deal-style card layouts using Pillow. This project generates card images from YAML definitions, supporting property cards, action cards, rent cards, wildcard cards, and money cards.
+A Python-based card rendering engine that generates high-quality card images from YAML definitions. This tool reproduces Business Deal-style card layouts using Pillow, supporting all major card types with a flexible, customizable design system.
 
-## Features
+## 🎯 Overview
 
-- **Card Types Supported:**
-  - Property cards (with color-coded headers and rent tables)
-  - Action cards (with decorative borders and centered text)
-  - Rent cards (with color circles and descriptions)
-  - Wildcard property cards (with color stripe headers)
-  - Money cards (with large denomination displays)
+This project allows you to:
+- **Define cards** in simple YAML format
+- **Render card images** programmatically with consistent styling
+- **Customize designs** through JSON design tokens
+- **Generate complete decks** with a single command
+- **Extend functionality** with custom templates and assets
 
-- **Design System:**
-  - JSON-based design tokens for easy customization
-  - Consistent typography and spacing
-  - Color-coded property sets
-  - Modular template system
+Perfect for game designers, developers, or anyone needing to generate card game assets programmatically.
 
-## Installation
+## ✨ Features
 
-This project uses `uv` for dependency management. Make sure you have `uv` installed:
+### Supported Card Types
 
-```bash
-# Install uv if you haven't already
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+- **Property Cards** - Color-coded headers with rent tables
+- **Action Cards** - Decorative borders with centered text and descriptions
+- **Rent Cards** - Color circles (2-color or wild 10-color segmented)
+- **Wildcard Cards** - Multi-color stripe headers for flexible property sets
+- **Money Cards** - Large denomination displays with decorative borders
 
-Install dependencies:
+### Key Capabilities
 
-```bash
-uv sync
-```
+- 🎨 **Design System** - JSON-based design tokens for easy customization
+- 🔤 **Custom Fonts** - Support for custom fonts from assets directory
+- 🧪 **Test Suite** - Comprehensive validation and comparison tests
+- 📐 **Consistent Layouts** - Standardized dimensions and spacing
+- 🎯 **Modular Architecture** - Easy to extend with new card types
+- 🚀 **Fast Rendering** - Efficient Pillow-based image generation
 
-## Usage
+## 📋 Requirements
 
-### Rendering Cards
+- Python 3.14 or higher
+- `uv` package manager (recommended) or pip
 
-Render all cards from the YAML definition file:
+## 🚀 Quick Start
 
+### Installation
+
+1. **Install `uv`** (if not already installed):
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+2. **Clone or download this repository**
+
+3. **Install dependencies**:
+   ```bash
+   uv sync
+   ```
+
+### Basic Usage
+
+**Render all cards:**
 ```bash
 uv run python render_deck.py
 ```
 
-Render specific card types:
-
+**Render specific card types:**
 ```bash
 uv run python render_deck.py --types property action
 ```
 
-Render to a specific output directory:
-
+**Custom output directory:**
 ```bash
-uv run python render_deck.py --output output/my_deck
+uv run python render_deck.py --output my_cards
 ```
 
-Render in WebP format:
-
+**Export as WebP:**
 ```bash
 uv run python render_deck.py --format webp
 ```
 
+## 📖 Detailed Usage
+
 ### Command-Line Options
 
-- `--cards`, `-c`: Path to cards YAML file (default: `cards.yaml`)
-- `--output`, `-o`: Output directory for rendered cards (default: `output/deck`)
-- `--types`, `-t`: Card types to render: `property`, `action`, `money`, `rent`, `wildcard`, or `all` (default: `all`)
-- `--format`, `-f`: Output image format: `png` or `webp` (default: `png`)
+| Option | Short | Description | Default |
+|--------|-------|-------------|---------|
+| `--cards` | `-c` | Path to cards YAML file | `cards.yaml` |
+| `--output` | `-o` | Output directory | `output/deck` |
+| `--types` | `-t` | Card types to render | `all` |
+| `--format` | `-f` | Image format (png/webp) | `png` |
 
-### Card Definitions
+**Card Types:** `property`, `action`, `money`, `rent`, `wildcard`, or `all`
 
-Cards are defined in `cards.yaml`. Each card type has its own section:
+### Examples
+
+**Render only property and money cards:**
+```bash
+uv run python render_deck.py --types property money
+```
+
+**Render to a specific directory with WebP format:**
+```bash
+uv run python render_deck.py --output cards/webp --format webp
+```
+
+**Use a custom card definition file:**
+```bash
+uv run python render_deck.py --cards my_cards.yaml --output my_output
+```
+
+## 📝 Card Definitions
+
+Cards are defined in YAML format. Here are examples for each card type:
+
+### Property Card
 
 ```yaml
 property_cards:
@@ -80,70 +120,166 @@ property_cards:
     set_size: 2
     rent_values: [[1, 1], [2, 2]]
     quantity: 2
+```
 
+**Fields:**
+- `id`: Unique identifier
+- `name`: Property name
+- `color`: Property set color (brown, light_blue, pink, orange, red, yellow, green, dark_blue, railroad, utility)
+- `value`: Card value in millions
+- `set_size`: Number of properties in the complete set
+- `rent_values`: List of `[num_properties, rent_amount]` pairs
+- `quantity`: How many copies to generate
+
+### Action Card
+
+```yaml
 action_cards:
   - id: deal-breaker
     name: "Deal Breaker"
     value: 5
-    description: "Steal a complete set of properties..."
+    description: "Steal a complete set of properties from any player. (Includes any buildings.) Play into center to use."
     quantity: 2
 ```
 
-See `cards.yaml` for complete examples of all card types.
+### Money Card
 
-## Project Structure
-
-```
-.
-├── src/
-│   ├── models/          # Card data models
-│   │   └── card.py      # Card dataclasses
-│   ├── renderer/        # Rendering engine
-│   │   ├── card_renderer.py  # Main renderer dispatcher
-│   │   ├── primitives.py     # Low-level drawing primitives
-│   │   └── elements.py       # High-level card elements
-│   └── templates/       # Card type templates
-│       ├── property_template.py
-│       ├── action_template.py
-│       ├── money_template.py
-│       ├── rent_template.py
-│       └── wildcard_template.py
-├── Card Images/         # Reference card images
-├── cards.yaml           # Card definitions
-├── design_tokens.json  # Design system tokens
-├── render_deck.py       # CLI entry point
-└── analyze_cards.py     # Card image analysis tool
+```yaml
+money_cards:
+  - denomination: 5
+    quantity: 2
 ```
 
-## Customization
+### Rent Card
+
+```yaml
+rent_cards:
+  # Two-color rent card
+  - id: rent-pink-orange
+    name: "Rent"
+    colors: [pink, orange]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors."
+    quantity: 2
+    
+  # Wild rent card (all colors)
+  - id: rent-wild
+    name: "Rent"
+    colors: []
+    value: 3
+    is_wild: true
+    description: "All players pay you rent for properties you own in one of these colors."
+    quantity: 3
+```
+
+### Wildcard Card
+
+```yaml
+wildcard_cards:
+  # Two-color wildcard
+  - id: wildcard-pink-orange
+    name: "Property Wild Card"
+    allowed_colors: [pink, orange]
+    is_multicolor: false
+    value: 2
+    description: "This card can be used as part of any property set."
+    quantity: 2
+    
+  # Multicolor wildcard (all 10 colors)
+  - id: wildcard-multicolor
+    name: "Property Wild Card"
+    allowed_colors: [brown, light_blue, pink, orange, red, yellow, green, dark_blue, railroad, utility]
+    is_multicolor: true
+    value: 0
+    description: "This card can be used as part of any property set."
+    quantity: 2
+```
+
+See `cards.yaml` for the complete deck definition (106 cards total).
+
+## 🎨 Customization
 
 ### Design Tokens
 
-Modify `design_tokens.json` to customize:
+Modify `design_tokens.json` to customize the visual appearance:
 
-- Card dimensions and corner radius
-- Color palettes for property sets
-- Typography (fonts, sizes, weights)
-- Spacing and padding values
-- Layout parameters for each card type
+**Card Dimensions:**
+```json
+{
+  "global": {
+    "card": {
+      "width": 413,
+      "height": 455,
+      "corner_radius": 20,
+      "border_width": 3
+    }
+  }
+}
+```
+
+**Colors:**
+```json
+{
+  "global": {
+    "colors": {
+      "property_sets": {
+        "brown": "#8B4513",
+        "light_blue": "#ADD8E6",
+        "pink": "#FF1493",
+        ...
+      }
+    }
+  }
+}
+```
+
+**Typography:**
+```json
+{
+  "global": {
+    "typography": {
+      "font_family_primary": "Arial",
+      "sizes": {
+        "title_large": 28,
+        "body": 14
+      }
+    }
+  }
+}
+```
 
 ### Custom Fonts
 
-Place custom font files (`.ttf`, `.otf`, or `.ttc`) in `src/assets/fonts/`:
+1. Create the fonts directory:
+   ```bash
+   mkdir -p src/assets/fonts
+   ```
 
-```
-src/assets/fonts/
-  ├── CustomFont.ttf
-  ├── CustomFont-Bold.ttf
-  └── ...
-```
+2. Place your font files:
+   ```
+   src/assets/fonts/
+     ├── MyCustomFont.ttf
+     ├── MyCustomFont-Bold.ttf
+     └── ...
+   ```
 
-The renderer will automatically check the assets directory before falling back to system fonts. Use the font filename (without extension) as the font name in your templates.
+3. Update `design_tokens.json` to use your font:
+   ```json
+   {
+     "global": {
+       "typography": {
+         "font_family_primary": "MyCustomFont"
+       }
+     }
+   }
+   ```
+
+The renderer automatically checks `src/assets/fonts/` before falling back to system fonts.
 
 ### Custom Icons
 
-Icons can be placed in `src/assets/icons/` (support coming soon):
-
+Icons support is planned. Place icons in `src/assets/icons/`:
 ```
 src/assets/icons/
   ├── house.png
@@ -151,101 +287,245 @@ src/assets/icons/
   └── ...
 ```
 
-### Adding New Card Types
+## 🏗️ Project Structure
 
-1. Create a new template in `src/templates/`
-2. Add the card model in `src/models/card.py`
-3. Update `src/renderer/card_renderer.py` to dispatch to your template
-4. Add card definitions to `cards.yaml`
-
-## Development
-
-### Code Formatting
-
-Format code with Black:
-
-```bash
-uv run black .
+```
+deal-deck-generator/
+├── src/
+│   ├── models/              # Card data models (dataclasses)
+│   │   └── card.py
+│   ├── renderer/            # Rendering engine
+│   │   ├── card_renderer.py # Main dispatcher
+│   │   ├── primitives.py    # Low-level drawing functions
+│   │   └── elements.py      # High-level card elements
+│   ├── templates/           # Card type templates
+│   │   ├── property_template.py
+│   │   ├── action_template.py
+│   │   ├── money_template.py
+│   │   ├── rent_template.py
+│   │   ├── wildcard_template.py
+│   │   └── utils.py        # Shared template utilities
+│   └── assets/              # Custom assets (fonts, icons)
+│       ├── fonts/
+│       └── icons/
+├── tests/                   # Test suite
+│   └── test_card_rendering.py
+├── Card Images/             # Reference card images
+├── cards.yaml               # Card definitions
+├── design_tokens.json       # Design system configuration
+├── render_deck.py           # CLI entry point
+├── analyze_cards.py         # Image analysis tool
+└── README.md                # This file
 ```
 
-### Linting
+## 🧪 Development
 
-Check code with Ruff:
+### Running Tests
 
-```bash
-uv run ruff check .
-```
-
-### Testing
-
-Run the test suite to validate card rendering:
-
+**Run all tests:**
 ```bash
 uv run pytest tests/ -v
 ```
 
-Run specific tests:
-
+**Run specific test:**
 ```bash
 uv run pytest tests/test_card_rendering.py::test_property_card_rendering -v
 ```
 
-The test suite includes:
+**Test coverage:**
 - Rendering validation for all card types
 - Dimension consistency checks
-- Visual comparison with original card images (when available)
+- Visual comparison with original images
 
-### Analysis
+### Code Quality
 
-Analyze card images to extract design tokens:
+**Format code:**
+```bash
+uv run black .
+```
+
+**Lint code:**
+```bash
+uv run ruff check .
+```
+
+**Format and lint together:**
+```bash
+uv run black . && uv run ruff check .
+```
+
+### Analyzing Card Images
+
+Extract design tokens from reference images:
 
 ```bash
 uv run python analyze_cards.py
 ```
 
-This generates `analysis_results.json` with extracted dimensions, colors, and layout information.
+This generates `analysis_results.json` with:
+- Card dimensions
+- Color palettes
+- Layout structure
+- Typography estimates
 
-## Card Specifications
+## 📐 Card Specifications
 
-### Property Cards
-- Color-coded header bar
-- Property name
+### Standard Card Size
+- **Dimensions:** 413 × 455 pixels
+- **Aspect Ratio:** ~0.908 (portrait)
+- **Corner Radius:** 20 pixels
+- **Format:** PNG or WebP
+
+### Card Type Details
+
+#### Property Cards
+- Color-coded header bar (property set color)
+- Property name in header
+- "RENT" label
 - Rent table with property icons
-- Value badge (top-left)
+- Value badge (top-left corner)
+- Footer text
 
-### Action Cards
+#### Action Cards
 - Decorative chain-link border
 - "ACTION CARD" title bar
-- Large circular title area
-- Description text
+- Large circular title area with action name
+- Description text (wrapped)
 - Value badges (top-left and bottom-right)
+- Footer text
 
-### Rent Cards
+#### Rent Cards
 - Decorative chain-link border
 - "RENT" title bar
-- Concentric color circles (2-color) or "ALL COLORS" text (wild)
+- **Two-color:** Concentric circles (outer + inner)
+- **Wild:** Segmented circle with all 10 property colors
 - Description text
 - Value badges (top-left and bottom-right)
+- Footer text
 
-### Wildcard Cards
-- Color stripe header (2 colors or 10 colors for multicolor)
+#### Wildcard Cards
+- Color stripe header (2 or 10 colors)
 - "PROPERTY WILD CARD" title
-- Large "WILD" text
+- Large "WILD" text display
 - Description text
 - Value badge (top-left)
+- Footer text
 
-### Money Cards
+#### Money Cards
 - Decorative chain-link border
 - Large denomination circle
+- Denomination text ($XM format)
 - Value badges (top-left and bottom-right)
+- Footer text
 
-## License
+## 🔧 Extending the Project
+
+### Adding a New Card Type
+
+1. **Create the model** in `src/models/card.py`:
+   ```python
+   @dataclass
+   class CustomCard(Card):
+       custom_field: str = ""
+       
+       def __post_init__(self):
+           super().__post_init__()
+           self.card_type = "custom"
+   ```
+
+2. **Create the template** in `src/templates/custom_template.py`:
+   ```python
+   def render_custom_card(card: CustomCard) -> Image.Image:
+       # Your rendering logic here
+       ...
+   ```
+
+3. **Update the renderer** in `src/renderer/card_renderer.py`:
+   ```python
+   elif card.card_type == "custom":
+       from ..templates.custom_template import render_custom_card
+       img = render_custom_card(card)
+   ```
+
+4. **Add card definitions** to `cards.yaml`
+
+### Creating Custom Templates
+
+Templates follow a consistent pattern:
+
+```python
+def render_card_type(card: CardType) -> Image.Image:
+    # 1. Load design tokens
+    tokens = load_design_tokens()
+    
+    # 2. Create card base
+    img, draw = create_card_base(width, height, bg_color, corner_radius)
+    
+    # 3. Draw elements (borders, text, icons, etc.)
+    # ...
+    
+    # 4. Return rendered image
+    return img
+```
+
+## 🐛 Troubleshooting
+
+### Font Issues
+
+**Problem:** Fonts not loading
+- **Solution:** Check that font files are in `src/assets/fonts/` and filenames match exactly
+- **Fallback:** System fonts will be used if custom fonts aren't found
+
+### Rendering Errors
+
+**Problem:** Cards not rendering
+- **Check:** Card definitions in `cards.yaml` are valid YAML
+- **Check:** Required fields are present for each card type
+- **Check:** Color names match those in `design_tokens.json`
+
+### Dimension Issues
+
+**Problem:** Cards have wrong size
+- **Check:** `design_tokens.json` has correct dimensions
+- **Check:** All templates use the same width/height from tokens
+
+## 📚 Additional Resources
+
+- **`IMPROVEMENTS.md`** - Roadmap and enhancement suggestions
+- **`Cards.md`** - Reference card information
+- **`analysis_results.json`** - Extracted design tokens from reference images
+
+## 🤝 Contributing
+
+Contributions are welcome! Areas for improvement:
+
+- Icon asset support
+- Performance optimizations
+- Additional card types
+- Enhanced visual validation
+- Better error handling
+
+See `IMPROVEMENTS.md` for detailed suggestions.
+
+## 📄 License
 
 This project is for educational and personal use. Card designs are inspired by Business Deal card game mechanics.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- Card design analysis based on reference images
-- Built with Pillow (PIL) for image rendering
-- Uses `uv` for fast Python package management
+- Built with [Pillow](https://python-pillow.org/) for image rendering
+- Uses [uv](https://github.com/astral-sh/uv) for fast Python package management
+- Design analysis based on reference card images
+- Inspired by Business Deal card game mechanics
 
+## 📞 Support
+
+For issues, questions, or contributions:
+1. Check existing documentation
+2. Review `IMPROVEMENTS.md` for planned features
+3. Run tests to verify your setup
+4. Check card definitions and design tokens for errors
+
+---
+
+**Happy card generating! 🎴**
