@@ -6,7 +6,6 @@ Provides utilities for rendering card elements.
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 import textwrap
-import math
 
 
 def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -104,17 +103,22 @@ def draw_pie_slice(
     width: int = 1,
 ):
     """
-    Draw a pie slice (arc segment).
+    Draw a pie slice (arc segment) using Pillow's built-in pieslice method.
 
     Args:
         draw: ImageDraw object
         center: Center point as (x, y)
         radius: Circle radius
-        start_angle: Start angle in degrees (0 = right, 90 = bottom)
+        start_angle: Start angle in degrees (0 = top, 90 = right)
         end_angle: End angle in degrees
         fill: Fill color
         outline: Outline color
         width: Outline width
+
+    Note:
+        Input angles are expected with 0 degrees at the top (12 o'clock).
+        These are converted to Pillow's coordinate system where 0 degrees
+        is at 3 o'clock (east) and angles increase clockwise.
     """
     cx, cy = center
 
@@ -124,48 +128,25 @@ def draw_pie_slice(
     if outline and isinstance(outline, str) and outline.startswith("#"):
         outline = hex_to_rgb(outline)
 
-    # Convert angles to radians and adjust for Pillow's coordinate system
-    # Pillow uses 0 degrees at 3 o'clock, positive clockwise
-    start_rad = math.radians(start_angle - 90)  # Adjust so 0 is at top
-    end_rad = math.radians(end_angle - 90)
-
     # Calculate bounding box
     bbox = (cx - radius, cy - radius, cx + radius, cy + radius)
 
-    # Calculate points for the pie slice
-    # Start point
-    start_x = cx + radius * math.cos(start_rad)
-    start_y = cy + radius * math.sin(start_rad)
+    # Convert angles from "0 at top" to Pillow's "0 at 3 o'clock" system
+    # Pillow uses: 0° = 3 o'clock (east), 90° = 6 o'clock (south), etc.
+    # Our system: 0° = 12 o'clock (north), 90° = 3 o'clock (east)
+    # Conversion: Pillow_angle = (our_angle + 90) % 360
+    pillow_start = (start_angle + 90) % 360
+    pillow_end = (end_angle + 90) % 360
 
-    # End point
-    end_x = cx + radius * math.cos(end_rad)
-    end_y = cy + radius * math.sin(end_rad)
-
-    # Create polygon points: center, start point, arc points, end point
-    points = [(cx, cy)]
-
-    # Add points along the arc
-    num_points = max(8, int(abs(end_angle - start_angle) / 5))
-    for i in range(num_points + 1):
-        angle = start_angle + (end_angle - start_angle) * i / num_points
-        angle_rad = math.radians(angle - 90)
-        px = cx + radius * math.cos(angle_rad)
-        py = cy + radius * math.sin(angle_rad)
-        points.append((px, py))
-
-    # Draw filled polygon
-    if fill:
-        draw.polygon(points, fill=fill, outline=None)
-
-    # Draw outline
-    if outline:
-        # Draw arc
-        draw.arc(
-            bbox, start=start_angle - 90, end=end_angle - 90, fill=outline, width=width
-        )
-        # Draw radial lines
-        draw.line([(cx, cy), (start_x, start_y)], fill=outline, width=width)
-        draw.line([(cx, cy), (end_x, end_y)], fill=outline, width=width)
+    # Use Pillow's built-in pieslice method
+    draw.pieslice(
+        bbox,
+        start=pillow_start,
+        end=pillow_end,
+        fill=fill,
+        outline=outline,
+        width=width,
+    )
 
 
 def get_font(
