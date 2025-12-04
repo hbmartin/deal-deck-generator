@@ -219,7 +219,7 @@ action_cards:
     name: "Forced Deal"
     value: 3
     description: "Swap any property with another player. (Cannot be part of a full set.) Play into center to use."
-    quantity: 4
+    quantity: 3
     
   - id: debt-collector
     name: "Debt Collector"
