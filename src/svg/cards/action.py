@@ -74,6 +74,7 @@ def action_chassis_content(doc, tokens, card, tint, title_icon=None):
         ring_color=ring,
         fill=tint["field"],
         rotate_content=90,
+        keyline="#000000",
     )
     badge.set("transform", core.translate(*BADGE_POS))
     doc.add(badge)
@@ -84,6 +85,7 @@ def action_chassis_content(doc, tokens, card, tint, title_icon=None):
         ring_color=ring,
         fill=tint["field"],
         rotate_content=90,
+        keyline="#000000",
     )
     badge2.set(
         "transform",

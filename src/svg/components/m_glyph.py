@@ -10,12 +10,8 @@ from ...tokens import Tokens
 from ...text.measure import get_measurer
 
 # Struck-M design box: 100 units tall, GLYPH_W wide, drawn around origin top-left.
-# The letter is drawn upright, then slanted with a skew; SLANT is how far the
-# top edge shifts right (100 * tan(SLANT_DEG)), keeping the baseline anchored.
 GLYPH_W = 88
-SLANT_DEG = 12
-SLANT = 21.3
-GLYPH_ADV = GLYPH_W + SLANT  # advance width of the slanted glyph
+GLYPH_ADV = GLYPH_W  # advance width
 _BAR = 8.5  # height of each strike bar
 _BAR_OVERHANG = 14  # strikes protrude equally past the letter on both sides
 
@@ -23,15 +19,24 @@ DEF_ID = "m-glyph"
 
 
 def ensure_glyph(doc: core.SVGDocument) -> str:
-    """Register the unit struck-M (100 units tall) in <defs>."""
+    """Register the unit struck-M (100 units tall) in <defs>.
+
+    The letter is a zigzag M — four angled strokes /\\/\\ with flat apex
+    tops — not vertical stems, matching the printed glyph.
+    """
     if doc.has_def(DEF_ID):
         return DEF_ID
-    w = GLYPH_W
-    # Filled M outline: stems 17 wide, middle vertex dips to ~70.
+    # Single closed contour, clockwise from the bottom-left outer corner.
     letter = core.path(
-        f"M 0 100 L 0 0 L 20 0 L {w / 2} 50 L {w - 20} 0 L {w} 0 L {w} 100 "
-        f"L {w - 17} 100 L {w - 17} 25 L {w / 2 + 7} 72 L {w / 2 - 7} 72 "
-        f"L 17 25 L 17 100 Z",
+        "M 0 100 "
+        "L 19 0 L 35 0 "  # left leg up to apex 1
+        "L 44 55 "  # notch down between the apexes
+        "L 53 0 L 69 0 "  # up to apex 2
+        "L 88 100 L 71 100 "  # right leg down to the foot
+        "L 56 16 "  # inner edge up under apex 2
+        "L 44 84 "  # middle vertex bottom
+        "L 32 16 "  # inner edge up under apex 1
+        "L 17 100 Z",
         fill="currentColor",
     )
     strikes = [
@@ -39,20 +44,13 @@ def ensure_glyph(doc: core.SVGDocument) -> str:
             None,
             x=-_BAR_OVERHANG,
             y=y - _BAR / 2,
-            width=w + 2 * _BAR_OVERHANG,
+            width=GLYPH_W + 2 * _BAR_OVERHANG,
             height=_BAR,
             fill="currentColor",
         )
         for y in (38, 60)
     ]
-    # Oblique lean: top shifts right, baseline stays put. The strikes skew
-    # with the letter so their overhang tracks the slanted stems.
-    slanted = core.g(
-        letter,
-        *strikes,
-        transform=f"{core.translate(SLANT, 0)} skewX({-SLANT_DEG})",
-    )
-    doc.add_def(DEF_ID, core.g(slanted))
+    doc.add_def(DEF_ID, core.g(letter, *strikes))
     return DEF_ID
 
 

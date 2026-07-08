@@ -83,6 +83,7 @@ def build_rent(card: RentCard, deck) -> core.SVGDocument:
         ring_color=ring,
         fill=tint["field"],
         rotate_content=90,
+        keyline="#000000",
     )
     badge.set("transform", core.translate(*BADGE_POS))
     doc.add(badge)
@@ -93,6 +94,7 @@ def build_rent(card: RentCard, deck) -> core.SVGDocument:
         ring_color=ring,
         fill=tint["field"],
         rotate_content=90,
+        keyline="#000000",
     )
     badge2.set(
         "transform",
