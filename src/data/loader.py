@@ -20,6 +20,9 @@ from ..models import (
     WildcardCard,
     Card,
 )
+from ..models.deck import Deck, DeckConfig
+
+DEFAULT_CARDS_PATH = Path(__file__).resolve().parent.parent.parent / "cards.yaml"
 
 
 def load_card_definitions(yaml_path: Path | str) -> dict:
@@ -72,7 +75,10 @@ def create_property_card_instances(prop_defs: list[dict]) -> list[PropertyCard]:
                 value=prop_def["value"],
                 rent_values=[tuple(rv) for rv in prop_def["rent_values"]],
                 set_size=prop_def["set_size"],
+                header_icon=prop_def.get("header_icon"),
+                name_lines=prop_def.get("name_lines"),
             )
+            card.metadata["design_id"] = prop_def["id"]
             cards.append(card)
     return cards
 
@@ -99,7 +105,10 @@ def create_action_card_instances(action_defs: list[dict]) -> list[ActionCard]:
                 action_name=action_def["name"],
                 value=action_def["value"],
                 description=action_def.get("description", ""),
+                fine_print=list(action_def.get("fine_print", [])),
+                icon=action_def.get("icon"),
             )
+            card.metadata["design_id"] = action_def["id"]
             cards.append(card)
     return cards
 
@@ -127,6 +136,7 @@ def create_money_card_instances(money_defs: list[dict]) -> list[MoneyCard]:
                 denomination=denom,
                 value=denom,
             )
+            card.metadata["design_id"] = f"money-{denom}m"
             cards.append(card)
     return cards
 
@@ -154,7 +164,9 @@ def create_rent_card_instances(rent_defs: list[dict]) -> list[RentCard]:
                 description=rent_def.get("description", ""),
                 colors=rent_def.get("colors", []),
                 is_wild=rent_def.get("is_wild", False),
+                fine_print=list(rent_def.get("fine_print", [])),
             )
+            card.metadata["design_id"] = rent_def["id"]
             cards.append(card)
     return cards
 
@@ -185,6 +197,7 @@ def create_wildcard_instances(wildcard_defs: list[dict]) -> list[WildcardCard]:
                 allowed_colors=wildcard_def.get("allowed_colors", []),
                 is_multicolor=wildcard_def.get("is_multicolor", False),
             )
+            card.metadata["design_id"] = wildcard_def["id"]
             cards.append(card)
     return cards
 
@@ -235,3 +248,37 @@ def create_card_instances(
             all_cards.extend(create_wildcard_instances(card_defs["wildcard_cards"]))
 
     return all_cards
+
+
+def _color_rent_index(card_defs: dict) -> dict[str, dict]:
+    """color -> rent table facts derived from the property definitions."""
+    index: dict[str, dict] = {}
+    for prop in card_defs.get("property_cards", []):
+        index.setdefault(
+            prop["color"],
+            {
+                "set_size": prop["set_size"],
+                "rent_values": [tuple(rv) for rv in prop["rent_values"]],
+                "header_icon": prop.get("header_icon"),
+            },
+        )
+    return index
+
+
+def load_deck(yaml_path: Path | str = DEFAULT_CARDS_PATH) -> Deck:
+    """Load the full deck: all card instances plus deck-level config."""
+    card_defs = load_card_definitions(yaml_path)
+    cards = create_card_instances(card_defs)
+
+    # Two-color wildcards render a rent table per side, derived from the
+    # matching property cards so the numbers have a single source of truth.
+    rent_index = _color_rent_index(card_defs)
+    for card in cards:
+        if isinstance(card, WildcardCard) and not card.is_multicolor:
+            card.metadata["halves"] = [
+                {"color": color, **rent_index[color]} for color in card.allowed_colors
+            ]
+
+    deck_cfg = card_defs.get("deck") or {}
+    config = DeckConfig(footer_text=deck_cfg.get("footer_text", ""))
+    return Deck(cards=cards, config=config)

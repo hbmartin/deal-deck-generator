@@ -16,6 +16,7 @@ class Card:
     title: str
     value: Optional[int] = None
     description: Optional[str] = None
+    fine_print: list[str] = field(default_factory=list)
     metadata: dict = field(default_factory=dict)
 
     def __post_init__(self):
@@ -34,6 +35,8 @@ class PropertyCard(Card):
         default_factory=list
     )  # [(num_properties, rent_value), ...]
     set_size: int = 0
+    header_icon: Optional[str] = None  # train | bulb | faucet
+    name_lines: Optional[list[str]] = None  # explicit header line breaks
 
     def __post_init__(self):
         super().__post_init__()
@@ -47,6 +50,7 @@ class ActionCard(Card):
     """Action card with effect description."""
 
     action_name: str = ""
+    icon: Optional[str] = None  # house | hotel | cake | go_arrow
 
     def __post_init__(self):
         super().__post_init__()

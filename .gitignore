@@ -12,3 +12,6 @@ wheels/
 # Generated output
 output/
 analysis_results.json
+
+# Unused texture asset packs (guilloché is generated procedurally)
+svg textures/

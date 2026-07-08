@@ -33,6 +33,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-uv-
 
+      - name: Install librsvg (SVG rasterizer)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
+
       - name: Install dependencies
         run: |
           uv sync --dev
@@ -48,4 +53,18 @@ jobs:
       - name: Run tests
         run: |
           uv run pytest tests/ -v
+
+      - name: Render full deck (bundled fonts)
+        run: |
+          uv run python main.py render --fonts bundled
+
+      - name: Upload rendered deck artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-deck
+          path: |
+            output/png
+            output/preview
+            output/manifest.json
+          retention-days: 14
 
