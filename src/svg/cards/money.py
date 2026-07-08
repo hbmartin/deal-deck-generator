@@ -22,7 +22,6 @@ CIRCLE_RING = 7
 BADGE_POS = (108, 114)  # centered on the band corner; bottom-right is the twin
 
 
-# pyrefly: ignore [bad-argument-type]
 @register("money")
 def build_money(card: MoneyCard, deck) -> core.SVGDocument:
     tokens = load_tokens()

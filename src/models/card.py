@@ -24,6 +24,12 @@ class Card:
         if self.card_type not in ["property", "action", "rent", "wildcard", "money"]:
             raise ValueError(f"Invalid card_type: {self.card_type}")
 
+    def require_value(self) -> int:
+        """Return the printed card value, or fail before rendering."""
+        if self.value is None:
+            raise ValueError(f"{self.card_type} card {self.card_id} requires a value")
+        return self.value
+
 
 @dataclass
 class PropertyCard(Card):

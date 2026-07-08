@@ -11,10 +11,10 @@ from . import register
 from .base import card_body, footer, new_document, thin_frame
 
 
-# pyrefly: ignore [bad-argument-type]
 @register("property")
 def build_property(card: PropertyCard, deck) -> core.SVGDocument:
     tokens = load_tokens()
+    value = card.require_value()
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))
     doc.add(thin_frame())
@@ -31,7 +31,7 @@ def build_property(card: PropertyCard, deck) -> core.SVGDocument:
             card.color,
             card.header_icon,
             explicit_lines=card.name_lines,
-            badge_clear_x=135 + 62 + 12,  # badge center x + radius + gap
+            badge_clear_x=138 + 62 + 12,  # badge center x + radius + gap
         )
     )
 
@@ -49,7 +49,7 @@ def build_property(card: PropertyCard, deck) -> core.SVGDocument:
     badge = value_badge(
         doc,
         tokens,
-        card.value,  # pyrefly: ignore [bad-argument-type]
+        value,
         tokens.chrome("badge_ring_property"),
         fill=tokens.chrome("property_body"),
     )

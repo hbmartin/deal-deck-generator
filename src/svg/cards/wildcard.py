@@ -215,12 +215,11 @@ def _build_two_color(card: WildcardCard, deck) -> core.SVGDocument:
 
     ring = tokens.chrome("badge_ring_property")
     body = tokens.chrome("property_body")
-    # pyrefly: ignore [bad-argument-type]
-    badge = value_badge(doc, tokens, card.value, ring_color=ring, fill=body)
+    value = card.require_value()
+    badge = value_badge(doc, tokens, value, ring_color=ring, fill=body)
     badge.set("transform", core.translate(*BADGE_POS))
     doc.add(badge)
-    # pyrefly: ignore [bad-argument-type]
-    badge2 = value_badge(doc, tokens, card.value, ring_color=ring, fill=body)
+    badge2 = value_badge(doc, tokens, value, ring_color=ring, fill=body)
     badge2.set(
         "transform",
         f"{core.translate(732 - BADGE_POS[0], 1101 - BADGE_POS[1])} {core.rotate(180)}",
@@ -293,7 +292,6 @@ def _build_multicolor(card: WildcardCard, deck) -> core.SVGDocument:
     return doc
 
 
-# pyrefly: ignore [bad-argument-type]
 @register("wildcard")
 def build_wildcard(card: WildcardCard, deck) -> core.SVGDocument:
     if card.is_multicolor:

@@ -4,7 +4,6 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-# pyrefly: ignore [missing-import]
 from src.svg.cards import build_card
 
 SIZE_BUDGET = 300_000  # bytes; guards against runaway guilloché output
