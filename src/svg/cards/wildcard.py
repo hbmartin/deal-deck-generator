@@ -27,7 +27,7 @@ from .base import card_body, footer, frame_box, new_document, thin_frame
 CX, CY = 366, 550.5
 
 HEADER_BOX = Box(115, 132, 502, 190)
-BADGE_POS = (135, 152)
+BADGE_POS = (138, 120)  # nested into the frame corner
 
 FAN_SCALE = 0.82
 BAND_PITCH = 96
@@ -214,10 +214,13 @@ def _build_two_color(card: WildcardCard, deck) -> core.SVGDocument:
     doc.add(bottom_group)
 
     ring = tokens.chrome("badge_ring_property")
-    badge = value_badge(doc, tokens, card.value, ring_color=ring)
+    body = tokens.chrome("property_body")
+    # pyrefly: ignore [bad-argument-type]
+    badge = value_badge(doc, tokens, card.value, ring_color=ring, fill=body)
     badge.set("transform", core.translate(*BADGE_POS))
     doc.add(badge)
-    badge2 = value_badge(doc, tokens, card.value, ring_color=ring)
+    # pyrefly: ignore [bad-argument-type]
+    badge2 = value_badge(doc, tokens, card.value, ring_color=ring, fill=body)
     badge2.set(
         "transform",
         f"{core.translate(732 - BADGE_POS[0], 1101 - BADGE_POS[1])} {core.rotate(180)}",
@@ -290,6 +293,7 @@ def _build_multicolor(card: WildcardCard, deck) -> core.SVGDocument:
     return doc
 
 
+# pyrefly: ignore [bad-argument-type]
 @register("wildcard")
 def build_wildcard(card: WildcardCard, deck) -> core.SVGDocument:
     if card.is_multicolor:

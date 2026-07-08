@@ -2,6 +2,7 @@
 
 import sys
 
+# pyrefly: ignore [missing-import]
 from src.cli import main
 
 if __name__ == "__main__":

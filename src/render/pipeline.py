@@ -63,6 +63,7 @@ def render_deck(
             entry["preview"] = str(pv_path.relative_to(out_dir))
         manifest["cards"][design_id] = entry
 
+    # pyrefly: ignore [bad-assignment]
     manifest["total_physical_cards"] = sum(
         e["quantity"] for e in manifest["cards"].values()
     )

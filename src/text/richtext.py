@@ -9,7 +9,7 @@ import re
 from dataclasses import dataclass
 
 from ..svg import core
-from ..svg.components.m_glyph import GLYPH_W, money_amount
+from ..svg.components.m_glyph import GLYPH_ADV, money_amount
 from ..tokens import Tokens
 from .measure import TextMeasurer, get_measurer
 
@@ -46,7 +46,7 @@ def parse(text: str) -> list[Word | Money]:
 def _money_width(
     tokens: Tokens, measurer: TextMeasurer, value: int, size: float
 ) -> float:
-    glyph_w = GLYPH_W / 100 * (size * 0.82)
+    glyph_w = GLYPH_ADV / 100 * (size * 0.82)
     digit_w = measurer.advance(str(value), size)
     small_w = measurer.advance("M", size * 0.44)
     return glyph_w + size * 0.09 * 2 + digit_w + small_w

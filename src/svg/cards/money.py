@@ -19,9 +19,10 @@ CIRCLE_CY = 540
 CIRCLE_R = 200
 CIRCLE_RING = 7
 
-BADGE_POS = (171, 180)  # top-left; bottom-right is the 180-degree twin
+BADGE_POS = (108, 114)  # centered on the band corner; bottom-right is the twin
 
 
+# pyrefly: ignore [bad-argument-type]
 @register("money")
 def build_money(card: MoneyCard, deck) -> core.SVGDocument:
     tokens = load_tokens()
@@ -60,13 +61,13 @@ def build_money(card: MoneyCard, deck) -> core.SVGDocument:
     doc.add(core.rect(field.inset(64), fill="none", stroke=dark, stroke_width=2.5))
     doc.add(core.rect(field.inset(71), fill="none", stroke=dark, stroke_width=1.5))
 
-    # Central circle: unfilled so the engraving shows through.
+    # Central circle: solid field color (the engraving stops at the ring).
     doc.add(
         core.circle(
             CIRCLE_CX,
             CIRCLE_CY,
             CIRCLE_R,
-            fill="none",
+            fill=field_color,
             stroke="#000000",
             stroke_width=CIRCLE_RING,
         )
@@ -84,13 +85,13 @@ def build_money(card: MoneyCard, deck) -> core.SVGDocument:
     )
     doc.add(amount)
 
-    # Corner badges: unfilled, black ring, horizontal amount.
+    # Corner badges: solid field color, black ring, horizontal amount.
     badge = value_badge(
         doc,
         tokens,
         card.denomination,
         ring_color="#000000",
-        fill=None,
+        fill=field_color,
     )
     badge.set("transform", core.translate(*BADGE_POS))
     doc.add(badge)
@@ -99,7 +100,7 @@ def build_money(card: MoneyCard, deck) -> core.SVGDocument:
         tokens,
         card.denomination,
         ring_color="#000000",
-        fill=None,
+        fill=field_color,
     )
     badge2.set(
         "transform",

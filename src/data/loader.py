@@ -65,7 +65,7 @@ def create_property_card_instances(prop_defs: list[dict]) -> list[PropertyCard]:
     for prop_def in prop_defs:
         quantity = prop_def.get("quantity", 1)
         for i in range(quantity):
-            card_id = f"{prop_def['id']}-{i+1}" if quantity > 1 else prop_def["id"]
+            card_id = f"{prop_def['id']}-{i + 1}" if quantity > 1 else prop_def["id"]
             card = PropertyCard(
                 card_id=card_id,
                 card_type="property",
@@ -97,7 +97,9 @@ def create_action_card_instances(action_defs: list[dict]) -> list[ActionCard]:
     for action_def in action_defs:
         quantity = action_def.get("quantity", 1)
         for i in range(quantity):
-            card_id = f"{action_def['id']}-{i+1}" if quantity > 1 else action_def["id"]
+            card_id = (
+                f"{action_def['id']}-{i + 1}" if quantity > 1 else action_def["id"]
+            )
             card = ActionCard(
                 card_id=card_id,
                 card_type="action",
@@ -128,7 +130,7 @@ def create_money_card_instances(money_defs: list[dict]) -> list[MoneyCard]:
         denom = money_def["denomination"]
         quantity = money_def.get("quantity", 1)
         for i in range(quantity):
-            card_id = f"money-{denom}m-{i+1}" if quantity > 1 else f"money-{denom}m"
+            card_id = f"money-{denom}m-{i + 1}" if quantity > 1 else f"money-{denom}m"
             card = MoneyCard(
                 card_id=card_id,
                 card_type="money",
@@ -155,7 +157,7 @@ def create_rent_card_instances(rent_defs: list[dict]) -> list[RentCard]:
     for rent_def in rent_defs:
         quantity = rent_def.get("quantity", 1)
         for i in range(quantity):
-            card_id = f"{rent_def['id']}-{i+1}" if quantity > 1 else rent_def["id"]
+            card_id = f"{rent_def['id']}-{i + 1}" if quantity > 1 else rent_def["id"]
             card = RentCard(
                 card_id=card_id,
                 card_type="rent",
@@ -186,7 +188,7 @@ def create_wildcard_instances(wildcard_defs: list[dict]) -> list[WildcardCard]:
         quantity = wildcard_def.get("quantity", 1)
         for i in range(quantity):
             card_id = (
-                f"{wildcard_def['id']}-{i+1}" if quantity > 1 else wildcard_def["id"]
+                f"{wildcard_def['id']}-{i + 1}" if quantity > 1 else wildcard_def["id"]
             )
             card = WildcardCard(
                 card_id=card_id,
@@ -233,20 +235,25 @@ def create_card_instances(
 
     if card_type is None or card_type == "action":
         if "action_cards" in card_defs:
+            # pyrefly: ignore [bad-argument-type]
             all_cards.extend(create_action_card_instances(card_defs["action_cards"]))
 
     if card_type is None or card_type == "money":
         if "money_cards" in card_defs:
+            # pyrefly: ignore [bad-argument-type]
             all_cards.extend(create_money_card_instances(card_defs["money_cards"]))
 
     if card_type is None or card_type == "rent":
         if "rent_cards" in card_defs:
+            # pyrefly: ignore [bad-argument-type]
             all_cards.extend(create_rent_card_instances(card_defs["rent_cards"]))
 
     if card_type is None or card_type == "wildcard":
         if "wildcard_cards" in card_defs:
+            # pyrefly: ignore [bad-argument-type]
             all_cards.extend(create_wildcard_instances(card_defs["wildcard_cards"]))
 
+    # pyrefly: ignore [bad-return]
     return all_cards
 
 

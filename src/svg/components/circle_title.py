@@ -38,6 +38,7 @@ def _title_lines(title: str) -> list[str]:
         score = abs(len(a) - len(b))
         if best is None or score < best[0]:
             best = (score, [a, b])
+    # pyrefly: ignore [unsupported-operation]
     return best[1]
 
 
@@ -82,7 +83,9 @@ def circle_title(
 
     if icon and _ICON_SPECS[icon][0] == "above":
         icon_w = icon_h * _ICON_SPECS[icon][2]
+        # pyrefly: ignore [missing-attribute]
         icon_el.set("transform", core.translate(cx - icon_w / 2, top))
+        # pyrefly: ignore [bad-argument-type]
         parts.append(icon_el)
         first_baseline = top + icon_h + gap + size * m.cap_height
     else:
@@ -107,7 +110,9 @@ def circle_title(
     if icon and _ICON_SPECS[icon][0] == "below":
         icon_w = icon_h * _ICON_SPECS[icon][2]
         icon_y = first_baseline + (len(lines) - 1) * line_adv + gap
+        # pyrefly: ignore [missing-attribute]
         icon_el.set("transform", core.translate(cx - icon_w / 2, icon_y))
+        # pyrefly: ignore [bad-argument-type]
         parts.append(icon_el)
 
     return core.g(*parts)

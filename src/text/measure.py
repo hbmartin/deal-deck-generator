@@ -24,6 +24,7 @@ class TextMeasurer:
     def __init__(self, font_path: Path):
         self.font_path = font_path
         self._font = TTFont(str(font_path))
+        # pyrefly: ignore [missing-attribute]
         self._upem = self._font["head"].unitsPerEm
         self._cmap = self._font.getBestCmap()
         self._hmtx = self._font["hmtx"]
@@ -35,6 +36,7 @@ class TextMeasurer:
                 self._kern = None
 
     def _glyph(self, ch: str) -> str:
+        # pyrefly: ignore [missing-attribute]
         return self._cmap.get(ord(ch), ".notdef")
 
     def advance(self, text: str, size: float, letter_spacing: float = 0.0) -> float:
@@ -56,6 +58,7 @@ class TextMeasurer:
     def metrics(self) -> FontMetrics:
         hhea = self._font["hhea"]
         try:
+            # pyrefly: ignore [missing-attribute]
             cap = self._font["OS/2"].sCapHeight
         except KeyError, AttributeError:
             cap = hhea.ascent * 0.7
