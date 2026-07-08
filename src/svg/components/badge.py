@@ -16,13 +16,15 @@ def value_badge(
     ring_color: str,
     fill: str | None = "#FFFFFF",
     rotate_content: float = 0.0,
+    keyline: str | None = None,
 ) -> core.ET.Element:
     """Badge group centered at (0, 0); caller translates into place.
 
     fill should be the card's background color behind the badge so the disc
     reads as un-textured background (None leaves the circle unfilled).
     rotate_content rotates the amount inside the circle (action-family
-    badges read vertically on the printed cards).
+    badges read vertically on the printed cards). keyline adds the thin
+    circle hugging the outside of the ring (black around the red rings).
     """
     amount_size = tokens.size("badge_value")
     amount, width = money_amount(doc, tokens, value, amount_size)
@@ -52,5 +54,16 @@ def value_badge(
             stroke_width=RING_W,
         )
     )
+    if keyline is not None:
+        parts.append(
+            core.circle(
+                0,
+                0,
+                BADGE_R + 1.25,
+                fill="none",
+                stroke=keyline,
+                stroke_width=2.5,
+            )
+        )
     parts.append(amount)
     return core.g(*parts)
