@@ -5,19 +5,21 @@ register(). build_card() is the single entry point used by the pipeline.
 """
 
 from collections.abc import Callable
-from typing import Any
+from typing import Any, TypeVar, cast
 
 from ...models import Card
 from ..core import SVGDocument
 
 Builder = Callable[[Card, Any], SVGDocument]  # (card, deck) -> document
+CardT = TypeVar("CardT", bound=Card)
+TypedBuilder = Callable[[CardT, Any], SVGDocument]
 
 BUILDERS: dict[str, Builder] = {}
 
 
-def register(card_type: str):
-    def deco(fn: Builder) -> Builder:
-        BUILDERS[card_type] = fn
+def register(card_type: str) -> Callable[[TypedBuilder[CardT]], TypedBuilder[CardT]]:
+    def deco(fn: TypedBuilder[CardT]) -> TypedBuilder[CardT]:
+        BUILDERS[card_type] = cast(Builder, fn)
         return fn
 
     return deco

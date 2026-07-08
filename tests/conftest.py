@@ -4,13 +4,10 @@ from pathlib import Path
 
 import pytest
 
-# pyrefly: ignore [missing-import]
 from src.data.loader import load_deck
 
-# pyrefly: ignore [missing-import]
 from src.goldens import detect_env, fonts_mode_for
 
-# pyrefly: ignore [missing-import]
 from src.render.pipeline import render_deck
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

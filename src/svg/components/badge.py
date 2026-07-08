@@ -55,14 +55,15 @@ def value_badge(
         )
     )
     if keyline is not None:
+        keyline_w = 2.5
         parts.append(
             core.circle(
                 0,
                 0,
-                BADGE_R + 1.25,
+                BADGE_R + keyline_w / 2,
                 fill="none",
                 stroke=keyline,
-                stroke_width=2.5,
+                stroke_width=keyline_w,
             )
         )
     parts.append(amount)
