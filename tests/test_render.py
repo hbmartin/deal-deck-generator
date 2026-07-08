@@ -2,9 +2,16 @@
 
 from PIL import Image
 
+# pyrefly: ignore [missing-import]
 from src.geometry import BLEED
+
+# pyrefly: ignore [missing-import]
 from src.raster.base import get_rasterizer
+
+# pyrefly: ignore [missing-import]
 from src.raster.fontsetup import write_fonts_conf
+
+# pyrefly: ignore [missing-import]
 from src.svg.cards import build_card
 
 SAMPLE_DESIGNS = [

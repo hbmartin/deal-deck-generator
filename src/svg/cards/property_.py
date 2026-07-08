@@ -11,6 +11,7 @@ from . import register
 from .base import card_body, footer, new_document, thin_frame
 
 
+# pyrefly: ignore [bad-argument-type]
 @register("property")
 def build_property(card: PropertyCard, deck) -> core.SVGDocument:
     tokens = load_tokens()
@@ -44,8 +45,15 @@ def build_property(card: PropertyCard, deck) -> core.SVGDocument:
         rent_rows(doc, tokens, rows_box, card.rent_values, card.color, card.set_size)
     )
 
-    badge = value_badge(doc, tokens, card.value, tokens.chrome("badge_ring_property"))
-    badge.set("transform", core.translate(135, 167))
+    # Badge nests into the frame corner, overlapping frame and header edge.
+    badge = value_badge(
+        doc,
+        tokens,
+        card.value,  # pyrefly: ignore [bad-argument-type]
+        tokens.chrome("badge_ring_property"),
+        fill=tokens.chrome("property_body"),
+    )
+    badge.set("transform", core.translate(138, 124))
     doc.add(badge)
 
     f = footer(deck, tokens)

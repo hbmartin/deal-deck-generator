@@ -12,9 +12,11 @@ from .base import card_body, footer, new_document
 from .chassis import tinted_chassis
 
 
+# pyrefly: ignore [bad-argument-type]
 @register("rent")
 def build_rent(card: RentCard, deck) -> core.SVGDocument:
     tokens = load_tokens()
+    # pyrefly: ignore [bad-argument-type]
     tint = tokens.value_tint(card.value)
 
     doc = new_document()
@@ -74,10 +76,24 @@ def build_rent(card: RentCard, deck) -> core.SVGDocument:
         doc.add(block)
 
     ring = tokens.chrome("badge_ring_action")
-    badge = value_badge(doc, tokens, card.value, ring_color=ring, rotate_content=90)
+    badge = value_badge(
+        doc,
+        tokens,
+        card.value,  # pyrefly: ignore [bad-argument-type]
+        ring_color=ring,
+        fill=tint["field"],
+        rotate_content=90,
+    )
     badge.set("transform", core.translate(*BADGE_POS))
     doc.add(badge)
-    badge2 = value_badge(doc, tokens, card.value, ring_color=ring, rotate_content=90)
+    badge2 = value_badge(
+        doc,
+        tokens,
+        card.value,  # pyrefly: ignore [bad-argument-type]
+        ring_color=ring,
+        fill=tint["field"],
+        rotate_content=90,
+    )
     badge2.set(
         "transform",
         f"{core.translate(732 - BADGE_POS[0], 1101 - BADGE_POS[1])} {core.rotate(180)}",

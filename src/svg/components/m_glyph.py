@@ -10,10 +10,14 @@ from ...tokens import Tokens
 from ...text.measure import get_measurer
 
 # Struck-M design box: 100 units tall, GLYPH_W wide, drawn around origin top-left.
+# The letter is drawn upright, then slanted with a skew; SLANT is how far the
+# top edge shifts right (100 * tan(SLANT_DEG)), keeping the baseline anchored.
 GLYPH_W = 88
+SLANT_DEG = 12
+SLANT = 21.3
+GLYPH_ADV = GLYPH_W + SLANT  # advance width of the slanted glyph
 _BAR = 8.5  # height of each strike bar
-_BAR_OVERHANG_L = 14  # strikes protrude past the letter on the left...
-_BAR_OVERHANG_R = 5  # ...and slightly on the right
+_BAR_OVERHANG = 14  # strikes protrude equally past the letter on both sides
 
 DEF_ID = "m-glyph"
 
@@ -33,15 +37,22 @@ def ensure_glyph(doc: core.SVGDocument) -> str:
     strikes = [
         core.rect(
             None,
-            x=-_BAR_OVERHANG_L,
+            x=-_BAR_OVERHANG,
             y=y - _BAR / 2,
-            width=w + _BAR_OVERHANG_L + _BAR_OVERHANG_R,
+            width=w + 2 * _BAR_OVERHANG,
             height=_BAR,
             fill="currentColor",
         )
         for y in (38, 60)
     ]
-    doc.add_def(DEF_ID, core.g(letter, *strikes))
+    # Oblique lean: top shifts right, baseline stays put. The strikes skew
+    # with the letter so their overhang tracks the slanted stems.
+    slanted = core.g(
+        letter,
+        *strikes,
+        transform=f"{core.translate(SLANT, 0)} skewX({-SLANT_DEG})",
+    )
+    doc.add_def(DEF_ID, core.g(slanted))
     return DEF_ID
 
 
@@ -67,7 +78,7 @@ def money_amount(
     small_w = measurer.advance("M", small_size) if small_m else 0.0
 
     glyph_h = size * 0.82  # the struck M runs slightly shorter than the digits
-    glyph_w = GLYPH_W / 100 * glyph_h
+    glyph_w = GLYPH_ADV / 100 * glyph_h
     gap = size * 0.09
 
     children = [
