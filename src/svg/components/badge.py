@@ -1,0 +1,56 @@
+"""Corner value badge: white circle + ring + money amount."""
+
+from ...svg import core
+from ...tokens import Tokens
+from .m_glyph import money_amount
+
+BADGE_R = 62
+RING_W = 5
+
+
+def value_badge(
+    doc: core.SVGDocument,
+    tokens: Tokens,
+    value: int,
+    ring_color: str,
+    rotate_content: float = 0.0,
+    fill: str | None = "auto",
+) -> core.ET.Element:
+    """Badge group centered at (0, 0); caller translates into place.
+
+    rotate_content rotates the amount inside the circle (action-family and
+    money badges read vertically on the printed cards). fill=None leaves the
+    circle unfilled so the card background shows through (money cards).
+    """
+    amount_size = tokens.size("badge_value")
+    amount, width = money_amount(doc, tokens, value, amount_size)
+
+    # Center the amount optically: baseline sits just below circle center.
+    transform = ""
+    if rotate_content:
+        transform = f"{core.rotate(rotate_content)} "
+    transform += core.translate(-width / 2, amount_size * 0.36)
+    amount.set("transform", transform)
+
+    parts = []
+    if fill is not None:
+        parts.append(
+            core.circle(
+                0,
+                0,
+                BADGE_R,
+                fill=tokens.chrome("badge_fill") if fill == "auto" else fill,
+            )
+        )
+    parts.append(
+        core.circle(
+            0,
+            0,
+            BADGE_R - RING_W / 2,
+            fill="none",
+            stroke=ring_color,
+            stroke_width=RING_W,
+        )
+    )
+    parts.append(amount)
+    return core.g(*parts)
