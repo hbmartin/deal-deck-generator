@@ -320,9 +320,7 @@ def test_validate_against_originals():
         # (fonts, exact layout, colors, etc.) between programmatic and original cards
         # We assert that similarity is positive to ensure images aren't completely broken
         min_similarity = 0.01  # Extremely low threshold - just verify function works
-        assert (
-            similarity_score >= min_similarity
-        ), (
+        assert similarity_score >= min_similarity, (
             f"Rendered {test_case['type']} card similarity extremely low "
             f"(score: {similarity_score:.3f} < {min_similarity}). "
             f"This may indicate a rendering error. "
