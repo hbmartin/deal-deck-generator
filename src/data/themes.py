@@ -25,14 +25,18 @@ def available_themes() -> list[str]:
     return sorted(p.name for p in THEMES_DIR.iterdir() if (p / "cards.yaml").is_file())
 
 
+def _validate_theme_name(name: str) -> None:
+    """Reject names that do not exactly identify a registered theme."""
+    themes = available_themes()
+    if name not in themes:
+        message = f"unknown theme {name!r}; available: {', '.join(themes)}"
+        raise ValueError(message)
+
+
 def theme_cards_path(name: str) -> Path:
     """Path to a theme's cards.yaml, validating the theme exists."""
-    path = THEMES_DIR / name / "cards.yaml"
-    if not path.is_file():
-        raise ValueError(
-            f"unknown theme {name!r}; available: {', '.join(available_themes())}"
-        )
-    return path
+    _validate_theme_name(name)
+    return THEMES_DIR / name / "cards.yaml"
 
 
 def _deep_merge(base: dict, overlay: dict) -> dict:
@@ -50,10 +54,11 @@ def _deep_merge(base: dict, overlay: dict) -> dict:
 @cache
 def load_theme_tokens(name: str = DEFAULT_THEME) -> Tokens:
     """Load the base tokens and deep-merge the theme's optional overlay."""
-    with open(TOKENS_PATH) as f:
+    _validate_theme_name(name)
+    with TOKENS_PATH.open(encoding="utf-8") as f:
         base = json.load(f)
     overlay_path = THEMES_DIR / name / "tokens.json"
     if overlay_path.is_file():
-        with open(overlay_path) as f:
+        with overlay_path.open(encoding="utf-8") as f:
             base = _deep_merge(base, json.load(f))
     return Tokens(raw=base)

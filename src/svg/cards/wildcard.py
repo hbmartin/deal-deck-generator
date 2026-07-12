@@ -5,7 +5,7 @@ to two entries: the top color's fan/leader/value reading left-to-right on
 the right, and the bottom color's rotated twin on the left. Rent tables are
 derived from the property definitions at load time.
 
-Multicolor: color stripe bars, title, Mr. Monopoly, description.
+Multicolor: color stripe bars, title, Mr. Money, description.
 """
 
 from ...geometry import Box
@@ -16,7 +16,7 @@ from ...tokens import Tokens
 from .. import core
 from ..components import fan_icon as fan_mod
 from ..components.badge import value_badge
-from ..components.character import mr_monopoly
+from ..components.character import mr_money
 from ..components.fan_icon import fan_icon
 from ..components.icons import bulb, faucet, train
 from ..components.m_glyph import money_amount
@@ -269,7 +269,7 @@ def _build_multicolor(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocum
     )
     doc.add(_stripe_bar(tokens, 292))
 
-    figure = mr_monopoly(420)
+    figure = mr_money(420)
     figure.set("transform", core.translate(CX - 0.78 * 420 / 2, 380))
     doc.add(figure)
 

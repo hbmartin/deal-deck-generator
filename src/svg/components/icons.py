@@ -106,7 +106,7 @@ def bulb(
 
 
 def house(height: float, color: str = "#1E9247") -> core.ET.Element:
-    """Monopoly house piece, flat front view. Width ~= 1.25 * height."""
+    """House piece, flat front view. Width ~= 1.25 * height."""
     h = height
     w = 1.25 * h
     return core.g(
@@ -121,7 +121,7 @@ def house(height: float, color: str = "#1E9247") -> core.ET.Element:
 
 
 def hotel(height: float, color: str = "#C0272D") -> core.ET.Element:
-    """Monopoly hotel piece: wider, with an entrance block."""
+    """Hotel piece: wider, with an entrance block."""
     h = height
     w = 1.45 * h
     return core.g(
