@@ -57,7 +57,7 @@ class Tokens:
 
 @cache
 def load_tokens(path: Path = TOKENS_PATH) -> Tokens:
-    with open(path) as f:
+    with path.open() as f:
         return Tokens(raw=json.load(f))
 
 
@@ -65,5 +65,5 @@ def mix_hex(a: str, b: str, t: float) -> str:
     """Linear mix of two #RRGGBB colors; t=0 -> a, t=1 -> b."""
     av = [int(a[i : i + 2], 16) for i in (1, 3, 5)]
     bv = [int(b[i : i + 2], 16) for i in (1, 3, 5)]
-    mixed = [round(x + (y - x) * t) for x, y in zip(av, bv)]
+    mixed = [round(x + (y - x) * t) for x, y in zip(av, bv, strict=True)]
     return "#" + "".join(f"{v:02X}" for v in mixed)

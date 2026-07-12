@@ -31,7 +31,7 @@ class Box:
     def cy(self) -> float:
         return self.y + self.h / 2
 
-    def inset(self, dx: float, dy: float | None = None) -> "Box":
+    def inset(self, dx: float, dy: float | None = None) -> Box:
         """Shrink the box by dx on left/right and dy (default dx) on top/bottom."""
         if dy is None:
             dy = dx

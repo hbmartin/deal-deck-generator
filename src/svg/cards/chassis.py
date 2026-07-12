@@ -4,7 +4,7 @@ tinted field, wave-mesh guilloché, outer pinstripe, ornate band, inner rules.
 
 from ...geometry import CUT, Box
 from ...svg import core
-from ...tokens import Tokens, mix_hex
+from ...tokens import mix_hex
 from ..components.border_band import border_band
 from ..components.guilloche import wave_field
 
@@ -23,11 +23,10 @@ def content_box() -> Box:
 
 def tinted_chassis(
     doc: core.SVGDocument,
-    tokens: Tokens,
-    tint: dict,
+    tint: dict[str, str],
     texture_extras: list[core.ET.Element] | None = None,
 ) -> None:
-    """Adds field + texture + chrome layers to the document in order.
+    """Add field, texture, and chrome layers to the document in order.
 
     texture_extras render above the wave field but below the chrome
     (used for rosette medallions).

@@ -22,8 +22,7 @@ def split_name(name: str, explicit: list[str] | None = None) -> list[str]:
     return [" ".join(words[:-1]), words[-1]]
 
 
-def property_header(
-    doc: core.SVGDocument,
+def property_header(  # noqa: C901, PLR0913
     tokens: Tokens,
     box: Box,
     name: str,

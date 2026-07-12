@@ -5,6 +5,8 @@ height with (0, 0) at the icon's top-left; callers translate/scale.
 Shapes are simplified silhouettes matched to the reference photos.
 """
 
+import math
+
 from ...svg import core
 
 
@@ -83,8 +85,6 @@ def bulb(
         ),
     ]
     # rays
-    import math
-
     for ang in (-150, -120, -90, -60, -30):
         a = math.radians(ang)
         x1 = cx + math.cos(a) * globe_r * 1.25
@@ -170,7 +170,8 @@ def cake(height: float) -> core.ET.Element:
             f"Q {w * 0.40} {h * 0.72} {w * 0.48} {h * 0.62} "
             f"Q {w * 0.56} {h * 0.72} {w * 0.64} {h * 0.62} "
             f"Q {w * 0.72} {h * 0.72} {w * 0.80} {h * 0.62} "
-            f"L {w * 0.84} {h * 0.62} L {w * 0.84} {h * 0.55} L {w * 0.16} {h * 0.55} Z",
+            f"L {w * 0.84} {h * 0.62} L {w * 0.84} {h * 0.55} "
+            f"L {w * 0.16} {h * 0.55} Z",
             fill=ink,
         ),
     ]
@@ -197,7 +198,7 @@ def cake(height: float) -> core.ET.Element:
 
 
 def go_arrow(height: float, color: str = "#C0272D") -> core.ET.Element:
-    """The Pass Go red arrow, pointing left. Width ~= 2.6 * height."""
+    """Draw the left-pointing Pass Go arrow, about 2.6 times wider than tall."""
     h = height
     w = 2.6 * h
     return core.g(

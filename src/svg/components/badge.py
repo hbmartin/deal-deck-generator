@@ -1,5 +1,6 @@
 """Corner value badge: solid circle matching the card background + ring +
-money amount."""
+money amount.
+"""
 
 from ...svg import core
 from ...tokens import Tokens
@@ -9,7 +10,7 @@ BADGE_R = 62
 RING_W = 5
 
 
-def value_badge(
+def value_badge(  # noqa: PLR0913
     doc: core.SVGDocument,
     tokens: Tokens,
     value: int,

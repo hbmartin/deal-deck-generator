@@ -30,7 +30,8 @@ class Money:
 
 def parse(text: str) -> list[Word | Money]:
     """Split on whitespace; a token containing {nM} becomes a Money item with
-    any surrounding punctuation kept attached (no space inserted)."""
+    any surrounding punctuation kept attached (no space inserted).
+    """
     items: list[Word | Money] = []
     for tok in text.split():
         m = _TOKEN.search(tok)
@@ -43,16 +44,14 @@ def parse(text: str) -> list[Word | Money]:
     return items
 
 
-def _money_width(
-    tokens: Tokens, measurer: TextMeasurer, value: int, size: float
-) -> float:
+def _money_width(measurer: TextMeasurer, value: int, size: float) -> float:
     glyph_w = GLYPH_ADV / 100 * (size * 0.82)
     digit_w = measurer.advance(str(value), size)
     small_w = measurer.advance("M", size * 0.44)
     return glyph_w + size * 0.09 * 2 + digit_w + small_w
 
 
-def rich_lines(
+def rich_lines(  # noqa: C901, PLR0913, PLR0915
     doc: core.SVGDocument,
     tokens: Tokens,
     text: str,
@@ -76,7 +75,7 @@ def rich_lines(
     def width_of(item: Word | Money) -> float:
         if isinstance(item, Word):
             return measurer.advance(item.text, size)
-        w = _money_width(tokens, heavy_measurer, item.value, size)
+        w = _money_width(heavy_measurer, item.value, size)
         if item.prefix:
             w += measurer.advance(item.prefix, size)
         if item.suffix:
@@ -108,7 +107,7 @@ def rich_lines(
         x = cx - total / 2
         run: list[str] = []
         run_x = x
-        for item, w in zip(line, widths):
+        for item, w in zip(line, widths, strict=True):
             if isinstance(item, Word):
                 run.append(item.text)
                 x += w + space_w

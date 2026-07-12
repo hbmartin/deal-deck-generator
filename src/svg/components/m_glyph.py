@@ -6,8 +6,8 @@ small trailing M use the condensed heavy face so they match card titles.
 """
 
 from ...svg import core
-from ...tokens import Tokens
 from ...text.measure import get_measurer
+from ...tokens import Tokens
 
 # Struck-M design box: 100 units tall, GLYPH_W wide, drawn around origin top-left.
 GLYPH_W = 88
@@ -19,7 +19,7 @@ DEF_ID = "m-glyph"
 
 
 def ensure_glyph(doc: core.SVGDocument) -> str:
-    """Register the unit struck-M (100 units tall) in <defs>.
+    r"""Register the unit struck-M (100 units tall) in <defs>.
 
     The letter is a zigzag M — four angled strokes /\\/\\ with flat apex
     tops — not vertical stems, matching the printed glyph.
@@ -54,14 +54,15 @@ def ensure_glyph(doc: core.SVGDocument) -> str:
     return DEF_ID
 
 
-def money_amount(
+def money_amount(  # noqa: PLR0913
     doc: core.SVGDocument,
     tokens: Tokens,
     value: int,
     size: float,
     color: str = "#000000",
+    *,
     small_m: bool = True,
-):
+) -> tuple[core.ET.Element, float]:
     """Build the amount group anchored at (0, 0) = left edge, baseline.
 
     Returns (group_element, total_width).
