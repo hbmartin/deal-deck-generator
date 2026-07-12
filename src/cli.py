@@ -5,6 +5,12 @@ import sys
 from pathlib import Path
 
 from .data.loader import load_deck
+from .data.themes import (
+    DEFAULT_THEME,
+    available_themes,
+    load_theme_tokens,
+    theme_cards_path,
+)
 from .geometry import BLEED
 from .render.pipeline import render_deck
 
@@ -14,28 +20,53 @@ CARD_TYPES = ["property", "action", "rent", "wildcard", "money"]
 
 
 def _add_render_args(p: argparse.ArgumentParser) -> None:
+    p.add_argument(
+        "--theme",
+        default=DEFAULT_THEME,
+        help=f"deck theme under themes/ (default: {DEFAULT_THEME})",
+    )
+    p.add_argument(
+        "--list-themes", action="store_true", help="list available themes and exit"
+    )
     p.add_argument("--type", choices=CARD_TYPES, action="append", dest="types")
     p.add_argument("--card", action="append", dest="cards", help="design id filter")
     p.add_argument("--renderer", choices=["rsvg", "inkscape"], default="rsvg")
     p.add_argument("--fonts", choices=["system", "bundled"], default="system")
-    p.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    p.add_argument(
+        "--out",
+        type=Path,
+        default=None,
+        help="output dir (default: output/<theme>)",
+    )
     p.add_argument("--no-previews", action="store_true", help="skip preview-size PNGs")
 
 
 def cmd_render(args) -> int:
-    deck = load_deck()
+    if args.list_themes:
+        print("\n".join(available_themes()))
+        return 0
+    try:
+        cards_path = theme_cards_path(args.theme)
+    except ValueError as e:
+        print(e, file=sys.stderr)
+        return 2
+
+    deck = load_deck(cards_path)
+    tokens = load_theme_tokens(args.theme)
+    out = args.out or (DEFAULT_OUT / args.theme)
     manifest = render_deck(
         deck,
-        args.out,
+        out,
         types=args.types,
         card_ids=args.cards,
         renderer=args.renderer,
         fonts_mode=args.fonts,
         previews=not args.no_previews,
+        tokens=tokens,
     )
     n = len(manifest["cards"])
     print(f"rendered {n} designs ({manifest['total_physical_cards']} physical cards)")
-    print(f"output: {args.out}")
+    print(f"output: {out}")
     return 0
 
 

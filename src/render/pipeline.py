@@ -8,7 +8,7 @@ from ..models.deck import Deck
 from ..raster.base import get_rasterizer
 from ..raster.fontsetup import write_fonts_conf
 from ..svg.cards import build_card
-from ..tokens import load_tokens
+from ..tokens import Tokens, load_tokens
 
 
 def design_id_of(card) -> str:
@@ -23,9 +23,10 @@ def render_deck(
     renderer: str = "rsvg",
     fonts_mode: str = "system",
     previews: bool = True,
+    tokens: Tokens | None = None,
 ) -> dict:
     """Render unique designs; returns the manifest dict."""
-    tokens = load_tokens()
+    tokens = tokens or load_tokens()
     svg_dir = out_dir / "svg"
     png_dir = out_dir / "png"
     preview_dir = out_dir / "preview"
@@ -45,7 +46,7 @@ def render_deck(
     manifest = {"renderer": rast.name, "fonts": fonts_mode, "cards": {}}
     for card in designs:
         design_id = design_id_of(card)
-        doc = build_card(card, deck)
+        doc = build_card(card, deck, tokens)
         svg_path = svg_dir / f"{design_id}.svg"
         svg_path.write_bytes(doc.to_bytes())
         png_path = png_dir / f"{design_id}.png"

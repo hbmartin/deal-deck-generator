@@ -2,7 +2,7 @@
 
 from ...geometry import Box
 from ...models import PropertyCard
-from ...tokens import load_tokens
+from ...tokens import Tokens
 from .. import core
 from ..components.badge import value_badge
 from ..components.header_bar import property_header
@@ -12,8 +12,7 @@ from .base import card_body, footer, new_document, thin_frame
 
 
 @register("property")
-def build_property(card: PropertyCard, deck) -> core.SVGDocument:
-    tokens = load_tokens()
+def build_property(card: PropertyCard, deck, tokens: Tokens) -> core.SVGDocument:
     value = card.require_value()
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))

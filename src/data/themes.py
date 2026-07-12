@@ -1,0 +1,59 @@
+"""Theme resolution: locate a theme's card data and build its merged tokens.
+
+A theme is a directory under ``themes/`` holding a ``cards.yaml`` (required) and
+an optional ``tokens.json`` overlay. The overlay is deep-merged onto the shared
+base ``design_tokens.json`` at load time, so a theme only lists the values it
+changes (typically the property palette). The ``classic`` theme has no overlay,
+so it resolves to the base tokens unchanged.
+"""
+
+import json
+from functools import cache
+from pathlib import Path
+
+from ..tokens import TOKENS_PATH, Tokens
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+THEMES_DIR = PROJECT_ROOT / "themes"
+DEFAULT_THEME = "classic"
+
+
+def available_themes() -> list[str]:
+    """Sorted names of theme directories that contain a cards.yaml."""
+    if not THEMES_DIR.is_dir():
+        return []
+    return sorted(p.name for p in THEMES_DIR.iterdir() if (p / "cards.yaml").is_file())
+
+
+def theme_cards_path(name: str) -> Path:
+    """Path to a theme's cards.yaml, validating the theme exists."""
+    path = THEMES_DIR / name / "cards.yaml"
+    if not path.is_file():
+        raise ValueError(
+            f"unknown theme {name!r}; available: {', '.join(available_themes())}"
+        )
+    return path
+
+
+def _deep_merge(base: dict, overlay: dict) -> dict:
+    """Recursively merge overlay onto base. Nested dicts merge; scalars and
+    lists in the overlay replace the base value. Returns a new dict."""
+    merged = dict(base)
+    for key, value in overlay.items():
+        if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
+            merged[key] = _deep_merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+@cache
+def load_theme_tokens(name: str = DEFAULT_THEME) -> Tokens:
+    """Load the base tokens and deep-merge the theme's optional overlay."""
+    with open(TOKENS_PATH) as f:
+        base = json.load(f)
+    overlay_path = THEMES_DIR / name / "tokens.json"
+    if overlay_path.is_file():
+        with open(overlay_path) as f:
+            base = _deep_merge(base, json.load(f))
+    return Tokens(raw=base)

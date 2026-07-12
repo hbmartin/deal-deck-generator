@@ -2,7 +2,7 @@
 
 from ...models import RentCard
 from ...text.richtext import rich_lines
-from ...tokens import load_tokens
+from ...tokens import Tokens
 from .. import core
 from ..components.badge import value_badge
 from ..components.color_ring import bullseye
@@ -13,8 +13,7 @@ from .chassis import tinted_chassis
 
 
 @register("rent")
-def build_rent(card: RentCard, deck) -> core.SVGDocument:
-    tokens = load_tokens()
+def build_rent(card: RentCard, deck, tokens: Tokens) -> core.SVGDocument:
     value = card.require_value()
     tint = tokens.value_tint(value)
 

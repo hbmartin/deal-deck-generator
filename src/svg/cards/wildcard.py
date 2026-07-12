@@ -12,7 +12,7 @@ from ...geometry import Box
 from ...models import WildcardCard
 from ...text.measure import get_measurer
 from ...text.richtext import rich_lines
-from ...tokens import load_tokens
+from ...tokens import Tokens
 from .. import core
 from ..components import fan_icon as fan_mod
 from ..components.badge import value_badge
@@ -196,8 +196,7 @@ def _band_mids(count: int, total_bands: int) -> list[float]:
     return [first + (offset + j) * BAND_PITCH for j in range(count)]
 
 
-def _build_two_color(card: WildcardCard, deck) -> core.SVGDocument:
-    tokens = load_tokens()
+def _build_two_color(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocument:
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))
     doc.add(thin_frame())
@@ -248,8 +247,7 @@ def _stripe_bar(tokens, y: float) -> core.ET.Element:
     return core.g(*parts)
 
 
-def _build_multicolor(card: WildcardCard, deck) -> core.SVGDocument:
-    tokens = load_tokens()
+def _build_multicolor(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocument:
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))
     doc.add(thin_frame())
@@ -293,12 +291,11 @@ def _build_multicolor(card: WildcardCard, deck) -> core.SVGDocument:
 
 
 @register("wildcard")
-def build_wildcard(card: WildcardCard, deck) -> core.SVGDocument:
+def build_wildcard(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocument:
     if card.is_multicolor:
-        doc = _build_multicolor(card, deck)
+        doc = _build_multicolor(card, deck, tokens)
     else:
-        doc = _build_two_color(card, deck)
-    tokens = load_tokens()
+        doc = _build_two_color(card, deck, tokens)
     f = footer(deck, tokens)
     if f is not None:
         doc.add(f)

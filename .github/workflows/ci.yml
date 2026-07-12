@@ -58,16 +58,17 @@ jobs:
         run: |
           uv run pytest tests/ -v
 
-      - name: Render full deck (bundled fonts)
+      - name: Render decks (bundled fonts)
         run: |
-          uv run python main.py render --fonts bundled
+          uv run python main.py render --fonts bundled                    # classic -> output/classic
+          uv run python main.py render --theme chicago --fonts bundled    # chicago -> output/chicago
 
       - name: Upload rendered deck artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rendered-deck
           path: |
-            output/png
-            output/preview
-            output/manifest.json
+            output/*/png
+            output/*/preview
+            output/*/manifest.json
           retention-days: 14

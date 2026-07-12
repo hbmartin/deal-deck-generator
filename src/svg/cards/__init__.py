@@ -8,11 +8,12 @@ from collections.abc import Callable
 from typing import Any, TypeVar, cast
 
 from ...models import Card
+from ...tokens import Tokens, load_tokens
 from ..core import SVGDocument
 
-Builder = Callable[[Card, Any], SVGDocument]  # (card, deck) -> document
+Builder = Callable[[Card, Any, Tokens], SVGDocument]  # (card, deck, tokens) -> document
 CardT = TypeVar("CardT", bound=Card)
-TypedBuilder = Callable[[CardT, Any], SVGDocument]
+TypedBuilder = Callable[[CardT, Any, Tokens], SVGDocument]
 
 BUILDERS: dict[str, Builder] = {}
 
@@ -25,14 +26,15 @@ def register(card_type: str) -> Callable[[TypedBuilder[CardT]], TypedBuilder[Car
     return deco
 
 
-def build_card(card: Card, deck) -> SVGDocument:
+def build_card(card: Card, deck, tokens: Tokens | None = None) -> SVGDocument:
+    """Build a card's SVG. `tokens` selects the theme palette; defaults to base."""
     try:
         builder = BUILDERS[card.card_type]
     except KeyError:
         raise NotImplementedError(
             f"no SVG builder registered for card type {card.card_type!r}"
         )
-    return builder(card, deck)
+    return builder(card, deck, tokens or load_tokens())
 
 
 def _load_builders() -> None:

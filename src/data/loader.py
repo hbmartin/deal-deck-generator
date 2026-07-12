@@ -22,7 +22,9 @@ from ..models import (
 )
 from ..models.deck import Deck, DeckConfig
 
-DEFAULT_CARDS_PATH = Path(__file__).resolve().parent.parent.parent / "cards.yaml"
+DEFAULT_CARDS_PATH = (
+    Path(__file__).resolve().parent.parent.parent / "themes" / "classic" / "cards.yaml"
+)
 
 
 def load_card_definitions(yaml_path: Path | str) -> dict:
