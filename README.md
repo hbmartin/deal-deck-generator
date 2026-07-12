@@ -3,6 +3,11 @@
 Data-driven card deck generator that reproduces the 2008-era Monopoly Deal
 card designs as print-ready files: **cards.yaml → Python → SVG → PNG**.
 
+Decks are **themeable**: each theme under `themes/<name>/` supplies its own card
+names and an optional color-palette overlay, all sharing the same game structure
+and rendering engine. The default `classic` deck ships alongside a `chicago`
+deck (Chicago landmarks + a Chicago-flag palette). See [Themes](#themes).
+
 Every one of the deck's 106 cards (58 unique designs) is generated as a
 resolution-independent SVG in print coordinates and rasterized to a PNG that
 matches the MakePlayingCards.com **US Game Deck** spec — 2.44" × 3.67" full
@@ -24,8 +29,12 @@ uv sync --dev
 ## Usage
 
 ```bash
-# Render everything: output/svg, output/png (732x1101 print), output/preview
+# Render the default (classic) deck into output/classic/{svg,png,preview}
 uv run python main.py render
+
+# Render a different theme (output goes to output/<theme>/ by default)
+uv run python main.py render --theme chicago
+uv run python main.py render --list-themes
 
 # Filter by type or design id
 uv run python main.py render --type property --type money
@@ -41,16 +50,44 @@ uv run python main.py render --renderer inkscape --fonts bundled
 uv run python main.py smoke
 ```
 
-`output/manifest.json` records every design with its physical-card quantity —
-use it when uploading to MakePlayingCards (one image per design, set the
-quantity on the site; the deck totals 106 cards).
+`output/<theme>/manifest.json` records every design with its physical-card
+quantity — use it when uploading to MakePlayingCards (one image per design, set
+the quantity on the site; the deck totals 106 cards).
+
+## Themes
+
+A theme is a directory under `themes/` holding a `cards.yaml` (required) and an
+optional `tokens.json` overlay:
+
+```
+themes/
+  classic/cards.yaml     # the default deck (== base design_tokens.json palette)
+  chicago/
+    cards.yaml           # Chicago property names + "WINDY CITY DEAL" footer
+    tokens.json          # palette overlay: Chicago property colors
+```
+
+- `cards.yaml` follows the same schema for every theme. Themes are **pure
+  reskins**: identical card ids, values, set sizes, rent tables, and quantities
+  — only property `name`s (and the footer) change — so any two themes are
+  structurally interchangeable and the derived wildcard rent tables stay valid.
+- `tokens.json` is a small **overlay** deep-merged onto the base
+  `design_tokens.json` at load time, so it only lists what changes (typically
+  `palette.property`); everything else (geometry, fonts, type scale, value
+  tints) is inherited from the base. `classic` has no overlay, so it resolves to
+  the base tokens unchanged.
+
+To add a theme, copy `themes/classic/cards.yaml`, rename the properties, and
+(optionally) add a `tokens.json` overlay. It shows up in `--list-themes`
+automatically. Resolution lives in `src/data/themes.py`
+(`theme_cards_path`, `load_theme_tokens`).
 
 ## How it works
 
 | Stage | Where | What |
 |---|---|---|
-| Data | `cards.yaml`, `src/data/loader.py` | All 106 cards, transcribed verbatim from the reference photos. Two-color wildcards derive their rent tables from the property definitions at load time — one source of truth. `{nM}` tokens in descriptions mark inline money glyphs. |
-| Design tokens | `design_tokens.json`, `src/tokens.py` | Print geometry, the ten property colors, per-value tints (money **and** action/rent cards share one `value_tints` table, as the real deck does), type scale, fonts. Tune colors/sizes here, not in code. |
+| Data | `themes/<name>/cards.yaml`, `src/data/loader.py`, `src/data/themes.py` | All 106 cards per theme, transcribed verbatim from the reference photos (classic). Two-color wildcards derive their rent tables from the property definitions at load time — one source of truth. `{nM}` tokens in descriptions mark inline money glyphs. |
+| Design tokens | `design_tokens.json` (base) + `themes/<name>/tokens.json` (overlay), `src/tokens.py` | Print geometry, the ten property colors, per-value tints (money **and** action/rent cards share one `value_tints` table, as the real deck does), type scale, fonts. Tune shared values in the base; per-theme colors go in the overlay. Tune here, not in code. |
 | SVG build | `src/svg/` | ElementTree-based builders. `svg/components/` holds the shared pieces: Ⓜ glyph, corner badges, header bars, fanned-card icons, dotted leaders, rent tables, title circles, color rings, procedural guilloché + ornate border band, icons, Mr. Monopoly. `svg/cards/` composes them per card type. |
 | Guilloché | `src/svg/components/guilloche.py` | Deterministic engraved-line work: interleaved sine-wave mesh fields (one path per family in `<defs>`, stamped with `<use>`) and superposed epitrochoid rosette medallions. No randomness — renders are byte-stable. |
 | Raster | `src/raster/` | Pluggable rasterizers (rsvg default, Inkscape optional) driven through fontconfig. On macOS `PANGOCAIRO_BACKEND=fc` is forced so the bundled fonts are honored. |
@@ -70,9 +107,11 @@ forces the fallback-only look (what CI renders).
 uv run pytest
 ```
 
-- Data invariants (106 cards, per-type counts, railroad/utility names,
-  wildcard rent derivation), SVG structure (parse validity, viewBox, size
-  budget, deterministic output), and raster dimensions.
+- Data invariants (106 cards, per-type counts, wildcard rent derivation) run
+  across **every** theme; classic-specific name assertions and the Chicago
+  pure-reskin / overlay-merge checks live in `tests/test_themes.py`. Plus SVG
+  structure (parse validity, viewBox, size budget, deterministic output) and
+  raster dimensions.
 - **Golden regression**: rendered previews are compared against the accepted
   set for the current environment — `tests/goldens/mac` (Gill Sans, generated
   locally) or `tests/goldens/ci` (bundled fonts, generated on Linux). After

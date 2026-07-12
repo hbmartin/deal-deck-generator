@@ -2,7 +2,7 @@
 
 from ...geometry import CUT, Box
 from ...models import MoneyCard
-from ...tokens import load_tokens, mix_hex
+from ...tokens import Tokens, mix_hex
 from .. import core
 from ..components.badge import value_badge
 from ..components.border_band import border_band
@@ -23,8 +23,7 @@ BADGE_POS = (108, 114)  # centered on the band corner; bottom-right is the twin
 
 
 @register("money")
-def build_money(card: MoneyCard, deck) -> core.SVGDocument:
-    tokens = load_tokens()
+def build_money(card: MoneyCard, deck, tokens: Tokens) -> core.SVGDocument:
     tint = tokens.value_tint(card.denomination)
     field_color = tint["field"]
     line_color = tint["line"]

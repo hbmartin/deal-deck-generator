@@ -1,7 +1,7 @@
 """Action card: tinted chassis, ACTION CARD header, title circle, description."""
 
 from ...models import ActionCard, Card
-from ...tokens import load_tokens
+from ...tokens import Tokens
 from .. import core
 from ..components.badge import value_badge
 from ..components.circle_title import circle_title
@@ -96,8 +96,7 @@ def action_chassis_content(doc, tokens, card: Card, tint, title_icon=None):
 
 
 @register("action")
-def build_action(card: ActionCard, deck) -> core.SVGDocument:
-    tokens = load_tokens()
+def build_action(card: ActionCard, deck, tokens: Tokens) -> core.SVGDocument:
     value = card.require_value()
     tint = tokens.value_tint(value)
 
