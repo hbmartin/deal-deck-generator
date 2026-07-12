@@ -133,17 +133,23 @@ def _half_group(
     tokens: Tokens,
     half: dict,
     band_mids: list[float],
+    top_band_y: float,
 ) -> core.ET.Element:
     """One half in upright coordinates; caller rotates the second half."""
     measurer = get_measurer(tokens.font("body_bold").measure_path)
     parts = [_wildcard_header(tokens, half)]
 
     rent_font = tokens.font("body")
+    # Anchor RENT to the top of the *shared* band range (top_band_y), not this
+    # half's first row -- which shifts down when the half has fewer rows and
+    # would drop the label into the data rows. Clamp below the header bar so it
+    # can't collide with it on 4-row (railroad) pairings.
+    rent_y = max(top_band_y - 74, HEADER_BOX.y2 + 42)
     parts.append(
         core.el(
             "text",
             x=ENTRY_VALUE_X2,
-            y=band_mids[0] - 74,
+            y=rent_y,
             text="RENT",
             font_family=rent_font.stack,
             font_size=tokens.size("rent_label") * 0.92,
@@ -209,11 +215,16 @@ def _build_two_color(card: WildcardCard, tokens: Tokens) -> core.SVGDocument:
 
     top, bottom = card.metadata["halves"]
     bands = max(len(top["rent_values"]), len(bottom["rent_values"]))
+    top_band_y = CY - (bands - 1) / 2 * BAND_PITCH
 
-    doc.add(_half_group(doc, tokens, top, _band_mids(len(top["rent_values"]), bands)))
+    doc.add(
+        _half_group(
+            doc, tokens, top, _band_mids(len(top["rent_values"]), bands), top_band_y
+        )
+    )
 
     bottom_group = _half_group(
-        doc, tokens, bottom, _band_mids(len(bottom["rent_values"]), bands)
+        doc, tokens, bottom, _band_mids(len(bottom["rent_values"]), bands), top_band_y
     )
     bottom_group.set("transform", core.rotate(180, CX, CY))
     doc.add(bottom_group)
