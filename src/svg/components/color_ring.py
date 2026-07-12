@@ -28,10 +28,17 @@ WILD_ORDER = [
 ]
 
 
-def _annulus_segment(cx, cy, r_out, r_in, a0, a1) -> str:
+def _annulus_segment(  # noqa: PLR0913
+    cx: float,
+    cy: float,
+    r_out: float,
+    r_in: float,
+    a0: float,
+    a1: float,
+) -> str:
     """Segment path between angles a0..a1 (degrees, 0 = 12 o'clock, cw)."""
 
-    def pt(r, a):
+    def pt(r: float, a: float) -> str:
         rad = math.radians(a - 90)
         return f"{core.fmt(cx + r * math.cos(rad))} {core.fmt(cy + r * math.sin(rad))}"
 
@@ -44,13 +51,13 @@ def _annulus_segment(cx, cy, r_out, r_in, a0, a1) -> str:
     )
 
 
-def bullseye(
-    doc: core.SVGDocument,
+def bullseye(  # noqa: PLR0913
     tokens: Tokens,
     cx: float,
     cy: float,
     r: float,
     colors: list[str],
+    *,
     is_wild: bool = False,
 ) -> core.ET.Element:
     """colors: two property color keys, or empty with is_wild=True."""

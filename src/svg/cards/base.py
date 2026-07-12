@@ -10,7 +10,10 @@ Layer order (bottom to top) for every card:
   7. footer
 """
 
+import xml.etree.ElementTree as ET
+
 from ...geometry import BLEED, CUT, SAFE, Box
+from ...models.deck import Deck
 from ...tokens import Tokens, load_tokens
 from ..core import SVGDocument, el, rect
 
@@ -26,8 +29,8 @@ def new_document(bleed_fill: str = "#FFFFFF") -> SVGDocument:
     return doc
 
 
-def card_body(tokens: Tokens, fill: str = "#FFFFFF"):
-    """Rounded rect at the cut line (what remains after trimming)."""
+def card_body(tokens: Tokens, fill: str = "#FFFFFF") -> ET.Element:
+    """Draw a rounded rectangle at the cut line."""
     return rect(CUT, rx=tokens.corner_radius, ry=tokens.corner_radius, fill=fill)
 
 
@@ -35,8 +38,8 @@ def frame_box() -> Box:
     return SAFE.inset(FRAME_INSET)
 
 
-def thin_frame(stroke: str = "#000000"):
-    """The thin rounded-rect rule used on property and wildcard cards."""
+def thin_frame(stroke: str = "#000000") -> ET.Element:
+    """Draw the thin rounded-rectangle rule used on property and wildcard cards."""
     return rect(
         frame_box(),
         rx=FRAME_RADIUS,
@@ -47,7 +50,7 @@ def thin_frame(stroke: str = "#000000"):
     )
 
 
-def footer(deck, tokens: Tokens):
+def footer(deck: Deck | None, tokens: Tokens) -> ET.Element | None:
     """Footer text zone above the bottom frame edge; empty text -> no element."""
     text = getattr(getattr(deck, "config", None), "footer_text", "") or ""
     if not text:
@@ -66,7 +69,7 @@ def footer(deck, tokens: Tokens):
     )
 
 
-def blank_card(deck=None) -> SVGDocument:
+def blank_card(deck: Deck | None = None) -> SVGDocument:
     """Chrome-only card used by the M0 smoke test and as a layout reference."""
     tokens = load_tokens()
     doc = new_document()

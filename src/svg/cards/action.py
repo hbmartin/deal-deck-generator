@@ -1,11 +1,12 @@
 """Action card: tinted chassis, ACTION CARD header, title circle, description."""
 
 from ...models import ActionCard, Card
+from ...models.deck import Deck
+from ...text.richtext import rich_lines
 from ...tokens import Tokens
 from .. import core
 from ..components.badge import value_badge
 from ..components.circle_title import circle_title
-from ...text.richtext import rich_lines
 from . import register
 from .base import card_body, footer, new_document
 from .chassis import tinted_chassis
@@ -18,7 +19,13 @@ DESC_TOP = 778
 BADGE_POS = (108, 114)  # centered on the border band's corner square
 
 
-def action_chassis_content(doc, tokens, card: Card, tint, title_icon=None):
+def action_chassis_content(
+    doc: core.SVGDocument,
+    tokens: Tokens,
+    card: Card,
+    tint: dict[str, str],
+    title_icon: str | None = None,
+) -> None:
     """Header + circle + description + badges shared by action/rent cards."""
     value = card.require_value()
     header_font = tokens.font("body_bold")
@@ -39,7 +46,7 @@ def action_chassis_content(doc, tokens, card: Card, tint, title_icon=None):
 
     doc.add(
         circle_title(
-            doc, tokens, CIRCLE_CX, CIRCLE_CY, CIRCLE_R, card.title, icon=title_icon
+            tokens, CIRCLE_CX, CIRCLE_CY, CIRCLE_R, card.title, icon=title_icon
         )
     )
 
@@ -96,13 +103,13 @@ def action_chassis_content(doc, tokens, card: Card, tint, title_icon=None):
 
 
 @register("action")
-def build_action(card: ActionCard, deck, tokens: Tokens) -> core.SVGDocument:
+def build_action(card: ActionCard, deck: Deck, tokens: Tokens) -> core.SVGDocument:
     value = card.require_value()
     tint = tokens.value_tint(value)
 
     doc = new_document()
     doc.add(card_body(tokens))
-    tinted_chassis(doc, tokens, tint)
+    tinted_chassis(doc, tint)
     action_chassis_content(doc, tokens, card, tint, title_icon=card.icon)
 
     f = footer(deck, tokens)

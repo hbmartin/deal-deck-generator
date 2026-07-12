@@ -9,8 +9,21 @@ Layout boxes carry slack to absorb the (small) metric differences.
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
+from typing import Protocol, cast
 
 from fontTools.ttLib import TTFont
+
+
+class _HeadTable(Protocol):
+    unitsPerEm: int  # noqa: N815 - fontTools table field
+
+
+class _KernSubtable(Protocol):
+    kernTable: dict[tuple[str, str], int]  # noqa: N815 - fontTools table field
+
+
+class _Os2Table(Protocol):
+    sCapHeight: int  # noqa: N815 - fontTools table field
 
 
 @dataclass(frozen=True)
@@ -24,14 +37,15 @@ class TextMeasurer:
     def __init__(self, font_path: Path):
         self.font_path = font_path
         self._font = TTFont(str(font_path))
-        # pyrefly: ignore [missing-attribute]
-        self._upem = self._font["head"].unitsPerEm
-        self._cmap = self._font.getBestCmap()
+        head = cast("_HeadTable", self._font["head"])
+        self._upem = head.unitsPerEm
+        self._cmap = self._font.getBestCmap() or {}
         self._hmtx = self._font["hmtx"]
         self._kern = None
         if "kern" in self._font:
             try:
-                self._kern = self._font["kern"].kernTables[0].kernTable
+                kern_subtable = cast("_KernSubtable", self._font["kern"].kernTables[0])
+                self._kern = kern_subtable.kernTable
             except AttributeError, IndexError:
                 self._kern = None
 
@@ -58,8 +72,8 @@ class TextMeasurer:
     def metrics(self) -> FontMetrics:
         hhea = self._font["hhea"]
         try:
-            # pyrefly: ignore [missing-attribute]
-            cap = self._font["OS/2"].sCapHeight
+            os2_table = cast("_Os2Table", self._font["OS/2"])
+            cap = os2_table.sCapHeight
         except KeyError, AttributeError:
             cap = hhea.ascent * 0.7
         return FontMetrics(

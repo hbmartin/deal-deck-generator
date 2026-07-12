@@ -8,23 +8,28 @@ This module handles:
 - Handling quantity multipliers
 """
 
-import yaml
+from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Literal
 
+import yaml
+
 from ..models import (
-    PropertyCard,
     ActionCard,
+    Card,
     MoneyCard,
+    PropertyCard,
     RentCard,
     WildcardCard,
-    Card,
 )
 from ..models.deck import Deck, DeckConfig
 
 DEFAULT_CARDS_PATH = (
     Path(__file__).resolve().parent.parent.parent / "themes" / "classic" / "cards.yaml"
 )
+
+type CardType = Literal["property", "action", "money", "rent", "wildcard"]
+type CardCreator = Callable[[list[dict]], Sequence[Card]]
 
 
 def load_card_definitions(yaml_path: Path | str) -> dict:
@@ -40,12 +45,13 @@ def load_card_definitions(yaml_path: Path | str) -> dict:
     Raises:
         FileNotFoundError: If the YAML file doesn't exist
         yaml.YAMLError: If the YAML file is invalid
+
     """
     yaml_path = Path(yaml_path)
     if not yaml_path.exists():
         raise FileNotFoundError(f"Card definitions file not found: {yaml_path}")
 
-    with open(yaml_path) as f:
+    with yaml_path.open() as f:
         return yaml.safe_load(f)
 
 
@@ -62,6 +68,7 @@ def create_property_card_instances(prop_defs: list[dict]) -> list[PropertyCard]:
     Example:
         >>> defs = [{"id": "brown-01", "name": "Mediterranean Avenue", ...}]
         >>> cards = create_property_card_instances(defs)
+
     """
     cards = []
     for prop_def in prop_defs:
@@ -94,6 +101,7 @@ def create_action_card_instances(action_defs: list[dict]) -> list[ActionCard]:
 
     Returns:
         List of ActionCard instances
+
     """
     cards = []
     for action_def in action_defs:
@@ -126,6 +134,7 @@ def create_money_card_instances(money_defs: list[dict]) -> list[MoneyCard]:
 
     Returns:
         List of MoneyCard instances
+
     """
     cards = []
     for money_def in money_defs:
@@ -154,6 +163,7 @@ def create_rent_card_instances(rent_defs: list[dict]) -> list[RentCard]:
 
     Returns:
         List of RentCard instances
+
     """
     cards = []
     for rent_def in rent_defs:
@@ -184,6 +194,7 @@ def create_wildcard_instances(wildcard_defs: list[dict]) -> list[WildcardCard]:
 
     Returns:
         List of WildcardCard instances
+
     """
     cards = []
     for wildcard_def in wildcard_defs:
@@ -208,7 +219,7 @@ def create_wildcard_instances(wildcard_defs: list[dict]) -> list[WildcardCard]:
 
 def create_card_instances(
     card_defs: dict,
-    card_type: Literal["property", "action", "money", "rent", "wildcard"] | None = None,
+    card_type: CardType | None = None,
 ) -> list[Card]:
     """
     Create card instances from card definitions dictionary.
@@ -226,41 +237,27 @@ def create_card_instances(
         >>> defs = load_card_definitions("cards.yaml")
         >>> all_cards = create_card_instances(defs)
         >>> property_cards = create_card_instances(defs, card_type="property")
+
     """
-    all_cards = []
-
-    if card_type is None or card_type == "property":
-        if "property_cards" in card_defs:
-            all_cards.extend(
-                create_property_card_instances(card_defs["property_cards"])
-            )
-
-    if card_type is None or card_type == "action":
-        if "action_cards" in card_defs:
-            # pyrefly: ignore [bad-argument-type]
-            all_cards.extend(create_action_card_instances(card_defs["action_cards"]))
-
-    if card_type is None or card_type == "money":
-        if "money_cards" in card_defs:
-            # pyrefly: ignore [bad-argument-type]
-            all_cards.extend(create_money_card_instances(card_defs["money_cards"]))
-
-    if card_type is None or card_type == "rent":
-        if "rent_cards" in card_defs:
-            # pyrefly: ignore [bad-argument-type]
-            all_cards.extend(create_rent_card_instances(card_defs["rent_cards"]))
-
-    if card_type is None or card_type == "wildcard":
-        if "wildcard_cards" in card_defs:
-            # pyrefly: ignore [bad-argument-type]
-            all_cards.extend(create_wildcard_instances(card_defs["wildcard_cards"]))
-
-    # pyrefly: ignore [bad-return]
+    creators: dict[CardType, tuple[str, CardCreator]] = {
+        "property": ("property_cards", create_property_card_instances),
+        "action": ("action_cards", create_action_card_instances),
+        "money": ("money_cards", create_money_card_instances),
+        "rent": ("rent_cards", create_rent_card_instances),
+        "wildcard": ("wildcard_cards", create_wildcard_instances),
+    }
+    requested_types = (
+        creators if card_type is None else {card_type: creators[card_type]}
+    )
+    all_cards: list[Card] = []
+    for definitions_key, creator in requested_types.values():
+        if definitions := card_defs.get(definitions_key):
+            all_cards.extend(creator(definitions))
     return all_cards
 
 
 def _color_rent_index(card_defs: dict) -> dict[str, dict]:
-    """color -> rent table facts derived from the property definitions."""
+    """Color -> rent table facts derived from the property definitions."""
     index: dict[str, dict] = {}
     for prop in card_defs.get("property_cards", []):
         index.setdefault(

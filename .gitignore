@@ -17,3 +17,5 @@ analysis_results.json
 svg textures/
 tests/**/*.png
 triage_decisions.db
+.coverage
+reviews_triage/

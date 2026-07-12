@@ -9,12 +9,15 @@ Conventions:
 
 import xml.etree.ElementTree as ET
 
-from ..geometry import BLEED
+from ..geometry import BLEED, Box
 
 SVG_NS = "http://www.w3.org/2000/svg"
 
 
-def fmt(v) -> str:
+type Number = int | float
+
+
+def fmt(v: object) -> str:
     """Format attribute values: floats trimmed to 2 decimals, no trailing zeros."""
     if isinstance(v, float):
         s = f"{v:.2f}".rstrip("0").rstrip(".")
@@ -22,55 +25,83 @@ def fmt(v) -> str:
     return str(v)
 
 
-def el(tag: str, *children: ET.Element, text: str | None = None, **attrs) -> ET.Element:
-    e = ET.Element(tag)
-    for k, v in attrs.items():
-        if v is None:
+def _element(
+    tag: str,
+    children: tuple[ET.Element, ...],
+    text: str | None,
+    attrs: dict[str, object],
+) -> ET.Element:
+    element = ET.Element(tag)
+    for key, value in attrs.items():
+        if value is None:
             continue
-        name = k.rstrip("_").replace("_", "-")
-        e.set(name, fmt(v))
+        name = key.rstrip("_").replace("_", "-")
+        element.set(name, fmt(value))
     if text is not None:
-        e.text = text
-    for c in children:
-        e.append(c)
-    return e
+        element.text = text
+    element.extend(children)
+    return element
 
 
-def g(*children: ET.Element, **attrs) -> ET.Element:
-    return el("g", *children, **attrs)
+def el(
+    tag: str,
+    *children: ET.Element,
+    text: str | None = None,
+    **attrs: object,
+) -> ET.Element:
+    return _element(tag, children, text, attrs)
 
 
-def rect(box=None, **attrs) -> ET.Element:
+def g(*children: ET.Element, **attrs: object) -> ET.Element:
+    return _element("g", children, None, attrs)
+
+
+def rect(box: Box | None = None, **attrs: object) -> ET.Element:
     if box is not None:
         attrs = {"x": box.x, "y": box.y, "width": box.w, "height": box.h, **attrs}
-    return el("rect", **attrs)
+    return _element("rect", (), None, attrs)
 
 
-def circle(cx, cy, r, **attrs) -> ET.Element:
-    return el("circle", cx=cx, cy=cy, r=r, **attrs)
+def circle(cx: Number, cy: Number, r: Number, **attrs: object) -> ET.Element:
+    return _element("circle", (), None, {"cx": cx, "cy": cy, "r": r, **attrs})
 
 
-def line(x1, y1, x2, y2, **attrs) -> ET.Element:
-    return el("line", x1=x1, y1=y1, x2=x2, y2=y2, **attrs)
+def line(
+    x1: Number,
+    y1: Number,
+    x2: Number,
+    y2: Number,
+    **attrs: object,
+) -> ET.Element:
+    return _element(
+        "line",
+        (),
+        None,
+        {"x1": x1, "y1": y1, "x2": x2, "y2": y2, **attrs},
+    )
 
 
-def path(d: str, **attrs) -> ET.Element:
-    return el("path", d=d, **attrs)
+def path(d: str, **attrs: object) -> ET.Element:
+    return _element("path", (), None, {"d": d, **attrs})
 
 
-def text_el(x, y, content: str, **attrs) -> ET.Element:
-    return el("text", x=x, y=y, text=content, **attrs)
+def text_el(x: Number, y: Number, content: str, **attrs: object) -> ET.Element:
+    return _element("text", (), content, {"x": x, "y": y, **attrs})
 
 
-def use(href: str, **attrs) -> ET.Element:
-    return el("use", href=f"#{href}", **attrs)
+def use(href: str, **attrs: object) -> ET.Element:
+    return _element("use", (), None, {"href": f"#{href}", **attrs})
 
 
-def translate(x, y) -> str:
+def translate(x: Number, y: Number) -> str:
     return f"translate({fmt(x)} {fmt(y)})"
 
 
-def rotate(deg, cx=None, cy=None) -> str:
+def rotate(
+    deg: Number,
+    cx: Number | None = None,
+    cy: Number | None = None,
+) -> str:
     if cx is None:
         return f"rotate({fmt(deg)})"
     return f"rotate({fmt(deg)} {fmt(cx)} {fmt(cy)})"
@@ -79,7 +110,7 @@ def rotate(deg, cx=None, cy=None) -> str:
 class SVGDocument:
     """A full-bleed card document with a managed <defs> section."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.root = el(
             "svg",
             xmlns=SVG_NS,

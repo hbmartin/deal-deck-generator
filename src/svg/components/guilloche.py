@@ -22,7 +22,7 @@ def _wave_path(width: float, wavelength: float, amplitude: float, phase: float) 
     return "M " + " L ".join(pts)
 
 
-def wave_field(
+def wave_field(  # noqa: PLR0913
     doc: core.SVGDocument,
     clip_box: Box,
     stroke: str,
@@ -66,21 +66,27 @@ def wave_field(
     return core.g(*rows, clip_path=f"url(#{clip_id})")
 
 
-def _epitrochoid_path(
-    cx: float, cy: float, R: float, r: float, d: float, turns: int, samples: int = 720
+def _epitrochoid_path(  # noqa: PLR0913
+    cx: float,
+    cy: float,
+    outer_radius: float,
+    rolling_radius: float,
+    offset: float,
+    turns: int,
+    samples: int = 720,
 ) -> str:
-    """Closed epitrochoid; with R/r = p/q in lowest terms it closes after q turns."""
+    """Draw a closed epitrochoid that closes after the requested turns."""
     pts = []
-    k = (R + r) / r
+    k = (outer_radius + rolling_radius) / rolling_radius
     for i in range(samples + 1):
         t = 2 * math.pi * turns * i / samples
-        x = (R + r) * math.cos(t) - d * math.cos(k * t)
-        y = (R + r) * math.sin(t) - d * math.sin(k * t)
+        x = (outer_radius + rolling_radius) * math.cos(t) - offset * math.cos(k * t)
+        y = (outer_radius + rolling_radius) * math.sin(t) - offset * math.sin(k * t)
         pts.append(f"{core.fmt(cx + x)} {core.fmt(cy + y)}")
     return "M " + " L ".join(pts) + " Z"
 
 
-def rosette(
+def rosette(  # noqa: PLR0913
     cx: float,
     cy: float,
     radius: float,
@@ -103,11 +109,19 @@ def rosette(
         # curves stepping inward to build a dense concentric medallion.
         shrink = 1.0 - 0.18 * i
         unit = radius * shrink / (big / small + 1 + df * 2.2)
-        R, r = unit * big / small, unit
-        d = unit * df * 2.2
+        outer_radius, rolling_radius = unit * big / small, unit
+        offset = unit * df * 2.2
         paths.append(
             core.path(
-                _epitrochoid_path(cx, cy, R, r, d, turns=small, samples=720),
+                _epitrochoid_path(
+                    cx,
+                    cy,
+                    outer_radius,
+                    rolling_radius,
+                    offset,
+                    turns=small,
+                    samples=720,
+                ),
                 fill="none",
                 stroke=stroke,
                 stroke_width=stroke_width,

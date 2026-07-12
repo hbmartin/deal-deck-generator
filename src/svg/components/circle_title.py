@@ -32,18 +32,18 @@ def _title_lines(title: str) -> list[str]:
         return [words[0], words[1]]
     # 3+ words: break before the last two words ("IT'S MY / BIRTHDAY" is the
     # exception handled by balance: minimize width difference).
-    best = None
-    for i in range(1, len(words)):
-        a, b = " ".join(words[:i]), " ".join(words[i:])
-        score = abs(len(a) - len(b))
-        if best is None or score < best[0]:
-            best = (score, [a, b])
-    # pyrefly: ignore [unsupported-operation]
-    return best[1]
+    _, lines = min(
+        (
+            (abs(len(first) - len(second)), [first, second])
+            for i in range(1, len(words))
+            if (first := " ".join(words[:i])) and (second := " ".join(words[i:]))
+        ),
+        key=lambda candidate: candidate[0],
+    )
+    return lines
 
 
-def circle_title(
-    doc: core.SVGDocument,
+def circle_title(  # noqa: PLR0913
     tokens: Tokens,
     cx: float,
     cy: float,
@@ -74,6 +74,8 @@ def circle_title(
     icon_el = None
     icon_h = 0.0
     gap = 0.0
+    arrangement = None
+    ratio = 0.0
     if icon:
         arrangement, icon_h, ratio = _ICON_SPECS[icon]
         icon_el = _ICON_FACTORIES[icon](icon_h)
@@ -81,11 +83,9 @@ def circle_title(
     total_h = text_h + (icon_h + gap if icon else 0)
     top = cy - total_h / 2
 
-    if icon and _ICON_SPECS[icon][0] == "above":
-        icon_w = icon_h * _ICON_SPECS[icon][2]
-        # pyrefly: ignore [missing-attribute]
+    if icon_el is not None and arrangement == "above":
+        icon_w = icon_h * ratio
         icon_el.set("transform", core.translate(cx - icon_w / 2, top))
-        # pyrefly: ignore [bad-argument-type]
         parts.append(icon_el)
         first_baseline = top + icon_h + gap + size * m.cap_height
     else:
@@ -107,12 +107,10 @@ def circle_title(
             )
         )
 
-    if icon and _ICON_SPECS[icon][0] == "below":
-        icon_w = icon_h * _ICON_SPECS[icon][2]
+    if icon_el is not None and arrangement == "below":
+        icon_w = icon_h * ratio
         icon_y = first_baseline + (len(lines) - 1) * line_adv + gap
-        # pyrefly: ignore [missing-attribute]
         icon_el.set("transform", core.translate(cx - icon_w / 2, icon_y))
-        # pyrefly: ignore [bad-argument-type]
         parts.append(icon_el)
 
     return core.g(*parts)

@@ -42,7 +42,7 @@ def wrap_line(
     return lines
 
 
-def layout_block(
+def layout_block(  # noqa: C901, PLR0912, PLR0913
     measurer: TextMeasurer,
     text: str,
     box: Box,

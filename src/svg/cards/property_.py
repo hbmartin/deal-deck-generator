@@ -2,6 +2,7 @@
 
 from ...geometry import Box
 from ...models import PropertyCard
+from ...models.deck import Deck
 from ...tokens import Tokens
 from .. import core
 from ..components.badge import value_badge
@@ -12,7 +13,7 @@ from .base import card_body, footer, new_document, thin_frame
 
 
 @register("property")
-def build_property(card: PropertyCard, deck, tokens: Tokens) -> core.SVGDocument:
+def build_property(card: PropertyCard, deck: Deck, tokens: Tokens) -> core.SVGDocument:
     value = card.require_value()
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))
@@ -23,7 +24,6 @@ def build_property(card: PropertyCard, deck, tokens: Tokens) -> core.SVGDocument
     header_box = Box(115, 146, 502, 140)
     doc.add(
         property_header(
-            doc,
             tokens,
             header_box,
             card.title,
@@ -37,7 +37,7 @@ def build_property(card: PropertyCard, deck, tokens: Tokens) -> core.SVGDocument
     # Four-row tables (railroads) start higher to fit inside the frame.
     tall = len(card.rent_values) >= 4
     caption_box = Box(140, 365 if tall else 410, 490, 90)
-    doc.add(caption_and_rent_label(doc, tokens, caption_box))
+    doc.add(caption_and_rent_label(tokens, caption_box))
 
     rows_box = Box(140, 491 if tall else 562, 490, 0)  # rows_box.y = first row mid
     doc.add(

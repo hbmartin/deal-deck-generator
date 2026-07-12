@@ -40,7 +40,6 @@ def _mini_card(fill: str) -> core.ET.Element:
 
 
 def fan_icon(
-    doc: core.SVGDocument,
     tokens: Tokens,
     count: int,
     color_key: str,

@@ -1,5 +1,6 @@
 import os
 import shutil
+from collections.abc import Generator
 from pathlib import Path
 
 import pytest
@@ -25,7 +26,7 @@ def golden_env() -> str:
 
 @pytest.fixture(scope="session")
 # pyrefly: ignore [bad-return]
-def rendered_previews(deck, golden_env, tmp_path_factory) -> Path:
+def rendered_previews(deck, golden_env, tmp_path_factory) -> Generator[Path]:
     """Render every unique design at preview size once per test session."""
     out = tmp_path_factory.mktemp("render")
     render_deck(deck, out, fonts_mode=fonts_mode_for(golden_env), previews=True)

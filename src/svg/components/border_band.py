@@ -64,7 +64,8 @@ def border_band(
     key: str = "band",
 ) -> core.ET.Element:
     """Band ring whose centerline is the rectangle `band_center` (motifs only;
-    the flanking pinstripe rules are composed by the card builders)."""
+    the flanking pinstripe rules are composed by the card builders).
+    """
     motif_id = f"band-motif-{key}"
     corner_id = f"band-corner-{key}"
     if not doc.has_def(motif_id):

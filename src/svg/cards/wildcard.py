@@ -10,6 +10,7 @@ Multicolor: color stripe bars, title, Mr. Money, description.
 
 from ...geometry import Box
 from ...models import WildcardCard
+from ...models.deck import Deck
 from ...text.measure import get_measurer
 from ...text.richtext import rich_lines
 from ...tokens import Tokens
@@ -49,7 +50,7 @@ STRIPE_COLORS = [
 ]
 
 
-def _leader(x1, x2, y):
+def _leader(x1: float, x2: float, y: float) -> core.ET.Element:
     return core.line(
         x1,
         y,
@@ -62,7 +63,7 @@ def _leader(x1, x2, y):
     )
 
 
-def _wildcard_header(doc, tokens, half: dict) -> core.ET.Element:
+def _wildcard_header(tokens: Tokens, half: dict) -> core.ET.Element:
     colors = tokens.property_color(half["color"])
     box = HEADER_BOX
     font_small = tokens.font("body_bold")
@@ -127,10 +128,15 @@ def _wildcard_header(doc, tokens, half: dict) -> core.ET.Element:
     return core.g(*parts)
 
 
-def _half_group(doc, tokens, half: dict, band_mids: list[float]) -> core.ET.Element:
+def _half_group(
+    doc: core.SVGDocument,
+    tokens: Tokens,
+    half: dict,
+    band_mids: list[float],
+) -> core.ET.Element:
     """One half in upright coordinates; caller rotates the second half."""
     measurer = get_measurer(tokens.font("body_bold").measure_path)
-    parts = [_wildcard_header(doc, tokens, half)]
+    parts = [_wildcard_header(tokens, half)]
 
     rent_font = tokens.font("body")
     parts.append(
@@ -150,8 +156,8 @@ def _half_group(doc, tokens, half: dict, band_mids: list[float]) -> core.ET.Elem
     icon_h = fan_mod.CARD_H * FAN_SCALE
     icon_w = fan_mod.CARD_W * FAN_SCALE
     set_size = half["set_size"]
-    for (n, rent), mid in zip(half["rent_values"], band_mids):
-        icon = fan_icon(doc, tokens, n, half["color"])
+    for (n, rent), mid in zip(half["rent_values"], band_mids, strict=True):
+        icon = fan_icon(tokens, n, half["color"])
         icon.set(
             "transform",
             f"{core.translate(ENTRY_FAN_X, mid - icon_h * 0.52)} "
@@ -196,7 +202,7 @@ def _band_mids(count: int, total_bands: int) -> list[float]:
     return [first + (offset + j) * BAND_PITCH for j in range(count)]
 
 
-def _build_two_color(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocument:
+def _build_two_color(card: WildcardCard, tokens: Tokens) -> core.SVGDocument:
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))
     doc.add(thin_frame())
@@ -227,7 +233,7 @@ def _build_two_color(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocume
     return doc
 
 
-def _stripe_bar(tokens, y: float) -> core.ET.Element:
+def _stripe_bar(tokens: Tokens, y: float) -> core.ET.Element:
     box = frame_box()
     x = box.x + 18
     w = box.w - 36
@@ -247,7 +253,7 @@ def _stripe_bar(tokens, y: float) -> core.ET.Element:
     return core.g(*parts)
 
 
-def _build_multicolor(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocument:
+def _build_multicolor(card: WildcardCard, tokens: Tokens) -> core.SVGDocument:
     doc = new_document()
     doc.add(card_body(tokens, fill=tokens.chrome("property_body")))
     doc.add(thin_frame())
@@ -291,11 +297,11 @@ def _build_multicolor(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocum
 
 
 @register("wildcard")
-def build_wildcard(card: WildcardCard, deck, tokens: Tokens) -> core.SVGDocument:
+def build_wildcard(card: WildcardCard, deck: Deck, tokens: Tokens) -> core.SVGDocument:
     if card.is_multicolor:
-        doc = _build_multicolor(card, deck, tokens)
+        doc = _build_multicolor(card, tokens)
     else:
-        doc = _build_two_color(card, deck, tokens)
+        doc = _build_two_color(card, tokens)
     f = footer(deck, tokens)
     if f is not None:
         doc.add(f)

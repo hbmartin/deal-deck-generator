@@ -35,7 +35,14 @@ def run_checked(cmd: list[str], fontconfig: Path | None) -> None:
 class RsvgRasterizer:
     name = "rsvg"
 
-    def rasterize(self, svg, png, width, height, fontconfig=None):
+    def rasterize(
+        self,
+        svg: Path,
+        png: Path,
+        width: int,
+        height: int,
+        fontconfig: Path | None = None,
+    ) -> None:
         run_checked(
             [
                 "rsvg-convert",
@@ -54,7 +61,14 @@ class RsvgRasterizer:
 class InkscapeRasterizer:
     name = "inkscape"
 
-    def rasterize(self, svg, png, width, height, fontconfig=None):
+    def rasterize(
+        self,
+        svg: Path,
+        png: Path,
+        width: int,
+        height: int,
+        fontconfig: Path | None = None,
+    ) -> None:
         run_checked(
             [
                 "inkscape",
@@ -74,7 +88,7 @@ _RASTERIZERS = {"rsvg": RsvgRasterizer, "inkscape": InkscapeRasterizer}
 def get_rasterizer(name: str = "rsvg") -> Rasterizer:
     try:
         return _RASTERIZERS[name]()
-    except KeyError:
+    except KeyError as error:
         raise RasterError(
             f"unknown rasterizer {name!r}; options: {sorted(_RASTERIZERS)}"
-        )
+        ) from error

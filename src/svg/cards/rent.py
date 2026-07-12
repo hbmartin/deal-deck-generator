@@ -1,6 +1,7 @@
 """Rent card: action chassis with a color bullseye instead of a title circle."""
 
 from ...models import RentCard
+from ...models.deck import Deck
 from ...text.richtext import rich_lines
 from ...tokens import Tokens
 from .. import core
@@ -13,13 +14,13 @@ from .chassis import tinted_chassis
 
 
 @register("rent")
-def build_rent(card: RentCard, deck, tokens: Tokens) -> core.SVGDocument:
+def build_rent(card: RentCard, deck: Deck, tokens: Tokens) -> core.SVGDocument:
     value = card.require_value()
     tint = tokens.value_tint(value)
 
     doc = new_document()
     doc.add(card_body(tokens))
-    tinted_chassis(doc, tokens, tint)
+    tinted_chassis(doc, tint)
 
     header_font = tokens.font("body_bold")
     doc.add(
@@ -39,7 +40,6 @@ def build_rent(card: RentCard, deck, tokens: Tokens) -> core.SVGDocument:
 
     doc.add(
         bullseye(
-            doc,
             tokens,
             CIRCLE_CX,
             CIRCLE_CY,

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from ..geometry import BLEED
+from ..models import Card
 from ..models.deck import Deck
 from ..raster.base import get_rasterizer
 from ..raster.fontsetup import write_fonts_conf
@@ -11,13 +12,14 @@ from ..svg.cards import build_card
 from ..tokens import Tokens, load_tokens
 
 
-def design_id_of(card) -> str:
+def design_id_of(card: Card) -> str:
     return card.metadata.get("design_id", card.card_id)
 
 
-def render_deck(
+def render_deck(  # noqa: PLR0913
     deck: Deck,
     out_dir: Path,
+    *,
     types: list[str] | None = None,
     card_ids: list[str] | None = None,
     renderer: str = "rsvg",

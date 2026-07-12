@@ -41,7 +41,8 @@ def theme_cards_path(name: str) -> Path:
 
 def _deep_merge(base: dict, overlay: dict) -> dict:
     """Recursively merge overlay onto base. Nested dicts merge; scalars and
-    lists in the overlay replace the base value. Returns a new dict."""
+    lists in the overlay replace the base value. Returns a new dict.
+    """
     merged = dict(base)
     for key, value in overlay.items():
         if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):

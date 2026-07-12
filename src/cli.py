@@ -3,7 +3,10 @@
 import argparse
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
+from . import goldens
+from .compare import contact_sheet
 from .data.loader import load_deck
 from .data.themes import (
     DEFAULT_THEME,
@@ -12,7 +15,10 @@ from .data.themes import (
     theme_cards_path,
 )
 from .geometry import BLEED
+from .raster import base as raster_base
+from .raster import fontsetup
 from .render.pipeline import render_deck
+from .svg.cards import base as card_base
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUT = PROJECT_ROOT / "output"
@@ -41,7 +47,7 @@ def _add_render_args(p: argparse.ArgumentParser) -> None:
     p.add_argument("--no-previews", action="store_true", help="skip preview-size PNGs")
 
 
-def cmd_render(args) -> int:
+def cmd_render(args: argparse.Namespace | SimpleNamespace) -> int:
     if args.list_themes:
         print("\n".join(available_themes()))
         return 0
@@ -70,22 +76,18 @@ def cmd_render(args) -> int:
     return 0
 
 
-def cmd_smoke(args) -> int:
+def cmd_smoke(args: argparse.Namespace | SimpleNamespace) -> int:
     """Render a blank chrome-only card through both rasterizers."""
-    from .raster.base import get_rasterizer
-    from .raster.fontsetup import write_fonts_conf
-    from .svg.cards.base import blank_card
-
     out = args.out / "smoke"
     out.mkdir(parents=True, exist_ok=True)
-    doc = blank_card()
+    doc = card_base.blank_card()
     svg_path = out / "blank.svg"
     svg_path.write_bytes(doc.to_bytes())
-    fontconfig = write_fonts_conf(out, args.fonts)
+    fontconfig = fontsetup.write_fonts_conf(out, args.fonts)
     for name, required in [("rsvg", True), ("inkscape", False)]:
         png = out / f"blank-{name}.png"
         try:
-            get_rasterizer(name).rasterize(
+            raster_base.get_rasterizer(name).rasterize(
                 svg_path, png, int(BLEED.w), int(BLEED.h), fontconfig
             )
             print(f"ok: {png}")
@@ -97,10 +99,8 @@ def cmd_smoke(args) -> int:
     return 0
 
 
-def cmd_compare(args) -> int:
-    from .compare.contact_sheet import build_contact_sheets
-
-    sheets = build_contact_sheets(
+def cmd_compare(args: argparse.Namespace | SimpleNamespace) -> int:
+    sheets = contact_sheet.build_contact_sheets(
         preview_dir=args.out / "preview",
         compare_dir=args.out / "compare",
         types=args.types,
@@ -110,13 +110,11 @@ def cmd_compare(args) -> int:
     return 0
 
 
-def cmd_goldens(args) -> int:
-    from .goldens import update_goldens
-
+def cmd_goldens(args: argparse.Namespace | SimpleNamespace) -> int:
     if not args.update:
         print("nothing to do (use --update)", file=sys.stderr)
         return 2
-    env = update_goldens(env=args.env, renderer=args.renderer)
+    env = goldens.update_goldens(env=args.env, renderer=args.renderer)
     print(f"updated goldens for env {env!r}")
     return 0
 

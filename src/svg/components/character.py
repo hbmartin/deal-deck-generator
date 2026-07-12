@@ -119,24 +119,28 @@ def mr_money(height: float) -> core.ET.Element:
     # --- head ---
     parts.append(core.circle(cx, h * 0.295, w * 0.155, fill=SKIN))
     # ears
-    for side in (-1, 1):
-        parts.append(core.circle(cx + side * w * 0.15, h * 0.30, w * 0.035, fill=SKIN))
+    parts.extend(
+        core.circle(cx + side * w * 0.15, h * 0.30, w * 0.035, fill=SKIN)
+        for side in (-1, 1)
+    )
     # mustache: two white lobes
-    for side in (-1, 1):
-        parts.append(
-            core.el(
-                "ellipse",
-                cx=cx + side * w * 0.075,
-                cy=h * 0.345,
-                rx=w * 0.085,
-                ry=h * 0.026,
-                fill=WHITE,
-                transform=core.rotate(side * 12, cx + side * w * 0.075, h * 0.345),
-            )
+    parts.extend(
+        core.el(
+            "ellipse",
+            cx=cx + side * w * 0.075,
+            cy=h * 0.345,
+            rx=w * 0.085,
+            ry=h * 0.026,
+            fill=WHITE,
+            transform=core.rotate(side * 12, cx + side * w * 0.075, h * 0.345),
         )
+        for side in (-1, 1)
+    )
     # eyes + nose
-    for side in (-1, 1):
-        parts.append(core.circle(cx + side * w * 0.05, h * 0.275, w * 0.012, fill=INK))
+    parts.extend(
+        core.circle(cx + side * w * 0.05, h * 0.275, w * 0.012, fill=INK)
+        for side in (-1, 1)
+    )
     parts.append(core.circle(cx, h * 0.31, w * 0.022, fill="#E8A87C"))
 
     # --- top hat ---

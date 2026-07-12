@@ -14,9 +14,7 @@ DOT = 4.0  # leader dot diameter (stroke width, round caps)
 DOT_GAP = 13.5
 
 
-def caption_and_rent_label(
-    doc: core.SVGDocument, tokens: Tokens, box: Box
-) -> core.ET.Element:
+def caption_and_rent_label(tokens: Tokens, box: Box) -> core.ET.Element:
     """'(No. of properties owned in set)' at left, big RENT at right."""
     body = tokens.font("body")
     heavy = tokens.font("body")
@@ -65,7 +63,7 @@ def _leader(x1: float, x2: float, y: float) -> core.ET.Element:
     )
 
 
-def rent_rows(
+def rent_rows(  # noqa: PLR0913
     doc: core.SVGDocument,
     tokens: Tokens,
     box: Box,
@@ -87,7 +85,7 @@ def rent_rows(
         # Fanned cards extend to the left of the front tile; anchor the tile
         # in a fixed column so digits align vertically.
         icon_x = box.x + box.w * 0.18
-        icon = fan_icon(doc, tokens, n, color_key)
+        icon = fan_icon(tokens, n, color_key)
         icon.set(
             "transform",
             f"{core.translate(icon_x, row_top)} scale({core.fmt(ICON_SCALE)})",
