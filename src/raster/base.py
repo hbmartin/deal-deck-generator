@@ -5,9 +5,26 @@ import subprocess
 from pathlib import Path
 from typing import Protocol
 
+from PIL import Image
+
+# Print files are rendered at the full-bleed pixel size (732x1101), which is the
+# card's physical size at 300 DPI. rsvg/inkscape don't write a resolution chunk,
+# so MPC would read the file as 72 DPI; stamp the pHYs chunk explicitly.
+PRINT_DPI = 300
+
 
 class RasterError(Exception):
     pass
+
+
+def stamp_png_dpi(path: Path, dpi: int = PRINT_DPI) -> None:
+    """Write a PNG resolution (pHYs) chunk so the file declares `dpi`.
+
+    Pixels are untouched — only the density metadata changes.
+    """
+    with Image.open(path) as im:
+        im.load()
+    im.save(path, dpi=(dpi, dpi))
 
 
 class Rasterizer(Protocol):

@@ -3,8 +3,11 @@
 import pytest
 
 from src.geometry import Box
+from src.svg import core
 from src.text.layout import TextOverflowError, layout_block, wrap_line
 from src.text.measure import FontMetrics
+from src.text.richtext import measure_rich_height, rich_lines
+from src.tokens import load_tokens
 
 
 class FixedWidthMeasurer:
@@ -80,3 +83,66 @@ def test_layout_block_raises_when_minimum_size_cannot_fit(measurer):
             size=2,
             min_size=1,
         )
+
+
+# --- rich_lines glyph-aware auto-fit (uses real bundled-font metrics) ---
+
+
+def _text_font_sizes(group) -> list[float]:
+    return [
+        float(t.get("font-size"))
+        for t in group.iter()
+        if t.tag.endswith("text") and t.get("font-size") is not None
+    ]
+
+
+def test_rich_lines_without_max_h_keeps_requested_size():
+    tokens = load_tokens()
+    group, _ = rich_lines(
+        core.SVGDocument(),
+        tokens,
+        "one two three four five",
+        cx=366,
+        y=778,
+        size=32,
+        max_w=372,
+    )
+    assert set(_text_font_sizes(group)) == {32.0}
+
+
+def test_rich_lines_shrinks_to_fit_max_h():
+    tokens = load_tokens()
+    long_text = " ".join(["word"] * 40)
+    natural = measure_rich_height(tokens, long_text, 32, 372)
+
+    group, baseline = rich_lines(
+        core.SVGDocument(),
+        tokens,
+        long_text,
+        cx=366,
+        y=778,
+        size=32,
+        max_w=372,
+        max_h=natural / 2,
+        min_size=12,
+    )
+    sizes = _text_font_sizes(group)
+    assert sizes
+    assert max(sizes) < 32  # shrank below the requested size
+    assert (baseline - 778) <= natural / 2 + 1e-6  # block fits the budget
+
+
+def test_rich_lines_clamps_at_min_size_without_raising():
+    tokens = load_tokens()
+    group, _ = rich_lines(
+        core.SVGDocument(),
+        tokens,
+        " ".join(["word"] * 60),
+        cx=366,
+        y=778,
+        size=32,
+        max_w=372,
+        max_h=1.0,  # impossible budget -> clamp at min_size, never raise
+        min_size=14,
+    )
+    assert min(_text_font_sizes(group)) == 14.0

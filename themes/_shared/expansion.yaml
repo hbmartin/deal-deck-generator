@@ -1,0 +1,214 @@
+# Expansion action cards — shared card-list fragment (not a theme).
+#
+# A theme opts in by adding `include: [expansion]` to its cards.yaml; the loader
+# appends these entries to that theme's own card lists. This directory has no
+# cards.yaml, so it is NOT listed by available_themes().
+#
+# 29 designs / 38 physical cards. Every card is an ACTION card, so it renders
+# through the existing action builder and is tinted by value (3 green / 4 blue /
+# 5 purple) with no palette changes. Text is transcribed from the reference
+# album with typos fixed (Eminent/Privatization), apostrophes added, and British
+# spellings Americanized. {nM} marks the struck-M money glyph (whole amounts
+# only); 0.5M and percentages stay plain. `fine_print` renders smaller than
+# `description`.
+
+action_cards:
+  # --- value 3 (green) ---
+  - id: exp-asset-seizure
+    name: "Asset Seizure"
+    value: 3
+    description: "Choose a player to discard all the non-money cards in their bank."
+    quantity: 2
+
+  - id: exp-especially-sly-deal
+    name: "An Especially Sly Deal"
+    value: 3
+    description: "Take two property cards of the same color from another player."
+    fine_print:
+      - "(As long as they are not part of a full set.)"
+    quantity: 1
+
+  - id: exp-bankruptcy
+    name: "Bankruptcy"
+    value: 3
+    description: "Choose a player who will bank 2 random cards of your choosing from their hand. They then must pay {5M} to you."
+    fine_print:
+      - "(If a card is unbankable, discard it.)"
+    quantity: 1
+
+  - id: exp-chairman-of-the-board
+    name: "Chairman of the Board"
+    value: 3
+    description: "Force all players to discard a random card of your choosing from their hand."
+    quantity: 1
+
+  - id: exp-chance
+    name: "Chance"
+    value: 3
+    description: "Draw a random card from another player's hand."
+    quantity: 2
+
+  - id: exp-condemned
+    name: "Condemned"
+    value: 3
+    description: "Choose any top level building on the board to put in the discard pile."
+    quantity: 1
+
+  - id: exp-eminent-domain
+    name: "Eminent Domain"
+    value: 3
+    description: "Buy any property at double the face value from another player."
+    fine_print:
+      - "(As long as it is not in a set.)"
+    quantity: 2
+
+  - id: exp-free-parking
+    name: "Free Parking"
+    value: 3
+    description: "Take another go."
+    quantity: 2
+
+  - id: exp-fresh-start
+    name: "Fresh Start"
+    value: 3
+    description: "Discard your hand and draw the number of cards you discarded."
+    quantity: 2
+
+  - id: exp-go-to-jail
+    name: "Go to Jail"
+    value: 3
+    description: "Choose a player to skip their next go."
+    quantity: 1
+
+  - id: exp-income-tax
+    name: "Income Tax"
+    value: 3
+    description: "Choose a player to discard 25% of their bank."
+    fine_print:
+      - "(Round up.)"
+    quantity: 1
+
+  - id: exp-insolvency
+    name: "Insolvency"
+    value: 3
+    description: "For all players, all but two cards must be discarded from their hand."
+    quantity: 1
+
+  - id: exp-philanthropist
+    name: "Philanthropist"
+    value: 3
+    description: "Choose another player to discard two properties and two bank cards of their choice."
+    quantity: 1
+
+  - id: exp-pickpocket
+    name: "Pickpocket"
+    value: 3
+    description: "Take three randomly chosen cards from any other player's hand and discard them."
+    quantity: 1
+
+  - id: exp-sneak-peek
+    name: "Sneak Peek"
+    value: 3
+    description: "See any player's full hand."
+    quantity: 1
+
+  - id: exp-super-tax
+    name: "Super Tax"
+    value: 3
+    description: "Choose a player to discard 40% of their bank."
+    fine_print:
+      - "(Round up.)"
+    quantity: 1
+
+  - id: exp-tax-evasion
+    name: "Tax Evasion"
+    value: 3
+    description: "Choose a player to discard their two largest value cards in their bank."
+    quantity: 1
+
+  # --- value 4 (blue) ---
+  - id: exp-audit
+    name: "Audit"
+    value: 4
+    description: "See any other player's hand and take the card of your choice from it."
+    quantity: 1
+
+  - id: exp-community-chest
+    name: "Community Chest"
+    value: 4
+    description: "Shuffle the discard pile and take the top three cards."
+    fine_print:
+      - "(If fewer than four cards in the pile, take them all.)"
+    quantity: 2
+
+  - id: exp-demolition
+    name: "Demolition"
+    value: 4
+    description: "Discard any property on the board, even if it is in a set."
+    fine_print:
+      - "(The property cannot have buildings on it, however.)"
+    quantity: 1
+
+  - id: exp-maintenance-fee
+    name: "Maintenance Fee"
+    value: 4
+    description: "Choose a player to pay 0.5M for each property, {2M} for each house and {4M} for each hotel."
+    quantity: 1
+
+  - id: exp-nationalization
+    name: "Nationalization"
+    value: 4
+    description: "Place on a full set of railways to allow addition of a further 4 railways. Each additional railway adds {2M} to rent."
+    fine_print:
+      - "(Treat as a building.)"
+    quantity: 1
+
+  - id: exp-offshore-account
+    name: "Offshore Account"
+    value: 4
+    description: "Recover up to three cards from your bank and place them in your hand."
+    quantity: 2
+
+  - id: exp-privatization
+    name: "Privatization"
+    value: 4
+    description: "Add to a full set of non-wildcard utilities to quintuple rent."
+    fine_print:
+      - "(Treat as a building.)"
+    quantity: 1
+
+  - id: exp-rent-control
+    name: "Rent Control"
+    value: 4
+    description: "Play at any time when you are paying rent. You only need to pay half the rent when this card is played."
+    fine_print:
+      - "(Round down.)"
+    quantity: 2
+
+  - id: exp-socialism
+    name: "Socialism"
+    value: 4
+    description: "Use at any time when any player is being charged rent. Every player must play an equal share of the rent bill except for the landlord."
+    quantity: 1
+
+  # --- value 5 (purple) ---
+  - id: exp-gold-digger
+    name: "Gold Digger"
+    value: 5
+    description: "The player of your choice must give you the largest value card in their bank."
+    quantity: 2
+
+  - id: exp-property-insurance
+    name: "Property Insurance"
+    value: 5
+    description: "Play on a property set to prevent it from being taken for any reason, unless it is to pay off a debt."
+    fine_print:
+      - "(Property cannot be further developed after this is placed.)"
+      - "(Treat as a building.)"
+    quantity: 1
+
+  - id: exp-triple-the-rent
+    name: "Triple the Rent"
+    value: 5
+    description: "Must be played with a rent card."
+    quantity: 1

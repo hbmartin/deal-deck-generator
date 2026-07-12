@@ -6,7 +6,7 @@ from pathlib import Path
 from ..geometry import BLEED
 from ..models import Card
 from ..models.deck import Deck
-from ..raster.base import get_rasterizer
+from ..raster.base import get_rasterizer, stamp_png_dpi
 from ..raster.fontsetup import write_fonts_conf
 from ..svg.cards import build_card
 from ..tokens import Tokens, load_tokens
@@ -53,6 +53,7 @@ def render_deck(  # noqa: PLR0913
         svg_path.write_bytes(doc.to_bytes())
         png_path = png_dir / f"{design_id}.png"
         rast.rasterize(svg_path, png_path, int(BLEED.w), int(BLEED.h), fontconfig)
+        stamp_png_dpi(png_path)  # print files must declare 300 DPI for MPC
         entry = {
             "type": card.card_type,
             "title": card.title,
