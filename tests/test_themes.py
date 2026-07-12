@@ -7,7 +7,9 @@ import pytest
 from src.data.loader import load_deck
 from src.data.themes import (
     THEMES_DIR,
+    available_fragments,
     available_themes,
+    fragment_cards_path,
     load_theme_tokens,
     theme_cards_path,
 )
@@ -44,11 +46,54 @@ def test_classic_and_chicago_registered():
     assert {"classic", "chicago"} <= set(available_themes())
 
 
-def test_chicago_is_pure_reskin_of_classic():
-    """Same ids, types, values, and quantities as classic — only labels differ."""
+def test_chicago_base_is_pure_reskin_of_classic():
+    """Chicago's BASE cards match classic exactly (ids, types, values, quantities);
+    only the property labels and the added expansion set differ.
+    """
     classic = load_deck(theme_cards_path("classic"))
     chicago = load_deck(theme_cards_path("chicago"))
-    assert _design_signature(chicago) == _design_signature(classic)
+    chicago_base = {
+        k: v for k, v in _design_signature(chicago).items() if not k.startswith("exp-")
+    }
+    assert chicago_base == _design_signature(classic)
+
+
+def test_chicago_includes_expansion():
+    """Chicago pulls in the 29 expansion action designs; classic does not."""
+    classic = load_deck(theme_cards_path("classic"))
+    chicago = load_deck(theme_cards_path("chicago"))
+    exp = [
+        c
+        for c in chicago.unique_designs()
+        if c.metadata["design_id"].startswith("exp-")
+    ]
+    assert len(exp) == 29
+    assert all(c.card_type == "action" for c in exp)
+    assert {c.value for c in exp} == {3, 4, 5}
+    # a doubled design keeps its count; classic stays expansion-free
+    assert chicago.quantity_of("exp-gold-digger") == 2
+    assert not any(
+        c.metadata["design_id"].startswith("exp-") for c in classic.unique_designs()
+    )
+
+
+def test_include_merges_shared_fragment():
+    """The `include:` directive merges a registered fragment's cards into a deck."""
+    assert "expansion" in available_fragments()
+    ids = {
+        c.metadata["design_id"]
+        for c in load_deck(theme_cards_path("chicago")).unique_designs()
+    }
+    assert "exp-gold-digger" in ids  # defined only in themes/_shared/expansion.yaml
+
+
+@pytest.mark.parametrize(
+    "name",
+    ["missing", "expansion/../expansion", str(THEMES_DIR / "_shared" / "expansion")],
+)
+def test_fragment_loaders_reject_unregistered_names(name):
+    with pytest.raises(ValueError, match="unknown fragment"):
+        fragment_cards_path(name)
 
 
 def test_chicago_has_new_property_names():

@@ -23,6 +23,7 @@ from ..models import (
     WildcardCard,
 )
 from ..models.deck import Deck, DeckConfig
+from .themes import fragment_cards_path
 
 DEFAULT_CARDS_PATH = (
     Path(__file__).resolve().parent.parent.parent / "themes" / "classic" / "cards.yaml"
@@ -30,6 +31,15 @@ DEFAULT_CARDS_PATH = (
 
 type CardType = Literal["property", "action", "money", "rent", "wildcard"]
 type CardCreator = Callable[[list[dict]], Sequence[Card]]
+
+# The per-type card lists a theme (or shared fragment) may define.
+CARD_LIST_KEYS = (
+    "property_cards",
+    "action_cards",
+    "money_cards",
+    "rent_cards",
+    "wildcard_cards",
+)
 
 
 def load_card_definitions(yaml_path: Path | str) -> dict:
@@ -271,9 +281,29 @@ def _color_rent_index(card_defs: dict) -> dict[str, dict]:
     return index
 
 
+def _apply_includes(card_defs: dict) -> dict:
+    """Merge any `include:`-d shared fragments' card lists into card_defs.
+
+    A theme lists shared fragments by name under `include:`; each is resolved
+    (and validated) via ``fragment_cards_path`` and its per-type card lists are
+    appended. Only the ``*_cards`` lists merge — the theme's ``deck`` config and
+    everything else are left untouched.
+    """
+    names = card_defs.get("include") or []
+    if not names:
+        return card_defs
+    merged = dict(card_defs)
+    for name in names:
+        fragment = load_card_definitions(fragment_cards_path(name))
+        for key in CARD_LIST_KEYS:
+            if fragment.get(key):
+                merged[key] = list(merged.get(key) or []) + list(fragment[key])
+    return merged
+
+
 def load_deck(yaml_path: Path | str = DEFAULT_CARDS_PATH) -> Deck:
     """Load the full deck: all card instances plus deck-level config."""
-    card_defs = load_card_definitions(yaml_path)
+    card_defs = _apply_includes(load_card_definitions(yaml_path))
     cards = create_card_instances(card_defs)
 
     # Two-color wildcards render a rent table per side, derived from the

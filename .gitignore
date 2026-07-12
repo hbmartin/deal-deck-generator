@@ -19,3 +19,4 @@ tests/**/*.png
 triage_decisions.db
 .coverage
 reviews_triage/
+Deal Expansion/

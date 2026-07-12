@@ -2,7 +2,7 @@
 
 from ...models import ActionCard, Card
 from ...models.deck import Deck
-from ...text.richtext import rich_lines
+from ...text.richtext import measure_rich_height, rich_lines
 from ...tokens import Tokens
 from .. import core
 from ..components.badge import value_badge
@@ -16,6 +16,7 @@ CIRCLE_CX = 366
 CIRCLE_CY = 520
 CIRCLE_R = 195
 DESC_TOP = 778
+DESC_BOTTOM = 985  # keep rules text clear of the footer and bottom badge
 BADGE_POS = (108, 114)  # centered on the border band's corner square
 
 
@@ -52,6 +53,14 @@ def action_chassis_content(
 
     baseline = DESC_TOP
     if card.description:
+        # Reserve vertical room for the fine print, then shrink the description
+        # (only if needed) so the whole block clears the footer. Base-game cards
+        # are short and never shrink, so their output is unchanged.
+        reserve = sum(
+            measure_rich_height(tokens, line, tokens.size("body_small"), 400) + 2
+            for line in card.fine_print
+        )
+        desc_max_h = max(DESC_BOTTOM - DESC_TOP - reserve, 60)
         block, baseline = rich_lines(
             doc,
             tokens,
@@ -60,6 +69,8 @@ def action_chassis_content(
             y=baseline,
             size=tokens.size("body"),
             max_w=372,
+            max_h=desc_max_h,
+            min_size=20,
         )
         doc.add(block)
     for line in card.fine_print:

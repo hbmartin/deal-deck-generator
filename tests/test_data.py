@@ -1,9 +1,11 @@
 """Deck data invariants: counts, names, and wildcard rent derivation.
 
-The structural invariants (counts, unique designs, rent derivation, quantities)
-must hold for *every* theme, so they are parametrized over available_themes().
-The name-specific assertions are true only for the classic Atlantic-City deck and
-use the classic ``deck`` fixture.
+Composition is asserted per theme via EXPECTED: the base themes are the standard
+106-card deck, while chicago also pulls in the 38-card expansion set (see
+``include: [expansion]`` in themes/chicago/cards.yaml). The rent-derivation and
+quantity self-consistency invariants hold for *every* theme. The name-specific
+assertions are true only for the classic Atlantic-City deck and use the classic
+``deck`` fixture.
 """
 
 from collections import Counter
@@ -13,35 +15,52 @@ import pytest
 from src.data.loader import load_deck
 from src.data.themes import available_themes, theme_cards_path
 
+# Base 106-card composition, shared by every pure-reskin theme.
+_BASE_PER_TYPE = {"property": 28, "action": 34, "rent": 13, "wildcard": 11, "money": 20}
+_BASE = {"total": 106, "designs": 58, "per_type": _BASE_PER_TYPE}
+
+EXPECTED = {
+    "classic": _BASE,
+    # chicago = base + expansion (29 designs / 38 physical, all action cards).
+    "chicago": {
+        "total": 144,
+        "designs": 87,
+        "per_type": {**_BASE_PER_TYPE, "action": 34 + 38},
+    },
+}
+
 
 @pytest.fixture(params=available_themes())
-def any_deck(request):
-    """A loaded deck for each available theme (parametrized)."""
-    return load_deck(theme_cards_path(request.param))
+def named_deck(request):
+    """(theme_name, loaded deck) for each available theme (parametrized)."""
+    return request.param, load_deck(theme_cards_path(request.param))
 
 
-def test_total_card_count(any_deck):
-    assert len(any_deck.cards) == 106
+def test_expected_covers_every_theme():
+    # Adding a theme must add its expected composition here, on purpose.
+    assert set(EXPECTED) == set(available_themes())
 
 
-def test_per_type_counts(any_deck):
-    counts = Counter(c.card_type for c in any_deck.cards)
-    assert counts == {
-        "property": 28,
-        "action": 34,
-        "rent": 13,
-        "wildcard": 11,
-        "money": 20,
-    }
+def test_total_card_count(named_deck):
+    name, deck = named_deck
+    assert len(deck.cards) == EXPECTED[name]["total"]
 
 
-def test_unique_design_count(any_deck):
-    assert len(any_deck.unique_designs()) == 58
+def test_per_type_counts(named_deck):
+    name, deck = named_deck
+    counts = Counter(c.card_type for c in deck.cards)
+    assert counts == EXPECTED[name]["per_type"]
 
 
-def test_wildcard_halves_derive_from_property_tables(any_deck):
-    props = {c.color: c for c in any_deck.by_type("property")}
-    for card in any_deck.by_type("wildcard"):
+def test_unique_design_count(named_deck):
+    name, deck = named_deck
+    assert len(deck.unique_designs()) == EXPECTED[name]["designs"]
+
+
+def test_wildcard_halves_derive_from_property_tables(named_deck):
+    _name, deck = named_deck
+    props = {c.color: c for c in deck.by_type("property")}
+    for card in deck.by_type("wildcard"):
         if card.is_multicolor:
             assert "halves" not in card.metadata
             continue
@@ -53,11 +72,12 @@ def test_wildcard_halves_derive_from_property_tables(any_deck):
             assert half["rent_values"] == prop.rent_values
 
 
-def test_design_quantities_sum_to_deck(any_deck):
+def test_design_quantities_sum_to_deck(named_deck):
+    _name, deck = named_deck
     total = sum(
-        any_deck.quantity_of(c.metadata["design_id"]) for c in any_deck.unique_designs()
+        deck.quantity_of(c.metadata["design_id"]) for c in deck.unique_designs()
     )
-    assert total == 106
+    assert total == len(deck.cards)
 
 
 # --- classic-only name assertions ---

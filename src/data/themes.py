@@ -16,6 +16,9 @@ from ..tokens import TOKENS_PATH, Tokens
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 THEMES_DIR = PROJECT_ROOT / "themes"
 DEFAULT_THEME = "classic"
+# Shared card-list fragments a theme can pull in via `include:` live here. The
+# directory has no cards.yaml, so it is not a theme.
+FRAGMENTS_DIR = THEMES_DIR / "_shared"
 
 
 def available_themes() -> list[str]:
@@ -23,6 +26,31 @@ def available_themes() -> list[str]:
     if not THEMES_DIR.is_dir():
         return []
     return sorted(p.name for p in THEMES_DIR.iterdir() if (p / "cards.yaml").is_file())
+
+
+def available_fragments() -> list[str]:
+    """Sorted names of shared card-list fragments in themes/_shared/*.yaml."""
+    if not FRAGMENTS_DIR.is_dir():
+        return []
+    return sorted(p.stem for p in FRAGMENTS_DIR.glob("*.yaml"))
+
+
+def _validate_fragment_name(name: str) -> None:
+    """Reject include names that are not a registered shared fragment."""
+    fragments = available_fragments()
+    if name not in fragments:
+        message = f"unknown fragment {name!r}; available: {', '.join(fragments)}"
+        raise ValueError(message)
+
+
+def fragment_cards_path(name: str) -> Path:
+    """Path to a shared fragment's yaml, validating that it is registered.
+
+    Like theme names, the allow-list check (exact membership of the discovered
+    fragment stems) is what blocks absolute paths and ``..`` traversal.
+    """
+    _validate_fragment_name(name)
+    return FRAGMENTS_DIR / f"{name}.yaml"
 
 
 def _validate_theme_name(name: str) -> None:

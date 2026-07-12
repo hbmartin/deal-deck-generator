@@ -1,12 +1,19 @@
-# Chicago-themed deck — 106 cards total.
+# Chicago-themed deck — 106 base cards, reskinned, plus the expansion set.
 #
-# A pure reskin of the classic deck: identical ids, values, set sizes, rent
-# tables, quantities, and header icons. Only the property NAMES and the deck
-# footer differ (and the palette lives in tokens.json). Because the ids/colors
-# match classic exactly, the two decks are structurally interchangeable and the
-# derived wildcard rent tables stay correct.
+# The base cards are a pure reskin of the classic deck: identical ids, values,
+# set sizes, rent tables, quantities, and header icons. Only the property NAMES
+# and the deck footer differ (and the palette lives in tokens.json). Because the
+# base ids/colors match classic exactly, the derived wildcard rent tables stay
+# correct.
+#
+# `include: [expansion]` appends the shared expansion action cards
+# (themes/_shared/expansion.yaml), so this theme renders 135 designs / 144
+# physical cards. Classic omits the include and stays a pure 106-card deck.
 #
 # {nM} marks an inline money glyph; `fine_print` renders smaller than `description`.
+
+include:
+  - expansion
 
 deck:
   footer_text: "WINDY CITY DEAL"
