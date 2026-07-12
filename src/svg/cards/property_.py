@@ -52,7 +52,7 @@ def build_property(card: PropertyCard, deck: Deck, tokens: Tokens) -> core.SVGDo
         tokens.chrome("badge_ring_property"),
         fill=tokens.chrome("property_body"),
     )
-    badge.set("transform", core.translate(138, 124))
+    badge.set("transform", core.translate(132, 132))
     doc.add(badge)
 
     f = footer(deck, tokens)

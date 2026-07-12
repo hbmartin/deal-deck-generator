@@ -17,7 +17,7 @@ CIRCLE_CY = 520
 CIRCLE_R = 195
 DESC_TOP = 778
 DESC_BOTTOM = 985  # keep rules text clear of the footer and bottom badge
-BADGE_POS = (108, 114)  # centered on the border band's corner square
+BADGE_POS = (132, 132)  # disc kept fully inside the safe area (corner 66 + radius)
 
 
 def action_chassis_content(

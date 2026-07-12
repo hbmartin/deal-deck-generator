@@ -20,7 +20,7 @@ CIRCLE_CY = 540
 CIRCLE_R = 200
 CIRCLE_RING = 7
 
-BADGE_POS = (108, 114)  # centered on the band corner; bottom-right is the twin
+BADGE_POS = (132, 132)  # disc kept fully inside the safe area; bottom-right is the twin
 
 
 @register("money")

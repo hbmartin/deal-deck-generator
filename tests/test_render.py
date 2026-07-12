@@ -8,6 +8,8 @@ from src.raster.base import get_rasterizer
 
 from src.raster.fontsetup import write_fonts_conf
 
+from src.render.pipeline import render_deck
+
 from src.svg.cards import build_card
 
 SAMPLE_DESIGNS = [
@@ -32,3 +34,15 @@ def test_print_png_dimensions(deck, tmp_path):
         rast.rasterize(svg, png, int(BLEED.w), int(BLEED.h), fontconfig)
         with Image.open(png) as img:
             assert img.size == (732, 1101), design_id
+
+
+def test_print_png_declares_300_dpi(deck, tmp_path):
+    """Print files must carry a 300-DPI resolution chunk (MPC reads pHYs)."""
+    render_deck(deck, tmp_path, card_ids=["pass-go"], fonts_mode="bundled",
+                previews=False)
+    with Image.open(tmp_path / "png" / "pass-go.png") as img:
+        assert img.size == (732, 1101)
+        dpi = img.info.get("dpi")
+    assert dpi is not None, "print PNG has no DPI metadata"
+    assert round(dpi[0]) == 300, dpi
+    assert round(dpi[1]) == 300, dpi

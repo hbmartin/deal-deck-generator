@@ -28,7 +28,7 @@ from .base import card_body, footer, frame_box, new_document, thin_frame
 CX, CY = 366, 550.5
 
 HEADER_BOX = Box(115, 132, 502, 190)
-BADGE_POS = (138, 120)  # nested into the frame corner
+BADGE_POS = (132, 132)  # disc kept fully inside the safe area
 
 FAN_SCALE = 0.82
 BAND_PITCH = 96
@@ -299,9 +299,10 @@ def _build_multicolor(card: WildcardCard, tokens: Tokens) -> core.SVGDocument:
 @register("wildcard")
 def build_wildcard(card: WildcardCard, deck: Deck, tokens: Tokens) -> core.SVGDocument:
     if card.is_multicolor:
-        doc = _build_multicolor(card, tokens)
-    else:
-        doc = _build_two_color(card, tokens)
+        # The bottom color-stripe fills the footer zone, so a theme footer would
+        # collide with it; this design carries no footer.
+        return _build_multicolor(card, tokens)
+    doc = _build_two_color(card, tokens)
     f = footer(deck, tokens)
     if f is not None:
         doc.add(f)
