@@ -9,10 +9,16 @@ assertions are true only for the classic Atlantic-City deck and use the classic
 """
 
 from collections import Counter
+from typing import cast
 
 import pytest
 
-from src.data.loader import load_deck
+from src.data.loader import (
+    CardType,
+    create_card_instances,
+    load_card_definitions,
+    load_deck,
+)
 from src.data.themes import available_themes, theme_cards_path
 
 # Base 106-card composition, shared by every pure-reskin theme.
@@ -78,6 +84,20 @@ def test_design_quantities_sum_to_deck(named_deck):
         deck.quantity_of(c.metadata["design_id"]) for c in deck.unique_designs()
     )
     assert total == len(deck.cards)
+
+
+def test_load_card_definitions_decodes_utf8(tmp_path):
+    cards_path = tmp_path / "cards.yaml"
+    cards_path.write_text("title: Montréal\n", encoding="utf-8")
+
+    assert load_card_definitions(cards_path) == {"title": "Montréal"}
+
+
+def test_create_card_instances_rejects_unsupported_card_type():
+    unsupported = cast("CardType", "unsupported")
+
+    with pytest.raises(ValueError, match="unsupported card type 'unsupported'"):
+        create_card_instances({}, card_type=unsupported)
 
 
 # --- classic-only name assertions ---
