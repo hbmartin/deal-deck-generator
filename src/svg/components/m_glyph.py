@@ -1,4 +1,4 @@
-"""The Monopoly money glyph: an M with a double horizontal strikethrough,
+"""The money glyph: an M with a double horizontal strikethrough,
 followed by an amount digit and a small trailing M, e.g. (M)3m.
 
 The struck M is pure vector geometry (no font dependence). Digits and the

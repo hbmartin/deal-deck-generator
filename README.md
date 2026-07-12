@@ -1,7 +1,6 @@
 # Deal Deck Generator
 
-Data-driven card deck generator that reproduces the 2008-era Monopoly Deal
-card designs as print-ready files: **cards.yaml → Python → SVG → PNG**.
+Data-driven card deck generator that produces card designs as print-ready files: **cards.yaml → Python → SVG → PNG**.
 
 Decks are **themeable**: each theme under `themes/<name>/` supplies its own card
 names and an optional color-palette overlay, all sharing the same game structure
@@ -88,7 +87,7 @@ automatically. Resolution lives in `src/data/themes.py`
 |---|---|---|
 | Data | `themes/<name>/cards.yaml`, `src/data/loader.py`, `src/data/themes.py` | All 106 cards per theme, transcribed verbatim from the reference photos (classic). Two-color wildcards derive their rent tables from the property definitions at load time — one source of truth. `{nM}` tokens in descriptions mark inline money glyphs. |
 | Design tokens | `design_tokens.json` (base) + `themes/<name>/tokens.json` (overlay), `src/tokens.py` | Print geometry, the ten property colors, per-value tints (money **and** action/rent cards share one `value_tints` table, as the real deck does), type scale, fonts. Tune shared values in the base; per-theme colors go in the overlay. Tune here, not in code. |
-| SVG build | `src/svg/` | ElementTree-based builders. `svg/components/` holds the shared pieces: Ⓜ glyph, corner badges, header bars, fanned-card icons, dotted leaders, rent tables, title circles, color rings, procedural guilloché + ornate border band, icons, Mr. Monopoly. `svg/cards/` composes them per card type. |
+| SVG build | `src/svg/` | ElementTree-based builders. `svg/components/` holds the shared pieces: Ⓜ glyph, corner badges, header bars, fanned-card icons, dotted leaders, rent tables, title circles, color rings, procedural guilloché + ornate border band, icons, Mr. Money. `svg/cards/` composes them per card type. |
 | Guilloché | `src/svg/components/guilloche.py` | Deterministic engraved-line work: interleaved sine-wave mesh fields (one path per family in `<defs>`, stamped with `<use>`) and superposed epitrochoid rosette medallions. No randomness — renders are byte-stable. |
 | Raster | `src/raster/` | Pluggable rasterizers (rsvg default, Inkscape optional) driven through fontconfig. On macOS `PANGOCAIRO_BACKEND=fc` is forced so the bundled fonts are honored. |
 

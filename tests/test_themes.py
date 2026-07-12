@@ -6,6 +6,7 @@ import pytest
 
 from src.data.loader import load_deck
 from src.data.themes import (
+    THEMES_DIR,
     available_themes,
     load_theme_tokens,
     theme_cards_path,
@@ -83,7 +84,18 @@ def test_classic_tokens_equal_base():
     assert load_theme_tokens("classic").raw == load_tokens().raw
 
 
-@pytest.mark.parametrize("theme", ["classic", "chicago"])
+@pytest.mark.parametrize(
+    "theme",
+    ["missing", "classic/../classic", str(THEMES_DIR / "classic")],
+)
+def test_theme_loaders_reject_unregistered_names(theme):
+    with pytest.raises(ValueError, match="unknown theme"):
+        theme_cards_path(theme)
+    with pytest.raises(ValueError, match="unknown theme"):
+        load_theme_tokens(theme)
+
+
+@pytest.mark.parametrize("theme", available_themes())
 def test_every_design_builds_valid_svg(theme):
     deck = load_deck(theme_cards_path(theme))
     tokens = load_theme_tokens(theme)

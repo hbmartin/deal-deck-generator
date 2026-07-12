@@ -1,7 +1,7 @@
 # Complete card deck definitions — 106 cards total.
 #
 # Text is transcribed verbatim from the reference photos in "Card Images/".
-# {nM} marks an inline Monopoly money glyph (double-struck M + amount),
+# {nM} marks an inline money glyph (double-struck M + amount),
 # rendered as vector art by the pipeline.
 # `fine_print` lines render smaller than `description`, matching the cards.
 

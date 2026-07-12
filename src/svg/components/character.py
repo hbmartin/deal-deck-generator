@@ -1,4 +1,4 @@
-"""Simplified vector Mr. Monopoly for the multicolor wildcard.
+"""Simplified vector Mr. Money for the multicolor wildcard.
 
 A stylized flat-color redraw of the pose in the reference photo: top hat,
 mustache, tailcoat, one arm extended pointing at an open palm.
@@ -12,7 +12,7 @@ INK = "#1A1A1A"
 WHITE = "#FFFFFF"
 
 
-def mr_monopoly(height: float) -> core.ET.Element:
+def mr_money(height: float) -> core.ET.Element:
     h = height
     w = 0.78 * h
     cx = w * 0.46  # figure center line
