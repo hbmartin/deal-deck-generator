@@ -42,7 +42,10 @@ def run_checked(cmd: list[str], fontconfig: Path | None) -> None:
         # On macOS pango defaults to CoreText, which cannot see the bundled
         # fonts; force the fontconfig backend so FONTCONFIG_FILE is honored.
         env["PANGOCAIRO_BACKEND"] = "fc"
-    result = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    # Rasterizer implementations construct argument lists without invoking a shell.
+    result = subprocess.run(  # noqa: S603
+        cmd, capture_output=True, text=True, env=env
+    )
     if result.returncode != 0:
         raise RasterError(
             f"{cmd[0]} failed ({result.returncode}): {result.stderr.strip()}"

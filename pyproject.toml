@@ -45,7 +45,7 @@ target-version = "py314"
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["ANN204", "COM812", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D205", "D212", "D213", "EM101", "EM102", "FBT001", "PLR2004", "PLW1510", "S603", "SIM102", "T201", "TC001", "TC003", "TID252", "TRY003"]
+ignore = ["ANN204", "COM812", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D205", "D212", "D213", "EM101", "EM102", "FBT001", "PLR2004", "PLW1510", "SIM102", "T201", "TC001", "TC003", "TID252", "TRY003"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["ANN001", "ANN002", "ANN003", "ANN201", "ARG001", "ARG005", "D103", "D104", "DTZ003", "ERA001", "F403", "F405", "FBT002", "FBT002", "G004", "N802", "PLC0415", "PLR2004", "PLW1510", "PT011", "PT013", "PTH110", "PTH118", "PTH119", "PTH122", "PTH123", "PTH207", "S101", "S102", "S311", "S603", "S607", "SIM115"]

@@ -61,7 +61,7 @@ def load_card_definitions(yaml_path: Path | str) -> dict:
     if not yaml_path.exists():
         raise FileNotFoundError(f"Card definitions file not found: {yaml_path}")
 
-    with yaml_path.open() as f:
+    with yaml_path.open(encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -256,6 +256,10 @@ def create_card_instances(
         "rent": ("rent_cards", create_rent_card_instances),
         "wildcard": ("wildcard_cards", create_wildcard_instances),
     }
+    if card_type is not None and card_type not in creators:
+        raise ValueError(
+            f"unsupported card type {card_type!r}; options: {sorted(creators)}"
+        )
     requested_types = (
         creators if card_type is None else {card_type: creators[card_type]}
     )
