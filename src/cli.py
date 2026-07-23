@@ -73,6 +73,7 @@ def cmd_render(args: argparse.Namespace | SimpleNamespace) -> int:
     n = len(manifest["cards"])
     print(f"rendered {n} designs ({manifest['total_physical_cards']} physical cards)")
     print(f"output: {out}")
+    print(f"upload: {out / 'upload'} ({len(manifest['upload_files'])} files)")
     return 0
 
 

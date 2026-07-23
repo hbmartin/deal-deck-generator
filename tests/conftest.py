@@ -1,3 +1,5 @@
+"""Shared pytest fixtures for deck rendering and golden comparisons."""
+
 import os
 import shutil
 from collections.abc import Generator
@@ -6,9 +8,7 @@ from pathlib import Path
 import pytest
 
 from src.data.loader import load_deck
-
 from src.goldens import detect_env, fonts_mode_for
-
 from src.render.pipeline import render_deck
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

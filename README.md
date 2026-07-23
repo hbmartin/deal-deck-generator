@@ -7,13 +7,14 @@ names and an optional color-palette overlay, all sharing the same game structure
 and rendering engine. The default `classic` deck ships alongside a `chicago`
 deck (Chicago landmarks + a Chicago-flag palette). See [Themes](#themes).
 
-Every one of the deck's 106 cards (58 unique designs) is generated as a
-resolution-independent SVG in print coordinates and rasterized to a PNG that
-matches the MakePlayingCards.com **US Game Deck** spec — 2.44" × 3.67" full
-bleed at 300 DPI (732 × 1101 px), cut line 2.2" × 3.43", with all critical
-content inside the safe area. Reference photos of the physical cards live in
-`Card Images/` and drive the visual-fidelity work (layout metrics, palettes,
-the guilloché engraving, the double-struck Ⓜ money glyph).
+The deck's 58 unique designs are generated as resolution-independent SVGs in
+print coordinates and rasterized to PNGs that match the MakePlayingCards.com
+**US Game Deck** spec — 2.44" × 3.67" full bleed at 300 DPI (732 × 1101 px),
+cut line 2.2" × 3.43", with all critical content inside the safe area. Each
+render also creates one uniquely named PNG per physical card, ready for bulk
+upload. Reference photos of the physical cards live in `Card Images/` and drive
+the visual-fidelity work (layout metrics, palettes, the guilloché engraving,
+the double-struck Ⓜ money glyph).
 
 ## Requirements
 
@@ -49,9 +50,12 @@ uv run python main.py render --renderer inkscape --fonts bundled
 uv run python main.py smoke
 ```
 
-`output/<theme>/manifest.json` records every design with its physical-card
-quantity — use it when uploading to MakePlayingCards (one image per design, set
-the quantity on the site; the deck totals 106 cards).
+`output/<theme>/png/` contains one print PNG per unique design.
+`output/<theme>/upload/` expands those designs by quantity into a flat,
+slot-ordered set of physical-card files, such as `029-deal-breaker-1.png` and
+`030-deal-breaker-2.png`. Select the entire `upload/` folder for bulk upload to
+MakePlayingCards. `manifest.json` records both the design quantities and the
+ordered mapping for every upload file; the classic deck totals 106 files.
 
 ## Themes
 
@@ -89,7 +93,7 @@ automatically. Resolution lives in `src/data/themes.py`
 | Design tokens | `design_tokens.json` (base) + `themes/<name>/tokens.json` (overlay), `src/tokens.py` | Print geometry, the ten property colors, per-value tints (money **and** action/rent cards share one `value_tints` table, as the real deck does), type scale, fonts. Tune shared values in the base; per-theme colors go in the overlay. Tune here, not in code. |
 | SVG build | `src/svg/` | ElementTree-based builders. `svg/components/` holds the shared pieces: Ⓜ glyph, corner badges, header bars, fanned-card icons, dotted leaders, rent tables, title circles, color rings, procedural guilloché + ornate border band, icons, Mr. Money. `svg/cards/` composes them per card type. |
 | Guilloché | `src/svg/components/guilloche.py` | Deterministic engraved-line work: interleaved sine-wave mesh fields (one path per family in `<defs>`, stamped with `<use>`) and superposed epitrochoid rosette medallions. No randomness — renders are byte-stable. |
-| Raster | `src/raster/` | Pluggable rasterizers (rsvg default, Inkscape optional) driven through fontconfig. On macOS `PANGOCAIRO_BACKEND=fc` is forced so the bundled fonts are honored. |
+| Raster | `src/raster/`, `src/render/pipeline.py` | Pluggable rasterizers (rsvg default, Inkscape optional) driven through fontconfig. Each unique design is rasterized once, then copied by quantity into the slot-ordered `upload/` directory. On macOS `PANGOCAIRO_BACKEND=fc` is forced so the bundled fonts are honored. |
 
 ### Fonts
 
@@ -126,5 +130,5 @@ uv run pytest
   notice when the set for its environment is absent.
 
 CI (GitHub Actions) checks Ruff formatting, lints with Ruff, type-checks with
-Pyrefly, tests, renders the full deck with bundled fonts, and uploads the PNGs
-+ manifest as an artifact.
+Pyrefly, tests, renders the full deck with bundled fonts, and uploads the design
+PNGs, quantity-expanded upload files, previews, and manifest as an artifact.
