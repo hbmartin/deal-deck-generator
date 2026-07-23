@@ -3,13 +3,9 @@
 from PIL import Image
 
 from src.geometry import BLEED
-
 from src.raster.base import get_rasterizer
-
 from src.raster.fontsetup import write_fonts_conf
-
 from src.render.pipeline import render_deck
-
 from src.svg.cards import build_card
 
 SAMPLE_DESIGNS = [
@@ -38,11 +34,24 @@ def test_print_png_dimensions(deck, tmp_path):
 
 def test_print_png_declares_300_dpi(deck, tmp_path):
     """Print files must carry a 300-DPI resolution chunk (MPC reads pHYs)."""
-    render_deck(deck, tmp_path, card_ids=["pass-go"], fonts_mode="bundled",
-                previews=False)
-    with Image.open(tmp_path / "png" / "pass-go.png") as img:
+    manifest = render_deck(
+        deck,
+        tmp_path,
+        card_ids=["pass-go"],
+        fonts_mode="bundled",
+        previews=False,
+    )
+    source_path = tmp_path / "png" / "pass-go.png"
+    with Image.open(source_path) as img:
         assert img.size == (732, 1101)
         dpi = img.info.get("dpi")
     assert dpi is not None, "print PNG has no DPI metadata"
     assert round(dpi[0]) == 300, dpi
     assert round(dpi[1]) == 300, dpi
+
+    upload_paths = sorted((tmp_path / "upload").glob("*.png"))
+    assert [path.name for path in upload_paths] == [
+        f"{slot:03d}-pass-go-{slot}.png" for slot in range(1, 11)
+    ]
+    assert all(path.read_bytes() == source_path.read_bytes() for path in upload_paths)
+    assert len(manifest["upload_files"]) == 10

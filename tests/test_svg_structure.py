@@ -23,7 +23,7 @@ def test_every_design_builds(built_svgs):
 
 def test_svgs_parse_with_viewbox(built_svgs):
     for design_id, data in built_svgs.items():
-        root = ET.fromstring(data)
+        root = ET.fromstring(data)  # noqa: S314 - parses trusted generated SVG
         assert root.get("viewBox") == "0 0 732 1101", design_id
 
 
@@ -34,7 +34,7 @@ def test_size_budget(built_svgs):
 
 def test_def_ids_unique(built_svgs):
     for design_id, data in built_svgs.items():
-        root = ET.fromstring(data)
+        root = ET.fromstring(data)  # noqa: S314 - parses trusted generated SVG
         ids = [el.get("id") for el in root.iter() if el.get("id")]
         assert len(ids) == len(set(ids)), design_id
 

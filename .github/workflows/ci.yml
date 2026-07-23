@@ -70,5 +70,6 @@ jobs:
           path: |
             output/*/png
             output/*/preview
+            output/*/upload
             output/*/manifest.json
           retention-days: 14

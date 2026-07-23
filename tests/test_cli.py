@@ -39,7 +39,11 @@ def test_cmd_render_passes_filters_to_pipeline(monkeypatch, tmp_path, capsys):
 
     def fake_render_deck(deck_arg, out_arg, **kwargs) -> dict:
         calls.update(deck=deck_arg, out=out_arg, **kwargs)
-        return {"cards": {"one": {}}, "total_physical_cards": 2}
+        return {
+            "cards": {"one": {}},
+            "upload_files": [{}, {}],
+            "total_physical_cards": 2,
+        }
 
     monkeypatch.setattr(cli, "render_deck", fake_render_deck)
     args = SimpleNamespace(
@@ -64,7 +68,9 @@ def test_cmd_render_passes_filters_to_pipeline(monkeypatch, tmp_path, capsys):
         "previews": False,
         "tokens": tokens,
     }
-    assert "rendered 1 designs (2 physical cards)" in capsys.readouterr().out
+    output = capsys.readouterr().out
+    assert "rendered 1 designs (2 physical cards)" in output
+    assert f"upload: {args.out / 'upload'} (2 files)" in output
 
 
 class BlankDocument:

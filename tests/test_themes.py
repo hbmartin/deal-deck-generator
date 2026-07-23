@@ -125,7 +125,7 @@ def test_overlay_merges_onto_base():
 
 
 def test_classic_tokens_equal_base():
-    """classic has no overlay, so it resolves to the base tokens unchanged."""
+    """Classic has no overlay, so it resolves to the base tokens unchanged."""
     assert load_theme_tokens("classic").raw == load_tokens().raw
 
 
@@ -147,5 +147,5 @@ def test_every_design_builds_valid_svg(theme):
     for card in deck.unique_designs():
         data = build_card(card, deck, tokens).to_bytes()
         # Parses as XML and is a non-trivial SVG document.
-        root = ET.fromstring(data)
+        root = ET.fromstring(data)  # noqa: S314 - parses trusted generated SVG
         assert root.tag.endswith("svg")
