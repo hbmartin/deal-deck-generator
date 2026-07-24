@@ -1,14 +1,10 @@
-# Chicago-themed deck — 106 base cards, reskinned, plus the expansion set.
+# Arizona statewide theme — 106 base cards, plus the shared expansion set.
 #
-# The base cards are a pure reskin of the classic deck: identical ids, values,
-# set sizes, rent tables, quantities, and header icons. Only the property NAMES
-# and the deck footer differ (and the palette lives in tokens.json). Because the
-# base ids/colors match classic exactly, the derived wildcard rent tables stay
-# correct.
-#
-# `include: [expansion]` appends the shared expansion action cards
-# (themes/_shared/expansion.yaml), so this theme renders 135 designs / 144
-# physical cards. Classic omits the include and stays a pure 106-card deck.
+# The property sets group cities, public landscapes, official park names,
+# Route 66 communities, and rivers from across Arizona. Their order follows the
+# inherited gameplay progression; it is not a ranking of cultural importance or
+# a statement of ownership. Tribal representation is limited to current official
+# place names, while the visual overlay uses non-tribal state and desert imagery.
 #
 # {nM} marks an inline money glyph; `fine_print` renders smaller than `description`.
 
@@ -16,14 +12,14 @@ include:
   - expansion
 
 deck:
-  footer_text: "WINDY CITY DEAL"
+  footer_text: "ARIZONA DEAL"
   card_back:
-    title: "WINDY CITY DEAL"
+    title: "ARIZONA DEAL"
 
-# Property Cards (28 total) — Chicago landmarks & neighborhoods, cheapest -> priciest.
+# Property Cards (28 total) — statewide places grouped by landscape and region.
 property_cards:
   - id: brown-01
-    name: "Pilsen"
+    name: "Bisbee"
     color: brown
     value: 1
     set_size: 2
@@ -31,7 +27,7 @@ property_cards:
     quantity: 1
 
   - id: brown-02
-    name: "Bridgeport"
+    name: "Jerome"
     color: brown
     value: 1
     set_size: 2
@@ -39,7 +35,7 @@ property_cards:
     quantity: 1
 
   - id: light_blue-01
-    name: "Rogers Park"
+    name: "Tempe Town Lake"
     color: light_blue
     value: 1
     set_size: 3
@@ -47,7 +43,8 @@ property_cards:
     quantity: 1
 
   - id: light_blue-02
-    name: "Uptown"
+    name: "Lake Havasu"
+    name_lines: ["Lake Havasu"]
     color: light_blue
     value: 1
     set_size: 3
@@ -55,7 +52,8 @@ property_cards:
     quantity: 1
 
   - id: light_blue-03
-    name: "Lincoln Square"
+    name: "Lake Powell"
+    name_lines: ["Lake Powell"]
     color: light_blue
     value: 1
     set_size: 3
@@ -63,7 +61,8 @@ property_cards:
     quantity: 1
 
   - id: pink-01
-    name: "Wicker Park"
+    name: "Roosevelt Row"
+    name_lines: ["Roosevelt Row"]
     color: pink
     value: 2
     set_size: 3
@@ -71,7 +70,7 @@ property_cards:
     quantity: 1
 
   - id: pink-02
-    name: "Logan Square"
+    name: "Old Town Scottsdale"
     color: pink
     value: 2
     set_size: 3
@@ -79,7 +78,8 @@ property_cards:
     quantity: 1
 
   - id: pink-03
-    name: "Bucktown"
+    name: "Barrio Viejo"
+    name_lines: ["Barrio Viejo"]
     color: pink
     value: 2
     set_size: 3
@@ -87,7 +87,8 @@ property_cards:
     quantity: 1
 
   - id: orange-01
-    name: "Hyde Park"
+    name: "Papago Park"
+    name_lines: ["Papago Park"]
     color: orange
     value: 2
     set_size: 3
@@ -95,7 +96,8 @@ property_cards:
     quantity: 1
 
   - id: orange-02
-    name: "Andersonville"
+    name: "Saguaro National Park"
+    name_lines: ["Saguaro", "National Park"]
     color: orange
     value: 2
     set_size: 3
@@ -103,7 +105,8 @@ property_cards:
     quantity: 1
 
   - id: orange-03
-    name: "Little Italy"
+    name: "Organ Pipe Cactus National Monument"
+    name_lines: ["Organ Pipe Cactus", "National Monument"]
     color: orange
     value: 2
     set_size: 3
@@ -111,7 +114,7 @@ property_cards:
     quantity: 1
 
   - id: red-01
-    name: "The Bean"
+    name: "Sedona"
     color: red
     value: 3
     set_size: 3
@@ -119,8 +122,8 @@ property_cards:
     quantity: 1
 
   - id: red-02
-    name: "Buckingham Fountain"
-    name_lines: ["Buckingham", "Fountain"]
+    name: "Antelope Canyon"
+    name_lines: ["Antelope Canyon"]
     color: red
     value: 3
     set_size: 3
@@ -128,7 +131,8 @@ property_cards:
     quantity: 1
 
   - id: red-03
-    name: "Grant Park"
+    name: "Canyon de Chelly National Monument"
+    name_lines: ["Canyon de Chelly", "National Monument"]
     color: red
     value: 3
     set_size: 3
@@ -136,7 +140,8 @@ property_cards:
     quantity: 1
 
   - id: yellow-01
-    name: "Navy Pier"
+    name: "Petrified Forest National Park"
+    name_lines: ["Petrified Forest", "National Park"]
     color: yellow
     value: 3
     set_size: 3
@@ -144,8 +149,8 @@ property_cards:
     quantity: 1
 
   - id: yellow-02
-    name: "Shedd Aquarium"
-    name_lines: ["Shedd", "Aquarium"]
+    name: "Meteor Crater"
+    name_lines: ["Meteor Crater"]
     color: yellow
     value: 3
     set_size: 3
@@ -153,7 +158,8 @@ property_cards:
     quantity: 1
 
   - id: yellow-03
-    name: "Field Museum"
+    name: "Chiricahua National Monument"
+    name_lines: ["Chiricahua", "National Monument"]
     color: yellow
     value: 3
     set_size: 3
@@ -161,8 +167,8 @@ property_cards:
     quantity: 1
 
   - id: green-01
-    name: "Millennium Park"
-    name_lines: ["Millennium", "Park"]
+    name: "Mount Lemmon"
+    name_lines: ["Mount Lemmon"]
     color: green
     value: 4
     set_size: 3
@@ -170,7 +176,8 @@ property_cards:
     quantity: 1
 
   - id: green-02
-    name: "Art Institute"
+    name: "Mogollon Rim"
+    name_lines: ["Mogollon Rim"]
     color: green
     value: 4
     set_size: 3
@@ -178,7 +185,8 @@ property_cards:
     quantity: 1
 
   - id: green-03
-    name: "Museum Campus"
+    name: "Humphreys Peak"
+    name_lines: ["Humphreys Peak"]
     color: green
     value: 4
     set_size: 3
@@ -186,8 +194,8 @@ property_cards:
     quantity: 1
 
   - id: dark_blue-01
-    name: "Magnificent Mile"
-    name_lines: ["Magnificent", "Mile"]
+    name: "Monument Valley Navajo Tribal Park"
+    name_lines: ["Monument Valley", "Navajo Tribal Park"]
     color: dark_blue
     value: 4
     set_size: 2
@@ -195,7 +203,8 @@ property_cards:
     quantity: 1
 
   - id: dark_blue-02
-    name: "Willis Tower"
+    name: "Grand Canyon National Park"
+    name_lines: ["Grand Canyon", "National Park"]
     color: dark_blue
     value: 4
     set_size: 2
@@ -203,60 +212,62 @@ property_cards:
     quantity: 1
 
   - id: railroad-01
-    name: "Red Line"
+    name: "Oatman"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: railroad-02
-    name: "Blue Line"
+    name: "Kingman"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: railroad-03
-    name: "Brown Line"
+    name: "Seligman"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: railroad-04
-    name: "Green Line"
+    name: "Winslow"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: utility-01
-    name: "ComEd"
+    name: "Colorado River"
+    name_lines: ["Colorado River"]
     color: utility
-    header_icon: bulb
+    header_icon: river
     value: 2
     set_size: 2
     rent_values: [[1, 1], [2, 2]]
     quantity: 1
 
   - id: utility-02
-    name: "Chicago Water"
+    name: "Salt River"
+    name_lines: ["Salt River"]
     color: utility
-    header_icon: faucet
+    header_icon: river
     value: 2
     set_size: 2
     rent_values: [[1, 1], [2, 2]]
     quantity: 1
 
-# Action Cards (34 total) — game mechanics, identical to the classic deck.
+# Action Cards (34 total) — game mechanics identical to the Classic deck.
 action_cards:
   - id: deal-breaker
     name: "Deal Breaker"
@@ -345,7 +356,7 @@ action_cards:
       - "Play into center to use."
     quantity: 2
 
-# Rent Cards (13 total) — identical to the classic deck.
+# Rent Cards (13 total) — game mechanics identical to the Classic deck.
 rent_cards:
   - id: rent-pink-orange
     name: "Rent"
@@ -407,11 +418,11 @@ rent_cards:
       - "Play into center to use."
     quantity: 3
 
-# Wildcard Property Cards (11 total) — identical to the classic deck.
+# Wildcard Property Cards (11 total) — game mechanics identical to Classic.
 wildcard_cards:
   - id: wildcard-pink-orange
     name: "Property Wild Card"
-    allowed_colors: [orange, pink]  # top half first, as photographed
+    allowed_colors: [orange, pink]
     is_multicolor: false
     value: 2
     quantity: 2
@@ -439,21 +450,21 @@ wildcard_cards:
 
   - id: wildcard-railroad-green
     name: "Property Wild Card"
-    allowed_colors: [green, railroad]  # top half first, as photographed
+    allowed_colors: [green, railroad]
     is_multicolor: false
     value: 4
     quantity: 1
 
   - id: wildcard-red-yellow
     name: "Property Wild Card"
-    allowed_colors: [yellow, red]  # top half first, as photographed
+    allowed_colors: [yellow, red]
     is_multicolor: false
     value: 3
     quantity: 2
 
   - id: wildcard-railroad-utility
     name: "Property Wild Card"
-    allowed_colors: [utility, railroad]  # top half first, as photographed
+    allowed_colors: [utility, railroad]
     is_multicolor: false
     value: 2
     quantity: 1
@@ -466,7 +477,7 @@ wildcard_cards:
     description: "This card can be used as part of any property set. This card has no monetary value."
     quantity: 2
 
-# Money Cards (20 total) — identical to the classic deck.
+# Money Cards (20 total) — game mechanics identical to the Classic deck.
 money_cards:
   - denomination: 10
     quantity: 1

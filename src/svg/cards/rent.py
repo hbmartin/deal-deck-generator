@@ -20,7 +20,7 @@ def build_rent(card: RentCard, deck: Deck, tokens: Tokens) -> core.SVGDocument:
 
     doc = new_document()
     doc.add(card_body(tokens))
-    tinted_chassis(doc, tint)
+    tinted_chassis(doc, tokens, tint)
 
     header_font = tokens.font("body_bold")
     doc.add(

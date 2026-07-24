@@ -1,11 +1,10 @@
 """Deck data invariants: counts, names, and wildcard rent derivation.
 
 Composition is asserted per theme via EXPECTED: the base themes are the standard
-106-card deck, while chicago also pulls in the 38-card expansion set (see
-``include: [expansion]`` in themes/chicago/cards.yaml). The rent-derivation and
-quantity self-consistency invariants hold for *every* theme. The name-specific
-assertions are true only for the classic Atlantic-City deck and use the classic
-``deck`` fixture.
+106-card deck, while Arizona and Chicago also pull in the 38-card expansion set.
+The rent-derivation and quantity self-consistency invariants hold for *every*
+theme. The name-specific assertions are true only for the classic Atlantic-City
+deck and use the classic ``deck`` fixture.
 """
 
 from collections import Counter
@@ -26,7 +25,13 @@ _BASE_PER_TYPE = {"property": 28, "action": 34, "rent": 13, "wildcard": 11, "mon
 _BASE = {"total": 106, "designs": 58, "per_type": _BASE_PER_TYPE}
 
 EXPECTED = {
+    "arizona": {
+        "total": 144,
+        "designs": 87,
+        "per_type": {**_BASE_PER_TYPE, "action": 34 + 38},
+    },
     "classic": _BASE,
+    "oaxaca": _BASE,
     # chicago = base + expansion (29 designs / 38 physical, all action cards).
     "chicago": {
         "total": 144,

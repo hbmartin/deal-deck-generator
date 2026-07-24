@@ -120,7 +120,7 @@ def build_action(card: ActionCard, deck: Deck, tokens: Tokens) -> core.SVGDocume
 
     doc = new_document()
     doc.add(card_body(tokens))
-    tinted_chassis(doc, tint)
+    tinted_chassis(doc, tokens, tint)
     action_chassis_content(doc, tokens, card, tint, title_icon=card.icon)
 
     f = footer(deck, tokens)

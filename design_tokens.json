@@ -47,6 +47,26 @@
       "weight": "700"
     }
   },
+  "ornament": {
+    "field_pattern": "wave",
+    "border_corner": "rosette",
+    "money_medallion": "epitrochoid"
+  },
+  "card_back": {
+    "background_property": "dark_blue",
+    "accent_order": [
+      "yellow",
+      "green",
+      "dark_blue",
+      "railroad",
+      "utility",
+      "brown",
+      "light_blue",
+      "pink",
+      "orange",
+      "red"
+    ]
+  },
   "palette": {
     "property": {
       "brown": {
@@ -136,6 +156,7 @@
     "body_small": 26,
     "footer": 20,
     "rent_value": 50,
-    "badge_value": 52
+    "badge_value": 52,
+    "card_back_title": 64
   }
 }

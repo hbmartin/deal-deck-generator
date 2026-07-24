@@ -7,6 +7,8 @@
 
 deck:
   footer_text: ""
+  card_back:
+    title: "DEAL"
 
 # Property Cards (28 total)
 property_cards:

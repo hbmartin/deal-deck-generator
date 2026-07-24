@@ -10,6 +10,7 @@ from ..models import Card
 from ..models.deck import Deck
 from ..raster.base import get_rasterizer, stamp_png_dpi
 from ..raster.fontsetup import write_fonts_conf
+from ..svg.card_back import build_card_back
 from ..svg.cards import build_card
 from ..tokens import Tokens, load_tokens
 
@@ -30,9 +31,17 @@ class UploadManifestEntry(TypedDict):
     png: str
 
 
+class CardBackManifestEntry(TypedDict):
+    title: str
+    svg: str
+    png: str
+    preview: NotRequired[str]
+
+
 class RenderManifest(TypedDict):
     renderer: str
     fonts: str
+    card_back: CardBackManifestEntry
     cards: dict[str, CardManifestEntry]
     upload_files: list[UploadManifestEntry]
     total_physical_cards: int
@@ -133,6 +142,28 @@ def render_deck(  # noqa: PLR0913
             entry["preview"] = str(pv_path.relative_to(out_dir))
         card_entries[design_id] = entry
 
+    card_back_doc = build_card_back(deck, tokens)
+    card_back_svg = svg_dir / "card-back.svg"
+    card_back_svg.write_bytes(card_back_doc.to_bytes())
+    card_back_png = png_dir / "card-back.png"
+    rast.rasterize(
+        card_back_svg,
+        card_back_png,
+        int(BLEED.w),
+        int(BLEED.h),
+        fontconfig,
+    )
+    stamp_png_dpi(card_back_png)
+    card_back_entry: CardBackManifestEntry = {
+        "title": deck.config.card_back.title,
+        "svg": str(card_back_svg.relative_to(out_dir)),
+        "png": str(card_back_png.relative_to(out_dir)),
+    }
+    if previews:
+        card_back_preview = preview_dir / "card-back.png"
+        rast.rasterize(card_back_svg, card_back_preview, pw, ph, fontconfig)
+        card_back_entry["preview"] = str(card_back_preview.relative_to(out_dir))
+
     upload_files = _write_upload_files(
         deck,
         design_pngs=design_pngs,
@@ -141,6 +172,7 @@ def render_deck(  # noqa: PLR0913
     manifest: RenderManifest = {
         "renderer": rast.name,
         "fonts": fonts_mode,
+        "card_back": card_back_entry,
         "cards": card_entries,
         "upload_files": upload_files,
         "total_physical_cards": len(upload_files),

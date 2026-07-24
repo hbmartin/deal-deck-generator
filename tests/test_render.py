@@ -49,6 +49,14 @@ def test_print_png_declares_300_dpi(deck, tmp_path):
     assert round(dpi[0]) == 300, dpi
     assert round(dpi[1]) == 300, dpi
 
+    card_back_path = tmp_path / manifest["card_back"]["png"]
+    with Image.open(card_back_path) as card_back:
+        assert card_back.size == (732, 1101)
+        card_back_dpi = card_back.info.get("dpi")
+    assert card_back_dpi is not None, "card-back PNG has no DPI metadata"
+    assert round(card_back_dpi[0]) == 300, card_back_dpi
+    assert round(card_back_dpi[1]) == 300, card_back_dpi
+
     upload_paths = sorted((tmp_path / "upload").glob("*.png"))
     assert [path.name for path in upload_paths] == [
         f"{slot:03d}-pass-go-{slot}.png" for slot in range(1, 11)

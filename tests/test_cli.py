@@ -40,6 +40,7 @@ def test_cmd_render_passes_filters_to_pipeline(monkeypatch, tmp_path, capsys):
     def fake_render_deck(deck_arg, out_arg, **kwargs) -> dict:
         calls.update(deck=deck_arg, out=out_arg, **kwargs)
         return {
+            "card_back": {"png": "png/card-back.png"},
             "cards": {"one": {}},
             "upload_files": [{}, {}],
             "total_physical_cards": 2,
@@ -70,6 +71,7 @@ def test_cmd_render_passes_filters_to_pipeline(monkeypatch, tmp_path, capsys):
     }
     output = capsys.readouterr().out
     assert "rendered 1 designs (2 physical cards)" in output
+    assert f"back: {args.out / 'png/card-back.png'}" in output
     assert f"upload: {args.out / 'upload'} (2 files)" in output
 
 

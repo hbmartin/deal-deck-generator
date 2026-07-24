@@ -22,7 +22,7 @@ from ..models import (
     RentCard,
     WildcardCard,
 )
-from ..models.deck import Deck, DeckConfig
+from ..models.deck import CardBackConfig, Deck, DeckConfig
 from .themes import fragment_cards_path
 
 DEFAULT_CARDS_PATH = (
@@ -274,14 +274,16 @@ def _color_rent_index(card_defs: dict) -> dict[str, dict]:
     """Color -> rent table facts derived from the property definitions."""
     index: dict[str, dict] = {}
     for prop in card_defs.get("property_cards", []):
-        index.setdefault(
+        entry = index.setdefault(
             prop["color"],
             {
                 "set_size": prop["set_size"],
                 "rent_values": [tuple(rv) for rv in prop["rent_values"]],
-                "header_icon": prop.get("header_icon"),
+                "header_icons": [],
             },
         )
+        if (icon := prop.get("header_icon")) and icon not in entry["header_icons"]:
+            entry["header_icons"].append(icon)
     return index
 
 
@@ -320,5 +322,9 @@ def load_deck(yaml_path: Path | str = DEFAULT_CARDS_PATH) -> Deck:
             ]
 
     deck_cfg = card_defs.get("deck") or {}
-    config = DeckConfig(footer_text=deck_cfg.get("footer_text", ""))
+    card_back_cfg = deck_cfg.get("card_back") or {}
+    config = DeckConfig(
+        footer_text=deck_cfg.get("footer_text", ""),
+        card_back=CardBackConfig(title=card_back_cfg.get("title", "DEAL")),
+    )
     return Deck(cards=cards, config=config)

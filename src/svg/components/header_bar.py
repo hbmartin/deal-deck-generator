@@ -4,7 +4,7 @@ from ...geometry import Box
 from ...svg import core
 from ...text.measure import get_measurer
 from ...tokens import Tokens
-from .icons import bulb, faucet, train
+from .icons import header_icon as build_header_icon
 
 HEADER_STROKE = 4
 
@@ -22,7 +22,7 @@ def split_name(name: str, explicit: list[str] | None = None) -> list[str]:
     return [" ".join(words[:-1]), words[-1]]
 
 
-def property_header(  # noqa: C901, PLR0913
+def property_header(  # noqa: PLR0913
     tokens: Tokens,
     box: Box,
     name: str,
@@ -47,15 +47,8 @@ def property_header(  # noqa: C901, PLR0913
     icon_zone = 0.0
     if header_icon:
         icon_h = box.h * 0.42
-        if header_icon == "train":
-            left, right = train(icon_h, colors["text"]), train(icon_h, colors["text"])
-            icon_w = icon_h * 1.5
-        elif header_icon == "faucet":
-            left, right = faucet(icon_h, colors["text"]), faucet(icon_h, colors["text"])
-            icon_w = icon_h * 1.1
-        else:
-            left, right = bulb(icon_h), bulb(icon_h)
-            icon_w = icon_h * 0.9
+        left, icon_w = build_header_icon(header_icon, icon_h, colors["text"])
+        right, _ = build_header_icon(header_icon, icon_h, colors["text"])
         icon_inset = box.h * 0.22
         icon_zone = icon_inset + icon_w + 16
         icon_y = box.cy - icon_h / 2

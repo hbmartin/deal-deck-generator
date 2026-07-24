@@ -105,6 +105,120 @@ def bulb(
     return core.g(*parts)
 
 
+def route(height: float, color: str = "#000000") -> core.ET.Element:
+    """Winding route with endpoint markers. Width ~= 1.15 * height."""
+    h = height
+    w = 1.15 * h
+    path = core.path(
+        f"M {w * 0.18} {h * 0.82} "
+        f"C {w * 0.72} {h * 0.80} {w * 0.28} {h * 0.42} {w * 0.78} {h * 0.18}",
+        fill="none",
+        stroke=color,
+        stroke_width=h * 0.09,
+        stroke_linecap="round",
+    )
+    return core.g(
+        path,
+        core.circle(w * 0.18, h * 0.82, h * 0.12, fill=color),
+        core.circle(w * 0.78, h * 0.18, h * 0.12, fill=color),
+    )
+
+
+def river(height: float, color: str = "#000000") -> core.ET.Element:
+    """Three flowing water lines. Width ~= 1.15 * height."""
+    h = height
+    w = 1.15 * h
+    paths = [
+        core.path(
+            f"M {w * 0.04} {y} "
+            f"C {w * 0.22} {y - h * 0.14} {w * 0.36} {y + h * 0.14} "
+            f"{w * 0.54} {y} "
+            f"S {w * 0.86} {y - h * 0.14} {w * 0.96} {y}",
+            fill="none",
+            stroke=color,
+            stroke_width=h * 0.075,
+            stroke_linecap="round",
+        )
+        for y in (h * 0.25, h * 0.5, h * 0.75)
+    ]
+    return core.g(*paths)
+
+
+def agave(height: float, color: str = "#000000") -> core.ET.Element:
+    """Compact fan of pointed agave leaves. Width ~= height."""
+    h = height
+    w = h
+    leaves = []
+    for angle, scale in ((-46, 0.76), (-24, 0.92), (0, 1.0), (24, 0.92), (46, 0.76)):
+        length = h * 0.72 * scale
+        width = h * 0.15 * scale
+        leaves.append(
+            core.path(
+                f"M 0 0 C {-width} {-length * 0.32} "
+                f"{-width * 0.6} {-length * 0.7} 0 {-length} "
+                f"C {width * 0.6} {-length * 0.7} "
+                f"{width} {-length * 0.32} 0 0 Z",
+                fill=color,
+                transform=f"{core.translate(w / 2, h * 0.9)} {core.rotate(angle)}",
+            )
+        )
+    return core.g(*leaves)
+
+
+def jicara(height: float, color: str = "#000000") -> core.ET.Element:
+    """Shallow jícara drinking bowl. Width ~= 1.1 * height."""
+    h = height
+    w = 1.1 * h
+    return core.g(
+        core.path(
+            f"M {w * 0.08} {h * 0.36} Q {w * 0.5} {h * 0.98} {w * 0.92} {h * 0.36} Z",
+            fill="none",
+            stroke=color,
+            stroke_width=h * 0.07,
+            stroke_linejoin="round",
+        ),
+        core.line(
+            w * 0.08,
+            h * 0.36,
+            w * 0.92,
+            h * 0.36,
+            stroke=color,
+            stroke_width=h * 0.07,
+            stroke_linecap="round",
+        ),
+        core.circle(w * 0.36, h * 0.26, h * 0.055, fill=color),
+        core.circle(w * 0.53, h * 0.20, h * 0.045, fill=color),
+        core.circle(w * 0.68, h * 0.27, h * 0.05, fill=color),
+    )
+
+
+def header_icon(
+    name: str,
+    height: float,
+    color: str,
+) -> tuple[core.ET.Element, float]:
+    """Build a property-header icon and report its design width."""
+    match name:
+        case "train":
+            icon, width = train(height, color), height * 1.5
+        case "faucet":
+            icon, width = faucet(height, color), height * 1.1
+        case "bulb":
+            icon, width = bulb(height), height * 0.9
+        case "route":
+            icon, width = route(height, color), height * 1.15
+        case "agave":
+            icon, width = agave(height, color), height
+        case "jicara":
+            icon, width = jicara(height, color), height * 1.1
+        case "river":
+            icon, width = river(height, color), height * 1.15
+        case _:
+            msg = f"unsupported property header icon {name!r}"
+            raise ValueError(msg)
+    return icon, width
+
+
 def house(height: float, color: str = "#1E9247") -> core.ET.Element:
     """House piece, flat front view. Width ~= 1.25 * height."""
     h = height

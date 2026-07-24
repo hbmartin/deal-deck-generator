@@ -1,29 +1,21 @@
-# Chicago-themed deck — 106 base cards, reskinned, plus the expansion set.
+# Oaxaca City + Valles Centrales theme — 106 cards total.
 #
-# The base cards are a pure reskin of the classic deck: identical ids, values,
-# set sizes, rent tables, quantities, and header icons. Only the property NAMES
-# and the deck footer differ (and the palette lives in tokens.json). Because the
-# base ids/colors match classic exactly, the derived wildcard rent tables stay
-# correct.
-#
-# `include: [expansion]` appends the shared expansion action cards
-# (themes/_shared/expansion.yaml), so this theme renders 135 designs / 144
-# physical cards. Classic omits the include and stays a pure 106-card deck.
-#
-# {nM} marks an inline money glyph; `fine_print` renders smaller than `description`.
-
-include:
-  - expansion
+# The property sequence moves from city neighborhoods and gathering places
+# toward valley communities and heritage sites; it is gameplay progression,
+# not a ranking of cultural value. Game mechanics remain in English.
+# {nM} marks an inline money glyph (double-struck M + amount),
+# rendered as vector art by the pipeline.
+# `fine_print` lines render smaller than `description`, matching the cards.
 
 deck:
-  footer_text: "WINDY CITY DEAL"
+  footer_text: "OAXACA DEAL"
   card_back:
-    title: "WINDY CITY DEAL"
+    title: "OAXACA DEAL"
 
-# Property Cards (28 total) — Chicago landmarks & neighborhoods, cheapest -> priciest.
+# Property Cards (28 total) — Oaxaca de Juárez + Valles Centrales
 property_cards:
   - id: brown-01
-    name: "Pilsen"
+    name: "La Noria"
     color: brown
     value: 1
     set_size: 2
@@ -31,7 +23,7 @@ property_cards:
     quantity: 1
 
   - id: brown-02
-    name: "Bridgeport"
+    name: "Carmen Alto"
     color: brown
     value: 1
     set_size: 2
@@ -39,7 +31,7 @@ property_cards:
     quantity: 1
 
   - id: light_blue-01
-    name: "Rogers Park"
+    name: "Jalatlaco"
     color: light_blue
     value: 1
     set_size: 3
@@ -47,7 +39,7 @@ property_cards:
     quantity: 1
 
   - id: light_blue-02
-    name: "Uptown"
+    name: "Xochimilco"
     color: light_blue
     value: 1
     set_size: 3
@@ -55,7 +47,7 @@ property_cards:
     quantity: 1
 
   - id: light_blue-03
-    name: "Lincoln Square"
+    name: "El Llano"
     color: light_blue
     value: 1
     set_size: 3
@@ -63,7 +55,7 @@ property_cards:
     quantity: 1
 
   - id: pink-01
-    name: "Wicker Park"
+    name: "Zócalo"
     color: pink
     value: 2
     set_size: 3
@@ -71,7 +63,7 @@ property_cards:
     quantity: 1
 
   - id: pink-02
-    name: "Logan Square"
+    name: "Mercado Benito Juárez"
     color: pink
     value: 2
     set_size: 3
@@ -79,7 +71,7 @@ property_cards:
     quantity: 1
 
   - id: pink-03
-    name: "Bucktown"
+    name: "Mercado 20 de Noviembre"
     color: pink
     value: 2
     set_size: 3
@@ -87,7 +79,7 @@ property_cards:
     quantity: 1
 
   - id: orange-01
-    name: "Hyde Park"
+    name: "Mercado de Artesanías"
     color: orange
     value: 2
     set_size: 3
@@ -95,7 +87,7 @@ property_cards:
     quantity: 1
 
   - id: orange-02
-    name: "Andersonville"
+    name: "Museo Textil de Oaxaca"
     color: orange
     value: 2
     set_size: 3
@@ -103,7 +95,7 @@ property_cards:
     quantity: 1
 
   - id: orange-03
-    name: "Little Italy"
+    name: "Jardín Etnobotánico"
     color: orange
     value: 2
     set_size: 3
@@ -111,7 +103,7 @@ property_cards:
     quantity: 1
 
   - id: red-01
-    name: "The Bean"
+    name: "Andador Macedonio Alcalá"
     color: red
     value: 3
     set_size: 3
@@ -119,8 +111,7 @@ property_cards:
     quantity: 1
 
   - id: red-02
-    name: "Buckingham Fountain"
-    name_lines: ["Buckingham", "Fountain"]
+    name: "Teatro Macedonio Alcalá"
     color: red
     value: 3
     set_size: 3
@@ -128,7 +119,7 @@ property_cards:
     quantity: 1
 
   - id: red-03
-    name: "Grant Park"
+    name: "Auditorio Guelaguetza"
     color: red
     value: 3
     set_size: 3
@@ -136,7 +127,7 @@ property_cards:
     quantity: 1
 
   - id: yellow-01
-    name: "Navy Pier"
+    name: "Santa María del Tule"
     color: yellow
     value: 3
     set_size: 3
@@ -144,8 +135,7 @@ property_cards:
     quantity: 1
 
   - id: yellow-02
-    name: "Shedd Aquarium"
-    name_lines: ["Shedd", "Aquarium"]
+    name: "Tlacolula de Matamoros"
     color: yellow
     value: 3
     set_size: 3
@@ -153,7 +143,7 @@ property_cards:
     quantity: 1
 
   - id: yellow-03
-    name: "Field Museum"
+    name: "Cuilápam de Guerrero"
     color: yellow
     value: 3
     set_size: 3
@@ -161,8 +151,7 @@ property_cards:
     quantity: 1
 
   - id: green-01
-    name: "Millennium Park"
-    name_lines: ["Millennium", "Park"]
+    name: "Centro Histórico"
     color: green
     value: 4
     set_size: 3
@@ -170,7 +159,7 @@ property_cards:
     quantity: 1
 
   - id: green-02
-    name: "Art Institute"
+    name: "Mitla"
     color: green
     value: 4
     set_size: 3
@@ -178,7 +167,7 @@ property_cards:
     quantity: 1
 
   - id: green-03
-    name: "Museum Campus"
+    name: "Hierve el Agua"
     color: green
     value: 4
     set_size: 3
@@ -186,8 +175,7 @@ property_cards:
     quantity: 1
 
   - id: dark_blue-01
-    name: "Magnificent Mile"
-    name_lines: ["Magnificent", "Mile"]
+    name: "Templo de Santo Domingo"
     color: dark_blue
     value: 4
     set_size: 2
@@ -195,7 +183,7 @@ property_cards:
     quantity: 1
 
   - id: dark_blue-02
-    name: "Willis Tower"
+    name: "Monte Albán"
     color: dark_blue
     value: 4
     set_size: 2
@@ -203,60 +191,60 @@ property_cards:
     quantity: 1
 
   - id: railroad-01
-    name: "Red Line"
+    name: "Santa María Atzompa"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: railroad-02
-    name: "Blue Line"
+    name: "San Bartolo Coyotepec"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: railroad-03
-    name: "Brown Line"
+    name: "San Martín Tilcajete"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: railroad-04
-    name: "Green Line"
+    name: "Teotitlán del Valle"
     color: railroad
-    header_icon: train
+    header_icon: route
     value: 2
     set_size: 4
     rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
     quantity: 1
 
   - id: utility-01
-    name: "ComEd"
+    name: "Mezcal"
     color: utility
-    header_icon: bulb
+    header_icon: agave
     value: 2
     set_size: 2
     rent_values: [[1, 1], [2, 2]]
     quantity: 1
 
   - id: utility-02
-    name: "Chicago Water"
+    name: "Tejate"
     color: utility
-    header_icon: faucet
+    header_icon: jicara
     value: 2
     set_size: 2
     rent_values: [[1, 1], [2, 2]]
     quantity: 1
 
-# Action Cards (34 total) — game mechanics, identical to the classic deck.
+# Action Cards (34 total)
 action_cards:
   - id: deal-breaker
     name: "Deal Breaker"
@@ -345,7 +333,7 @@ action_cards:
       - "Play into center to use."
     quantity: 2
 
-# Rent Cards (13 total) — identical to the classic deck.
+# Rent Cards (13 total)
 rent_cards:
   - id: rent-pink-orange
     name: "Rent"
@@ -407,7 +395,7 @@ rent_cards:
       - "Play into center to use."
     quantity: 3
 
-# Wildcard Property Cards (11 total) — identical to the classic deck.
+# Wildcard Property Cards (11 total)
 wildcard_cards:
   - id: wildcard-pink-orange
     name: "Property Wild Card"
@@ -466,7 +454,7 @@ wildcard_cards:
     description: "This card can be used as part of any property set. This card has no monetary value."
     quantity: 2
 
-# Money Cards (20 total) — identical to the classic deck.
+# Money Cards (20 total)
 money_cards:
   - denomination: 10
     quantity: 1
