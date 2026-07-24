@@ -4,8 +4,9 @@ Data-driven card deck generator that produces card designs as print-ready files:
 
 Decks are **themeable**: each theme under `themes/<name>/` supplies its own card
 names and an optional color-palette overlay, all sharing the same game structure
-and rendering engine. The default `classic` deck ships alongside a `chicago`
-deck (Chicago landmarks + a Chicago-flag palette). See [Themes](#themes).
+and rendering engine. The default `classic` deck ships alongside `chicago`
+(Chicago landmarks + civic palette) and `oaxaca` (Oaxaca City + Valles
+Centrales, natural-dye palette, and custom ornaments). See [Themes](#themes).
 
 The deck's 58 unique designs are generated as resolution-independent SVGs in
 print coordinates and rasterized to PNGs that match the MakePlayingCards.com
@@ -34,6 +35,7 @@ uv run python main.py render
 
 # Render a different theme (output goes to output/<theme>/ by default)
 uv run python main.py render --theme chicago
+uv run python main.py render --theme oaxaca
 uv run python main.py render --list-themes
 
 # Filter by type or design id
@@ -68,6 +70,9 @@ themes/
   chicago/
     cards.yaml           # Chicago property names + "WINDY CITY DEAL" footer
     tokens.json          # palette overlay: Chicago property colors
+  oaxaca/
+    cards.yaml           # Oaxaca City + Valles Centrales, 106-card base deck
+    tokens.json          # full palette + Mitla/agave ornament profile
 ```
 
 - `cards.yaml` follows the same schema for every theme. Themes are **pure
@@ -75,10 +80,13 @@ themes/
   — only property `name`s (and the footer) change — so any two themes are
   structurally interchangeable and the derived wildcard rent tables stay valid.
 - `tokens.json` is a small **overlay** deep-merged onto the base
-  `design_tokens.json` at load time, so it only lists what changes (typically
-  `palette.property`); everything else (geometry, fonts, type scale, value
-  tints) is inherited from the base. `classic` has no overlay, so it resolves to
-  the base tokens unchanged.
+  `design_tokens.json` at load time. A theme can override property colors,
+  value tints, and the `ornament` choices for field pattern, border corners,
+  and money medallions. `classic` has no overlay, so it resolves to the base
+  tokens unchanged.
+- Property `header_icon` supports `train`, `bulb`, `faucet`, `route`, `agave`,
+  and `jicara`. Wildcard headers derive every distinct icon used by their
+  corresponding property set.
 
 To add a theme, copy `themes/classic/cards.yaml`, rename the properties, and
 (optionally) add a `tokens.json` overlay. It shows up in `--list-themes`
@@ -90,9 +98,9 @@ automatically. Resolution lives in `src/data/themes.py`
 | Stage | Where | What |
 |---|---|---|
 | Data | `themes/<name>/cards.yaml`, `src/data/loader.py`, `src/data/themes.py` | All 106 cards per theme, transcribed verbatim from the reference photos (classic). Two-color wildcards derive their rent tables from the property definitions at load time — one source of truth. `{nM}` tokens in descriptions mark inline money glyphs. |
-| Design tokens | `design_tokens.json` (base) + `themes/<name>/tokens.json` (overlay), `src/tokens.py` | Print geometry, the ten property colors, per-value tints (money **and** action/rent cards share one `value_tints` table, as the real deck does), type scale, fonts. Tune shared values in the base; per-theme colors go in the overlay. Tune here, not in code. |
+| Design tokens | `design_tokens.json` (base) + `themes/<name>/tokens.json` (overlay), `src/tokens.py` | Print geometry, the ten property colors, per-value tints (money **and** action/rent cards share one `value_tints` table), ornament profile, type scale, and fonts. Tune shared values in the base; theme-specific choices go in overlays. |
 | SVG build | `src/svg/` | ElementTree-based builders. `svg/components/` holds the shared pieces: Ⓜ glyph, corner badges, header bars, fanned-card icons, dotted leaders, rent tables, title circles, color rings, procedural guilloché + ornate border band, icons, Mr. Money. `svg/cards/` composes them per card type. |
-| Guilloché | `src/svg/components/guilloche.py` | Deterministic engraved-line work: interleaved sine-wave mesh fields (one path per family in `<defs>`, stamped with `<use>`) and superposed epitrochoid rosette medallions. No randomness — renders are byte-stable. |
+| Ornament | `src/svg/components/guilloche.py`, `src/svg/components/border_band.py` | Deterministic SVG textures and ornaments selected by theme tokens: classic wave/rosette engraving or Oaxaca stepped-stone fields and agave corners/medallions. Reusable paths live in `<defs>` and are stamped with `<use>`; no randomness is used. |
 | Raster | `src/raster/`, `src/render/pipeline.py` | Pluggable rasterizers (rsvg default, Inkscape optional) driven through fontconfig. Each unique design is rasterized once, then copied by quantity into the slot-ordered `upload/` directory. On macOS `PANGOCAIRO_BACKEND=fc` is forced so the bundled fonts are honored. |
 
 ### Fonts

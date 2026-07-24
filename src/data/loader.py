@@ -274,14 +274,16 @@ def _color_rent_index(card_defs: dict) -> dict[str, dict]:
     """Color -> rent table facts derived from the property definitions."""
     index: dict[str, dict] = {}
     for prop in card_defs.get("property_cards", []):
-        index.setdefault(
+        entry = index.setdefault(
             prop["color"],
             {
                 "set_size": prop["set_size"],
                 "rent_values": [tuple(rv) for rv in prop["rent_values"]],
-                "header_icon": prop.get("header_icon"),
+                "header_icons": [],
             },
         )
+        if (icon := prop.get("header_icon")) and icon not in entry["header_icons"]:
+            entry["header_icons"].append(icon)
     return index
 
 

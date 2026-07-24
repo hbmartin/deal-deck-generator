@@ -27,6 +27,7 @@ _BASE = {"total": 106, "designs": 58, "per_type": _BASE_PER_TYPE}
 
 EXPECTED = {
     "classic": _BASE,
+    "oaxaca": _BASE,
     # chicago = base + expansion (29 designs / 38 physical, all action cards).
     "chicago": {
         "total": 144,

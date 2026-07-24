@@ -7,7 +7,7 @@ from ...tokens import Tokens, mix_hex
 from .. import core
 from ..components.badge import value_badge
 from ..components.border_band import border_band
-from ..components.guilloche import rosette, wave_field
+from ..components.guilloche import agave_medallion, rosette, texture_field
 from ..components.m_glyph import money_amount
 from . import register
 from .base import card_body, footer, new_document
@@ -36,15 +36,45 @@ def build_money(card: MoneyCard, deck: Deck, tokens: Tokens) -> core.SVGDocument
     field = CUT.inset(FIELD_INSET)
     doc.add(rect_field(field, field_color))
 
-    # Engraved texture: woven wave mesh across the field plus a rosette
-    # medallion behind the central circle.
-    doc.add(wave_field(doc, field, stroke=line_color))
+    # The active theme selects the field texture and medallion treatment.
     doc.add(
-        rosette(CIRCLE_CX, CIRCLE_CY, CIRCLE_R * 1.32, stroke=line_color, variant=0)
+        texture_field(
+            doc,
+            field,
+            stroke=line_color,
+            style=tokens.ornament.field_pattern,
+        )
     )
-    doc.add(
-        rosette(CIRCLE_CX, CIRCLE_CY, CIRCLE_R * 0.82, stroke=line_color, variant=1)
-    )
+    match tokens.ornament.money_medallion:
+        case "epitrochoid":
+            doc.add(
+                rosette(
+                    CIRCLE_CX,
+                    CIRCLE_CY,
+                    CIRCLE_R * 1.32,
+                    stroke=line_color,
+                    variant=0,
+                )
+            )
+            doc.add(
+                rosette(
+                    CIRCLE_CX,
+                    CIRCLE_CY,
+                    CIRCLE_R * 0.82,
+                    stroke=line_color,
+                    variant=1,
+                )
+            )
+        case "agave":
+            doc.add(
+                agave_medallion(
+                    doc,
+                    CIRCLE_CX,
+                    CIRCLE_CY,
+                    CIRCLE_R * 1.34,
+                    stroke=line_color,
+                )
+            )
 
     # Chrome: outer pinstripe, motif band, inner double rule.
     doc.add(
@@ -56,7 +86,14 @@ def build_money(card: MoneyCard, deck: Deck, tokens: Tokens) -> core.SVGDocument
             rx=FIELD_RADIUS - 8,
         )
     )
-    doc.add(border_band(doc, field.inset(40), stroke=dark))
+    doc.add(
+        border_band(
+            doc,
+            field.inset(40),
+            stroke=dark,
+            corner_style=tokens.ornament.border_corner,
+        )
+    )
     doc.add(core.rect(field.inset(64), fill="none", stroke=dark, stroke_width=2.5))
     doc.add(core.rect(field.inset(71), fill="none", stroke=dark, stroke_width=1.5))
 

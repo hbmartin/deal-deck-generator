@@ -1,5 +1,5 @@
 """Ornate rectangular border band: a diamond-chain motif tiled along each
-edge with distinct square rosettes at the corners, flanked by thin rules.
+edge with theme-selected corner ornaments, flanked by thin rules.
 
 Explicit <use> tiling (not <pattern>): each edge gets an integer tile count
 with a tiny justified stretch, sides are rotated 90 degrees, and corners
@@ -8,6 +8,7 @@ are their own motif — matching the printed cards.
 
 from ...geometry import Box
 from ...svg import core
+from ...tokens import BorderCorner
 
 UNIT = 26.0  # motif design size (square)
 
@@ -57,21 +58,45 @@ def _corner(stroke: str) -> core.ET.Element:
     )
 
 
+def _agave_corner(stroke: str) -> core.ET.Element:
+    """Four small pointed leaves forming a compact agave corner tile."""
+    leaves = [
+        core.path(
+            "M 0 0 C -2 -3 -3 -7 0 -10 C 3 -7 2 -3 0 0 Z",
+            fill="none",
+            stroke=stroke,
+            stroke_width=1.35,
+            transform=core.rotate(angle),
+        )
+        for angle in (0, 90, 180, 270)
+    ]
+    return core.g(*leaves, core.circle(0, 0, 2.1, fill=stroke))
+
+
 def border_band(
     doc: core.SVGDocument,
     band_center: Box,
     stroke: str,
     key: str = "band",
+    corner_style: BorderCorner = "rosette",
 ) -> core.ET.Element:
     """Band ring whose centerline is the rectangle `band_center` (motifs only;
     the flanking pinstripe rules are composed by the card builders).
     """
     motif_id = f"band-motif-{key}"
-    corner_id = f"band-corner-{key}"
+    corner_id = (
+        f"band-corner-{key}"
+        if corner_style == "rosette"
+        else f"band-corner-{corner_style}-{key}"
+    )
     if not doc.has_def(motif_id):
         doc.add_def(motif_id, _motif(stroke))
     if not doc.has_def(corner_id):
-        doc.add_def(corner_id, _corner(stroke))
+        match corner_style:
+            case "rosette":
+                doc.add_def(corner_id, _corner(stroke))
+            case "agave":
+                doc.add_def(corner_id, _agave_corner(stroke))
 
     parts = []
     x1, y1, x2, y2 = band_center.x, band_center.y, band_center.x2, band_center.y2

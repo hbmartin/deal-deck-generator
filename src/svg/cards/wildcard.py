@@ -19,7 +19,7 @@ from ..components import fan_icon as fan_mod
 from ..components.badge import value_badge
 from ..components.character import mr_money
 from ..components.fan_icon import fan_icon
-from ..components.icons import bulb, faucet, train
+from ..components.icons import header_icon
 from ..components.m_glyph import money_amount
 from ..components.rent_table import DOT, DOT_GAP
 from . import register
@@ -113,18 +113,19 @@ def _wildcard_header(tokens: Tokens, half: dict) -> core.ET.Element:
         )
     )
 
-    icon = half.get("header_icon")
-    if icon == "train":
-        el = train(44, text)
-        el.set("transform", core.translate(box.x + 24, box.y + 18))
+    icons = half.get("header_icons") or []
+    if len(icons) == 1:
+        el, icon_width = header_icon(icons[0], 44, text)
+        icon_x = box.x2 - 24 - icon_width if icons[0] == "route" else box.x + 24
+        el.set("transform", core.translate(icon_x, box.y + 18))
         parts.append(el)
-    elif icon in ("bulb", "faucet"):
-        b = bulb(40)
-        b.set("transform", core.translate(box.x2 - 60, box.y + 14))
-        f = faucet(38, text)
-        f.set("transform", core.translate(box.x2 - 66, box.y + 118))
-        parts.append(b)
-        parts.append(f)
+    elif len(icons) >= 2:
+        first, _ = header_icon(icons[0], 40, text)
+        first.set("transform", core.translate(box.x2 - 60, box.y + 14))
+        second, _ = header_icon(icons[1], 38, text)
+        second.set("transform", core.translate(box.x2 - 66, box.y + 118))
+        parts.append(first)
+        parts.append(second)
     return core.g(*parts)
 
 

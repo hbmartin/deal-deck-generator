@@ -1,0 +1,473 @@
+# Oaxaca City + Valles Centrales theme — 106 cards total.
+#
+# The property sequence moves from city neighborhoods and gathering places
+# toward valley communities and heritage sites; it is gameplay progression,
+# not a ranking of cultural value. Game mechanics remain in English.
+# {nM} marks an inline money glyph (double-struck M + amount),
+# rendered as vector art by the pipeline.
+# `fine_print` lines render smaller than `description`, matching the cards.
+
+deck:
+  footer_text: "OAXACA DEAL"
+
+# Property Cards (28 total) — Oaxaca de Juárez + Valles Centrales
+property_cards:
+  - id: brown-01
+    name: "La Noria"
+    color: brown
+    value: 1
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 1
+
+  - id: brown-02
+    name: "Carmen Alto"
+    color: brown
+    value: 1
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 1
+
+  - id: light_blue-01
+    name: "Jalatlaco"
+    color: light_blue
+    value: 1
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 3]]
+    quantity: 1
+
+  - id: light_blue-02
+    name: "Xochimilco"
+    color: light_blue
+    value: 1
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 3]]
+    quantity: 1
+
+  - id: light_blue-03
+    name: "El Llano"
+    color: light_blue
+    value: 1
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 3]]
+    quantity: 1
+
+  - id: pink-01
+    name: "Zócalo"
+    color: pink
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 4]]
+    quantity: 1
+
+  - id: pink-02
+    name: "Mercado Benito Juárez"
+    color: pink
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 4]]
+    quantity: 1
+
+  - id: pink-03
+    name: "Mercado 20 de Noviembre"
+    color: pink
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 2], [3, 4]]
+    quantity: 1
+
+  - id: orange-01
+    name: "Mercado de Artesanías"
+    color: orange
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 3], [3, 5]]
+    quantity: 1
+
+  - id: orange-02
+    name: "Museo Textil de Oaxaca"
+    color: orange
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 3], [3, 5]]
+    quantity: 1
+
+  - id: orange-03
+    name: "Jardín Etnobotánico"
+    color: orange
+    value: 2
+    set_size: 3
+    rent_values: [[1, 1], [2, 3], [3, 5]]
+    quantity: 1
+
+  - id: red-01
+    name: "Andador Macedonio Alcalá"
+    color: red
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: red-02
+    name: "Teatro Macedonio Alcalá"
+    color: red
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: red-03
+    name: "Auditorio Guelaguetza"
+    color: red
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: yellow-01
+    name: "Santa María del Tule"
+    color: yellow
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: yellow-02
+    name: "Tlacolula de Matamoros"
+    color: yellow
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: yellow-03
+    name: "Cuilápam de Guerrero"
+    color: yellow
+    value: 3
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 6]]
+    quantity: 1
+
+  - id: green-01
+    name: "Centro Histórico"
+    color: green
+    value: 4
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 7]]
+    quantity: 1
+
+  - id: green-02
+    name: "Mitla"
+    color: green
+    value: 4
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 7]]
+    quantity: 1
+
+  - id: green-03
+    name: "Hierve el Agua"
+    color: green
+    value: 4
+    set_size: 3
+    rent_values: [[1, 2], [2, 4], [3, 7]]
+    quantity: 1
+
+  - id: dark_blue-01
+    name: "Templo de Santo Domingo"
+    color: dark_blue
+    value: 4
+    set_size: 2
+    rent_values: [[1, 3], [2, 8]]
+    quantity: 1
+
+  - id: dark_blue-02
+    name: "Monte Albán"
+    color: dark_blue
+    value: 4
+    set_size: 2
+    rent_values: [[1, 3], [2, 8]]
+    quantity: 1
+
+  - id: railroad-01
+    name: "Santa María Atzompa"
+    color: railroad
+    header_icon: route
+    value: 2
+    set_size: 4
+    rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
+    quantity: 1
+
+  - id: railroad-02
+    name: "San Bartolo Coyotepec"
+    color: railroad
+    header_icon: route
+    value: 2
+    set_size: 4
+    rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
+    quantity: 1
+
+  - id: railroad-03
+    name: "San Martín Tilcajete"
+    color: railroad
+    header_icon: route
+    value: 2
+    set_size: 4
+    rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
+    quantity: 1
+
+  - id: railroad-04
+    name: "Teotitlán del Valle"
+    color: railroad
+    header_icon: route
+    value: 2
+    set_size: 4
+    rent_values: [[1, 1], [2, 2], [3, 3], [4, 4]]
+    quantity: 1
+
+  - id: utility-01
+    name: "Mezcal"
+    color: utility
+    header_icon: agave
+    value: 2
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 1
+
+  - id: utility-02
+    name: "Tejate"
+    color: utility
+    header_icon: jicara
+    value: 2
+    set_size: 2
+    rent_values: [[1, 1], [2, 2]]
+    quantity: 1
+
+# Action Cards (34 total)
+action_cards:
+  - id: deal-breaker
+    name: "Deal Breaker"
+    value: 5
+    description: "Steal a complete set of properties from any player."
+    fine_print:
+      - "(Includes any buildings.)"
+      - "Play into center to use."
+    quantity: 2
+
+  - id: just-say-no
+    name: "Just Say No!"
+    value: 4
+    description: "Use any time when an action card is played against you."
+    fine_print:
+      - "Play into center to use."
+    quantity: 3
+
+  - id: sly-deal
+    name: "Sly Deal"
+    value: 3
+    description: "Steal a property from the player of your choice."
+    fine_print:
+      - "(Cannot be part of a full set.)"
+      - "Play into center to use."
+    quantity: 3
+
+  - id: forced-deal
+    name: "Forced Deal"
+    value: 3
+    description: "Swap any property with another player."
+    fine_print:
+      - "(Cannot be part of a full set.)"
+      - "Play into center to use."
+    quantity: 3
+
+  - id: debt-collector
+    name: "Debt Collector"
+    value: 3
+    description: "Force any player to pay you {5M}."
+    fine_print:
+      - "Play into center to use."
+    quantity: 3
+
+  - id: its-my-birthday
+    name: "It's My Birthday"
+    value: 2
+    icon: cake
+    description: "All players give you {2M} as a \"gift.\""
+    fine_print:
+      - "Play into center to use."
+    quantity: 3
+
+  - id: pass-go
+    name: "Pass Go"
+    value: 1
+    icon: go_arrow
+    description: "Draw 2 extra cards."
+    fine_print:
+      - "Play into center to use."
+    quantity: 10
+
+  - id: house
+    name: "House"
+    value: 3
+    icon: house
+    description: "Add onto any full set you own to add {3M} to the rent value."
+    fine_print:
+      - "(Except railroads and utilities.)"
+    quantity: 3
+
+  - id: hotel
+    name: "Hotel"
+    value: 4
+    icon: hotel
+    description: "Add onto any full set you own to add {4M} to the rent value."
+    fine_print:
+      - "(Except railroads and utilities.)"
+    quantity: 2
+
+  - id: double-the-rent
+    name: "Double The Rent!"
+    value: 1
+    description: "Needs to be played with a rent card."
+    fine_print:
+      - "Play into center to use."
+    quantity: 2
+
+# Rent Cards (13 total)
+rent_cards:
+  - id: rent-pink-orange
+    name: "Rent"
+    colors: [pink, orange]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors."
+    fine_print:
+      - "Play into center to use."
+    quantity: 2
+
+  - id: rent-railroad-utility
+    name: "Rent"
+    colors: [railroad, utility]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors."
+    fine_print:
+      - "Play into center to use."
+    quantity: 2
+
+  - id: rent-green-dark_blue
+    name: "Rent"
+    colors: [green, dark_blue]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors."
+    fine_print:
+      - "Play into center to use."
+    quantity: 2
+
+  - id: rent-brown-light_blue
+    name: "Rent"
+    colors: [brown, light_blue]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors."
+    fine_print:
+      - "Play into center to use."
+    quantity: 2
+
+  - id: rent-red-yellow
+    name: "Rent"
+    colors: [red, yellow]
+    value: 1
+    is_wild: false
+    description: "All players pay you rent for properties you own in one of these colors."
+    fine_print:
+      - "Play into center to use."
+    quantity: 2
+
+  - id: rent-wild
+    name: "Rent"
+    colors: []
+    value: 3
+    is_wild: true
+    description: "Force one player to pay you rent for properties you own in one of these colors."
+    fine_print:
+      - "Play into center to use."
+    quantity: 3
+
+# Wildcard Property Cards (11 total)
+wildcard_cards:
+  - id: wildcard-pink-orange
+    name: "Property Wild Card"
+    allowed_colors: [orange, pink]  # top half first, as photographed
+    is_multicolor: false
+    value: 2
+    quantity: 2
+
+  - id: wildcard-light_blue-brown
+    name: "Property Wild Card"
+    allowed_colors: [light_blue, brown]
+    is_multicolor: false
+    value: 1
+    quantity: 1
+
+  - id: wildcard-light_blue-railroad
+    name: "Property Wild Card"
+    allowed_colors: [light_blue, railroad]
+    is_multicolor: false
+    value: 4
+    quantity: 1
+
+  - id: wildcard-dark_blue-green
+    name: "Property Wild Card"
+    allowed_colors: [dark_blue, green]
+    is_multicolor: false
+    value: 4
+    quantity: 1
+
+  - id: wildcard-railroad-green
+    name: "Property Wild Card"
+    allowed_colors: [green, railroad]  # top half first, as photographed
+    is_multicolor: false
+    value: 4
+    quantity: 1
+
+  - id: wildcard-red-yellow
+    name: "Property Wild Card"
+    allowed_colors: [yellow, red]  # top half first, as photographed
+    is_multicolor: false
+    value: 3
+    quantity: 2
+
+  - id: wildcard-railroad-utility
+    name: "Property Wild Card"
+    allowed_colors: [utility, railroad]  # top half first, as photographed
+    is_multicolor: false
+    value: 2
+    quantity: 1
+
+  - id: wildcard-multicolor
+    name: "Property Wild Card"
+    allowed_colors: [brown, light_blue, pink, orange, red, yellow, green, dark_blue, railroad, utility]
+    is_multicolor: true
+    value: 0
+    description: "This card can be used as part of any property set. This card has no monetary value."
+    quantity: 2
+
+# Money Cards (20 total)
+money_cards:
+  - denomination: 10
+    quantity: 1
+
+  - denomination: 5
+    quantity: 2
+
+  - denomination: 4
+    quantity: 3
+
+  - denomination: 3
+    quantity: 3
+
+  - denomination: 2
+    quantity: 5
+
+  - denomination: 1
+    quantity: 6

@@ -1,4 +1,4 @@
-"""Procedural guilloché engraving: sine-wave mesh fields and trochoid rosettes.
+"""Procedural field textures and medallions selected by theme tokens.
 
 Everything here is deterministic pure geometry — no randomness — so repeated
 renders produce byte-identical SVGs (required for golden-image stability).
@@ -8,6 +8,7 @@ import math
 
 from ...geometry import Box
 from ...svg import core
+from ...tokens import FieldPattern
 
 
 def _wave_path(width: float, wavelength: float, amplitude: float, phase: float) -> str:
@@ -64,6 +65,66 @@ def wave_field(  # noqa: PLR0913
             core.use(f"guilloche-wave-{key}-b", x=clip_box.x, y=y + spacing / 2)
         )
     return core.g(*rows, clip_path=f"url(#{clip_id})")
+
+
+def mitla_step_field(
+    doc: core.SVGDocument,
+    clip_box: Box,
+    stroke: str,
+    stroke_width: float = 0.9,
+    key: str = "field",
+) -> core.ET.Element:
+    """Tile an original stepped-stone rhythm across a clipped field."""
+    clip_id = f"mitla-step-clip-{key}"
+    if not doc.has_def(clip_id):
+        doc.add_def(
+            clip_id,
+            core.el("clipPath", core.rect(clip_box)),
+        )
+
+    motif_id = f"mitla-step-motif-{key}"
+    motif_w = 64.0
+    motif_h = 36.0
+    if not doc.has_def(motif_id):
+        upper = core.path(
+            "M 0 30 H 12 V 24 H 24 V 18 H 36 V 12 H 48 V 6 H 64",
+            fill="none",
+            stroke=stroke,
+            stroke_width=stroke_width,
+        )
+        lower = core.path(
+            "M 0 6 H 16 V 12 H 28 V 18 H 40 V 24 H 52 V 30 H 64",
+            fill="none",
+            stroke=stroke,
+            stroke_width=stroke_width,
+        )
+        doc.add_def(motif_id, core.g(upper, lower))
+
+    tiles = []
+    row_count = math.ceil(clip_box.h / motif_h) + 1
+    column_count = math.ceil(clip_box.w / motif_w) + 2
+    for row in range(row_count):
+        offset = motif_w / 2 if row % 2 else 0.0
+        y = clip_box.y + row * motif_h
+        for column in range(-1, column_count):
+            x = clip_box.x + column * motif_w + offset
+            tiles.append(core.use(motif_id, x=x, y=y))
+    return core.g(*tiles, clip_path=f"url(#{clip_id})", opacity=0.72)
+
+
+def texture_field(
+    doc: core.SVGDocument,
+    clip_box: Box,
+    stroke: str,
+    style: FieldPattern,
+    key: str = "field",
+) -> core.ET.Element:
+    """Build the field texture selected by the active theme tokens."""
+    match style:
+        case "wave":
+            return wave_field(doc, clip_box, stroke=stroke, key=key)
+        case "mitla_step":
+            return mitla_step_field(doc, clip_box, stroke=stroke, key=key)
 
 
 def _epitrochoid_path(  # noqa: PLR0913
@@ -128,3 +189,51 @@ def rosette(  # noqa: PLR0913
             )
         )
     return core.g(*paths)
+
+
+def _agave_leaf(length: float, width: float, stroke: str) -> core.ET.Element:
+    """One pointed agave leaf rooted at the local origin."""
+    return core.path(
+        f"M 0 0 C {-width * 0.62} {-length * 0.28} "
+        f"{-width * 0.42} {-length * 0.68} 0 {-length} "
+        f"C {width * 0.42} {-length * 0.68} {width * 0.62} {-length * 0.28} 0 0 Z",
+        fill="none",
+        stroke=stroke,
+        stroke_width=0.9,
+    )
+
+
+def agave_medallion(  # noqa: PLR0913
+    doc: core.SVGDocument,
+    cx: float,
+    cy: float,
+    radius: float,
+    stroke: str,
+    key: str = "medallion",
+) -> core.ET.Element:
+    """Concentric radial agave leaves used behind the money-card disc."""
+    leaf_id = f"agave-medallion-leaf-{key}"
+    if not doc.has_def(leaf_id):
+        doc.add_def(
+            leaf_id,
+            _agave_leaf(length=radius, width=radius * 0.24, stroke=stroke),
+        )
+
+    leaves = []
+    for index in range(16):
+        angle = index * 22.5
+        leaves.append(
+            core.use(
+                leaf_id,
+                transform=f"{core.translate(cx, cy)} {core.rotate(angle)}",
+            )
+        )
+        leaves.append(
+            core.use(
+                leaf_id,
+                transform=(
+                    f"{core.translate(cx, cy)} {core.rotate(angle + 11.25)} scale(0.64)"
+                ),
+            )
+        )
+    return core.g(*leaves, opacity=0.78)

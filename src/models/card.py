@@ -6,6 +6,8 @@ Defines base Card class and type-specific variants.
 from dataclasses import dataclass, field
 from typing import Literal
 
+type HeaderIcon = Literal["train", "bulb", "faucet", "route", "agave", "jicara"]
+
 
 @dataclass
 class Card:
@@ -41,7 +43,7 @@ class PropertyCard(Card):
         default_factory=list
     )  # [(num_properties, rent_value), ...]
     set_size: int = 0
-    header_icon: str | None = None  # train | bulb | faucet
+    header_icon: HeaderIcon | None = None
     name_lines: list[str] | None = None  # explicit header line breaks
 
     def __post_init__(self):

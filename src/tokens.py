@@ -8,6 +8,7 @@ import json
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
+from typing import Literal
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 TOKENS_PATH = PROJECT_ROOT / "design_tokens.json"
@@ -23,6 +24,18 @@ class FontRole:
     @property
     def measure_path(self) -> Path:
         return FONTS_DIR / self.measure_file
+
+
+type FieldPattern = Literal["wave", "mitla_step"]
+type BorderCorner = Literal["rosette", "agave"]
+type MoneyMedallion = Literal["epitrochoid", "agave"]
+
+
+@dataclass(frozen=True)
+class OrnamentStyle:
+    field_pattern: FieldPattern
+    border_corner: BorderCorner
+    money_medallion: MoneyMedallion
 
 
 @dataclass(frozen=True)
@@ -41,6 +54,15 @@ class Tokens:
     def font(self, role: str) -> FontRole:
         f = self.raw["fonts"][role]
         return FontRole(f["stack"], f["measure_file"], f["weight"])
+
+    @property
+    def ornament(self) -> OrnamentStyle:
+        ornament = self.raw["ornament"]
+        return OrnamentStyle(
+            field_pattern=ornament["field_pattern"],
+            border_corner=ornament["border_corner"],
+            money_medallion=ornament["money_medallion"],
+        )
 
     def property_color(self, color: str) -> dict:
         return self.raw["palette"]["property"][color]
