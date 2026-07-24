@@ -7,7 +7,12 @@ from ...tokens import Tokens, mix_hex
 from .. import core
 from ..components.badge import value_badge
 from ..components.border_band import border_band
-from ..components.guilloche import agave_medallion, rosette, texture_field
+from ..components.guilloche import (
+    agave_medallion,
+    rosette,
+    sunburst_medallion,
+    texture_field,
+)
 from ..components.m_glyph import money_amount
 from . import register
 from .base import card_body, footer, new_document
@@ -68,6 +73,16 @@ def build_money(card: MoneyCard, deck: Deck, tokens: Tokens) -> core.SVGDocument
         case "agave":
             doc.add(
                 agave_medallion(
+                    doc,
+                    CIRCLE_CX,
+                    CIRCLE_CY,
+                    CIRCLE_R * 1.34,
+                    stroke=line_color,
+                )
+            )
+        case "sunburst":
+            doc.add(
+                sunburst_medallion(
                     doc,
                     CIRCLE_CX,
                     CIRCLE_CY,

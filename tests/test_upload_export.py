@@ -35,7 +35,8 @@ def fast_render(monkeypatch):
 
 
 @pytest.mark.parametrize(
-    ("theme", "expected_count"), [("classic", 106), ("chicago", 144)]
+    ("theme", "expected_count"),
+    [("arizona", 144), ("classic", 106), ("chicago", 144)],
 )
 def test_full_theme_upload_counts(theme, expected_count, fast_render, tmp_path):
     deck = load_deck(theme_cards_path(theme))
@@ -48,6 +49,37 @@ def test_full_theme_upload_counts(theme, expected_count, fast_render, tmp_path):
     assert len(manifest["upload_files"]) == expected_count
     assert manifest["total_physical_cards"] == expected_count
     assert all(path.is_file() and not path.is_symlink() for path in upload_paths)
+
+
+def test_card_back_outputs_and_manifest_are_separate_from_uploads(
+    deck,
+    fast_render,
+    tmp_path,
+):
+    manifest = fast_render(
+        deck,
+        tmp_path,
+        card_ids=["pass-go"],
+        previews=True,
+    )
+
+    assert manifest["card_back"] == {
+        "title": "DEAL",
+        "svg": "svg/card-back.svg",
+        "png": "png/card-back.png",
+        "preview": "preview/card-back.png",
+    }
+    assert (tmp_path / "svg/card-back.svg").is_file()
+    assert (tmp_path / "png/card-back.png").read_bytes() == b"card-back"
+    assert (tmp_path / "preview/card-back.png").read_bytes() == b"card-back"
+    assert not any("card-back" in path.name for path in (tmp_path / "upload").iterdir())
+
+
+def test_no_previews_omits_card_back_preview(deck, fast_render, tmp_path):
+    manifest = fast_render(deck, tmp_path, card_ids=["pass-go"], previews=False)
+
+    assert "preview" not in manifest["card_back"]
+    assert not (tmp_path / "preview/card-back.png").exists()
 
 
 def test_classic_upload_names_and_manifest_follow_deck_order(fast_render, tmp_path):

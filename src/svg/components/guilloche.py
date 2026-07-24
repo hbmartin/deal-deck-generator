@@ -112,6 +112,70 @@ def mitla_step_field(
     return core.g(*tiles, clip_path=f"url(#{clip_id})", opacity=0.72)
 
 
+def _desert_dune_path(
+    width: float,
+    wavelength: float,
+    amplitude: float,
+    phase: float,
+) -> str:
+    """One low dune contour with a smaller wind-ripple harmonic."""
+    step = wavelength / 18
+    points = []
+    x = 0.0
+    while x <= width + step / 2:
+        primary = math.sin(2 * math.pi * x / wavelength + phase)
+        ripple = math.sin(4 * math.pi * x / wavelength + phase / 2)
+        y = amplitude * (primary * 0.72 + ripple * 0.28)
+        points.append(f"{core.fmt(x)} {core.fmt(y)}")
+        x += step
+    return "M " + " L ".join(points)
+
+
+def desert_dune_field(  # noqa: PLR0913
+    doc: core.SVGDocument,
+    clip_box: Box,
+    stroke: str,
+    spacing: float = 18.0,
+    wavelength: float = 210.0,
+    amplitude: float = 7.0,
+    stroke_width: float = 1.0,
+    key: str = "field",
+) -> core.ET.Element:
+    """Layered desert contours with alternating phases and generous spacing."""
+    clip_id = f"desert-dune-clip-{key}"
+    if not doc.has_def(clip_id):
+        doc.add_def(clip_id, core.el("clipPath", core.rect(clip_box)))
+
+    path_width = clip_box.w + wavelength
+    phases = (0.0, math.pi * 0.72)
+    for family, phase in zip(("a", "b"), phases, strict=True):
+        motif_id = f"desert-dune-motif-{key}-{family}"
+        if not doc.has_def(motif_id):
+            doc.add_def(
+                motif_id,
+                core.path(
+                    _desert_dune_path(
+                        path_width,
+                        wavelength=wavelength,
+                        amplitude=amplitude,
+                        phase=phase,
+                    ),
+                    fill="none",
+                    stroke=stroke,
+                    stroke_width=stroke_width,
+                ),
+            )
+
+    rows = []
+    row_count = math.ceil(clip_box.h / spacing) + 2
+    for row in range(row_count):
+        family = "a" if row % 2 == 0 else "b"
+        x = clip_box.x - wavelength / 2 + (wavelength / 4 if row % 3 else 0)
+        y = clip_box.y + row * spacing
+        rows.append(core.use(f"desert-dune-motif-{key}-{family}", x=x, y=y))
+    return core.g(*rows, clip_path=f"url(#{clip_id})", opacity=0.7)
+
+
 def texture_field(
     doc: core.SVGDocument,
     clip_box: Box,
@@ -125,6 +189,8 @@ def texture_field(
             return wave_field(doc, clip_box, stroke=stroke, key=key)
         case "mitla_step":
             return mitla_step_field(doc, clip_box, stroke=stroke, key=key)
+        case "desert_dune":
+            return desert_dune_field(doc, clip_box, stroke=stroke, key=key)
 
 
 def _epitrochoid_path(  # noqa: PLR0913
@@ -237,3 +303,50 @@ def agave_medallion(  # noqa: PLR0913
             )
         )
     return core.g(*leaves, opacity=0.78)
+
+
+def sunburst_medallion(  # noqa: PLR0913
+    doc: core.SVGDocument,
+    cx: float,
+    cy: float,
+    radius: float,
+    stroke: str,
+    key: str = "medallion",
+) -> core.ET.Element:
+    """Alternating radial rays and rings inspired by an Arizona sunset."""
+    ray_id = f"sunburst-medallion-ray-{key}"
+    if not doc.has_def(ray_id):
+        half_width = radius * 0.018
+        doc.add_def(
+            ray_id,
+            core.path(
+                f"M {-half_width} {-radius * 0.58} "
+                f"L 0 {-radius} L {half_width} {-radius * 0.58} Z",
+                fill="none",
+                stroke=stroke,
+                stroke_width=1.0,
+            ),
+        )
+
+    rays = []
+    for index in range(26):
+        angle = index * (360 / 26)
+        scale = 1.0 if index % 2 == 0 else 0.78
+        rays.append(
+            core.use(
+                ray_id,
+                transform=(
+                    f"{core.translate(cx, cy)} {core.rotate(angle)} scale(1 {scale})"
+                ),
+            )
+        )
+    return core.g(
+        *rays,
+        core.circle(
+            cx, cy, radius * 0.56, fill="none", stroke=stroke, stroke_width=1.2
+        ),
+        core.circle(
+            cx, cy, radius * 0.42, fill="none", stroke=stroke, stroke_width=0.8
+        ),
+        opacity=0.78,
+    )

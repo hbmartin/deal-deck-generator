@@ -6,8 +6,20 @@ from .card import Card
 
 
 @dataclass(frozen=True)
+class CardBackConfig:
+    title: str = "DEAL"
+
+    def __post_init__(self) -> None:
+        title = " ".join(self.title.split())
+        if not title:
+            raise ValueError("card-back title must not be blank")
+        object.__setattr__(self, "title", title)
+
+
+@dataclass(frozen=True)
 class DeckConfig:
     footer_text: str = ""
+    card_back: CardBackConfig = field(default_factory=CardBackConfig)
 
 
 @dataclass

@@ -73,6 +73,47 @@ def _agave_corner(stroke: str) -> core.ET.Element:
     return core.g(*leaves, core.circle(0, 0, 2.1, fill=stroke))
 
 
+def _saguaro_corner(stroke: str) -> core.ET.Element:
+    """Compact saguaro silhouette centered in the corner tile."""
+    return core.g(
+        core.path(
+            "M 0 11 V -11",
+            fill="none",
+            stroke=stroke,
+            stroke_width=2.4,
+            stroke_linecap="round",
+        ),
+        core.path(
+            "M 0 2 H -5 V -4 C -5 -6 -7 -6 -7 -4 V -1",
+            fill="none",
+            stroke=stroke,
+            stroke_width=2.1,
+            stroke_linecap="round",
+            stroke_linejoin="round",
+        ),
+        core.path(
+            "M 0 -1 H 5 V -7 C 5 -9 7 -9 7 -7 V -5",
+            fill="none",
+            stroke=stroke,
+            stroke_width=2.1,
+            stroke_linecap="round",
+            stroke_linejoin="round",
+        ),
+        core.line(-6, 11, 6, 11, stroke=stroke, stroke_width=1.3),
+    )
+
+
+def _corner_for_style(stroke: str, style: BorderCorner) -> core.ET.Element:
+    """Build the configured corner ornament."""
+    match style:
+        case "rosette":
+            return _corner(stroke)
+        case "agave":
+            return _agave_corner(stroke)
+        case "saguaro":
+            return _saguaro_corner(stroke)
+
+
 def border_band(
     doc: core.SVGDocument,
     band_center: Box,
@@ -92,11 +133,7 @@ def border_band(
     if not doc.has_def(motif_id):
         doc.add_def(motif_id, _motif(stroke))
     if not doc.has_def(corner_id):
-        match corner_style:
-            case "rosette":
-                doc.add_def(corner_id, _corner(stroke))
-            case "agave":
-                doc.add_def(corner_id, _agave_corner(stroke))
+        doc.add_def(corner_id, _corner_for_style(stroke, corner_style))
 
     parts = []
     x1, y1, x2, y2 = band_center.x, band_center.y, band_center.x2, band_center.y2

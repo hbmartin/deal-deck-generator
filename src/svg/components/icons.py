@@ -124,6 +124,26 @@ def route(height: float, color: str = "#000000") -> core.ET.Element:
     )
 
 
+def river(height: float, color: str = "#000000") -> core.ET.Element:
+    """Three flowing water lines. Width ~= 1.15 * height."""
+    h = height
+    w = 1.15 * h
+    paths = [
+        core.path(
+            f"M {w * 0.04} {y} "
+            f"C {w * 0.22} {y - h * 0.14} {w * 0.36} {y + h * 0.14} "
+            f"{w * 0.54} {y} "
+            f"S {w * 0.86} {y - h * 0.14} {w * 0.96} {y}",
+            fill="none",
+            stroke=color,
+            stroke_width=h * 0.075,
+            stroke_linecap="round",
+        )
+        for y in (h * 0.25, h * 0.5, h * 0.75)
+    ]
+    return core.g(*paths)
+
+
 def agave(height: float, color: str = "#000000") -> core.ET.Element:
     """Compact fan of pointed agave leaves. Width ~= height."""
     h = height
@@ -180,20 +200,23 @@ def header_icon(
     """Build a property-header icon and report its design width."""
     match name:
         case "train":
-            return train(height, color), height * 1.5
+            icon, width = train(height, color), height * 1.5
         case "faucet":
-            return faucet(height, color), height * 1.1
+            icon, width = faucet(height, color), height * 1.1
         case "bulb":
-            return bulb(height), height * 0.9
+            icon, width = bulb(height), height * 0.9
         case "route":
-            return route(height, color), height * 1.15
+            icon, width = route(height, color), height * 1.15
         case "agave":
-            return agave(height, color), height
+            icon, width = agave(height, color), height
         case "jicara":
-            return jicara(height, color), height * 1.1
+            icon, width = jicara(height, color), height * 1.1
+        case "river":
+            icon, width = river(height, color), height * 1.15
         case _:
             msg = f"unsupported property header icon {name!r}"
             raise ValueError(msg)
+    return icon, width
 
 
 def house(height: float, color: str = "#1E9247") -> core.ET.Element:

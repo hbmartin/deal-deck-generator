@@ -26,9 +26,9 @@ class FontRole:
         return FONTS_DIR / self.measure_file
 
 
-type FieldPattern = Literal["wave", "mitla_step"]
-type BorderCorner = Literal["rosette", "agave"]
-type MoneyMedallion = Literal["epitrochoid", "agave"]
+type FieldPattern = Literal["wave", "mitla_step", "desert_dune"]
+type BorderCorner = Literal["rosette", "agave", "saguaro"]
+type MoneyMedallion = Literal["epitrochoid", "agave", "sunburst"]
 
 
 @dataclass(frozen=True)
@@ -36,6 +36,12 @@ class OrnamentStyle:
     field_pattern: FieldPattern
     border_corner: BorderCorner
     money_medallion: MoneyMedallion
+
+
+@dataclass(frozen=True)
+class CardBackStyle:
+    background_property: str
+    accent_order: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -62,6 +68,14 @@ class Tokens:
             field_pattern=ornament["field_pattern"],
             border_corner=ornament["border_corner"],
             money_medallion=ornament["money_medallion"],
+        )
+
+    @property
+    def card_back(self) -> CardBackStyle:
+        card_back = self.raw["card_back"]
+        return CardBackStyle(
+            background_property=card_back["background_property"],
+            accent_order=tuple(card_back["accent_order"]),
         )
 
     def property_color(self, color: str) -> dict:

@@ -9,6 +9,8 @@
 
 deck:
   footer_text: "OAXACA DEAL"
+  card_back:
+    title: "OAXACA DEAL"
 
 # Property Cards (28 total) — Oaxaca de Juárez + Valles Centrales
 property_cards:

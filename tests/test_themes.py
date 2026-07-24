@@ -59,7 +59,7 @@ def _design_signature(deck) -> dict[str, tuple]:
 
 
 def test_builtin_themes_registered():
-    assert {"classic", "chicago", "oaxaca"} <= set(available_themes())
+    assert {"arizona", "classic", "chicago", "oaxaca"} <= set(available_themes())
 
 
 def test_chicago_base_is_pure_reskin_of_classic():
@@ -72,6 +72,18 @@ def test_chicago_base_is_pure_reskin_of_classic():
         k: v for k, v in _design_signature(chicago).items() if not k.startswith("exp-")
     }
     assert chicago_base == _design_signature(classic)
+
+
+def test_arizona_base_is_pure_reskin_of_classic():
+    classic = load_deck(theme_cards_path("classic"))
+    arizona = load_deck(theme_cards_path("arizona"))
+    arizona_base = {
+        key: value
+        for key, value in _design_signature(arizona).items()
+        if not key.startswith("exp-")
+    }
+
+    assert arizona_base == _design_signature(classic)
 
 
 def test_oaxaca_is_pure_reskin_of_classic():
@@ -104,6 +116,20 @@ def test_chicago_includes_expansion():
     assert not any(
         c.metadata["design_id"].startswith("exp-") for c in classic.unique_designs()
     )
+
+
+def test_arizona_includes_expansion():
+    arizona = load_deck(theme_cards_path("arizona"))
+    expansion = [
+        card
+        for card in arizona.unique_designs()
+        if card.metadata["design_id"].startswith("exp-")
+    ]
+
+    assert len(expansion) == 29
+    assert all(card.card_type == "action" for card in expansion)
+    assert len(arizona.unique_designs()) == 87
+    assert len(arizona.cards) == 144
 
 
 def test_include_merges_shared_fragment():
@@ -174,6 +200,44 @@ def test_oaxaca_property_names_and_footer():
     assert oaxaca.config.footer_text == "OAXACA DEAL"
 
 
+def test_arizona_property_names_and_branding():
+    arizona = load_deck(theme_cards_path("arizona"))
+    expected = {
+        "Bisbee",
+        "Jerome",
+        "Tempe Town Lake",
+        "Lake Havasu",
+        "Lake Powell",
+        "Roosevelt Row",
+        "Old Town Scottsdale",
+        "Barrio Viejo",
+        "Papago Park",
+        "Saguaro National Park",
+        "Organ Pipe Cactus National Monument",
+        "Sedona",
+        "Antelope Canyon",
+        "Canyon de Chelly National Monument",
+        "Petrified Forest National Park",
+        "Meteor Crater",
+        "Chiricahua National Monument",
+        "Mount Lemmon",
+        "Mogollon Rim",
+        "Humphreys Peak",
+        "Monument Valley Navajo Tribal Park",
+        "Grand Canyon National Park",
+        "Oatman",
+        "Kingman",
+        "Seligman",
+        "Winslow",
+        "Colorado River",
+        "Salt River",
+    }
+
+    assert {card.title for card in arizona.by_type("property")} == expected
+    assert arizona.config.footer_text == "ARIZONA DEAL"
+    assert arizona.config.card_back.title == "ARIZONA DEAL"
+
+
 def test_overlay_merges_onto_base():
     base = load_tokens()
     chicago = load_theme_tokens("chicago")
@@ -224,11 +288,54 @@ def test_oaxaca_palette_tints_and_ornaments():
     assert oaxaca.ornament.money_medallion == "agave"
 
 
+def test_arizona_palette_tints_chrome_and_ornaments():
+    arizona = load_theme_tokens("arizona")
+    expected_property = {
+        "brown": {"fill": "#8B4A32", "text": "#FFFFFF"},
+        "light_blue": {"fill": "#4CB7C5", "text": "#000000"},
+        "pink": {"fill": "#B82974", "text": "#FFFFFF"},
+        "orange": {"fill": "#B9501C", "text": "#FFFFFF"},
+        "red": {"fill": "#9E2F32", "text": "#FFFFFF"},
+        "yellow": {"fill": "#E3B23C", "text": "#000000"},
+        "green": {"fill": "#2F6B45", "text": "#FFFFFF"},
+        "dark_blue": {"fill": "#214A73", "text": "#FFFFFF"},
+        "railroad": {"fill": "#2A2724", "text": "#FFFFFF"},
+        "utility": {"fill": "#D5C6A1", "text": "#000000"},
+    }
+    expected_tints = {
+        1: {"field": "#F7E8C6", "line": "#B99A68"},
+        2: {"field": "#F5C2A4", "line": "#B66B49"},
+        3: {"field": "#DDE5C6", "line": "#879667"},
+        4: {"field": "#C7E5E5", "line": "#6E9FA5"},
+        5: {"field": "#D8B6C9", "line": "#96647D"},
+        10: {"field": "#D9A441", "line": "#9D6E22"},
+    }
+
+    assert {
+        color: arizona.property_color(color) for color in PROPERTY_COLORS
+    } == expected_property
+    assert {
+        value: arizona.value_tint(value) for value in expected_tints
+    } == expected_tints
+    assert arizona.chrome("property_body") == "#F3E9D7"
+    assert arizona.ornament.field_pattern == "desert_dune"
+    assert arizona.ornament.border_corner == "saguaro"
+    assert arizona.ornament.money_medallion == "sunburst"
+
+
 def test_oaxaca_property_headers_meet_normal_text_contrast():
     oaxaca = load_theme_tokens("oaxaca")
 
     for color in PROPERTY_COLORS:
         entry = oaxaca.property_color(color)
+        assert _contrast_ratio(entry["fill"], entry["text"]) >= 4.5
+
+
+def test_arizona_property_headers_meet_normal_text_contrast():
+    arizona = load_theme_tokens("arizona")
+
+    for color in PROPERTY_COLORS:
+        entry = arizona.property_color(color)
         assert _contrast_ratio(entry["fill"], entry["text"]) >= 4.5
 
 
@@ -273,6 +380,40 @@ def test_oaxaca_svg_selects_mitla_and_agave_ornaments():
     assert b"band-corner-agave" not in classic_svg
 
 
+def test_arizona_svg_selects_desert_ornaments():
+    arizona_deck = load_deck(theme_cards_path("arizona"))
+    arizona_tokens = load_theme_tokens("arizona")
+    classic_deck = load_deck(theme_cards_path("classic"))
+    classic_tokens = load_theme_tokens("classic")
+
+    arizona_action = next(
+        card
+        for card in arizona_deck.unique_designs()
+        if card.metadata["design_id"] == "pass-go"
+    )
+    arizona_money = next(
+        card
+        for card in arizona_deck.unique_designs()
+        if card.metadata["design_id"] == "money-5m"
+    )
+    classic_action = next(
+        card
+        for card in classic_deck.unique_designs()
+        if card.metadata["design_id"] == "pass-go"
+    )
+
+    action_svg = build_card(arizona_action, arizona_deck, arizona_tokens).to_bytes()
+    money_svg = build_card(arizona_money, arizona_deck, arizona_tokens).to_bytes()
+    classic_svg = build_card(classic_action, classic_deck, classic_tokens).to_bytes()
+
+    assert b"desert-dune-motif-field" in action_svg
+    assert b"band-corner-saguaro-band" in action_svg
+    assert b"sunburst-medallion-ray-medallion" in money_svg
+    assert b"desert-dune" not in classic_svg
+    assert b"band-corner-saguaro" not in classic_svg
+    assert b"sunburst-medallion" not in classic_svg
+
+
 def test_oaxaca_wildcard_derives_all_set_icons():
     oaxaca = load_deck(theme_cards_path("oaxaca"))
     wildcard = next(
@@ -283,6 +424,19 @@ def test_oaxaca_wildcard_derives_all_set_icons():
     halves = wildcard.metadata["halves"]
 
     assert halves[0]["header_icons"] == ["agave", "jicara"]
+    assert halves[1]["header_icons"] == ["route"]
+
+
+def test_arizona_wildcard_derives_route_and_river_icons():
+    arizona = load_deck(theme_cards_path("arizona"))
+    wildcard = next(
+        card
+        for card in arizona.by_type("wildcard")
+        if card.metadata["design_id"] == "wildcard-railroad-utility"
+    )
+    halves = wildcard.metadata["halves"]
+
+    assert halves[0]["header_icons"] == ["river"]
     assert halves[1]["header_icons"] == ["route"]
 
 

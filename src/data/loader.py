@@ -22,7 +22,7 @@ from ..models import (
     RentCard,
     WildcardCard,
 )
-from ..models.deck import Deck, DeckConfig
+from ..models.deck import CardBackConfig, Deck, DeckConfig
 from .themes import fragment_cards_path
 
 DEFAULT_CARDS_PATH = (
@@ -322,5 +322,9 @@ def load_deck(yaml_path: Path | str = DEFAULT_CARDS_PATH) -> Deck:
             ]
 
     deck_cfg = card_defs.get("deck") or {}
-    config = DeckConfig(footer_text=deck_cfg.get("footer_text", ""))
+    card_back_cfg = deck_cfg.get("card_back") or {}
+    config = DeckConfig(
+        footer_text=deck_cfg.get("footer_text", ""),
+        card_back=CardBackConfig(title=card_back_cfg.get("title", "DEAL")),
+    )
     return Deck(cards=cards, config=config)

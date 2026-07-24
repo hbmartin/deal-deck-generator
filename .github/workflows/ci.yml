@@ -61,6 +61,7 @@ jobs:
       - name: Render decks (bundled fonts)
         run: |
           uv run python main.py render --fonts bundled                    # classic -> output/classic
+          uv run python main.py render --theme arizona --fonts bundled    # arizona -> output/arizona
           uv run python main.py render --theme chicago --fonts bundled    # chicago -> output/chicago
 
       - name: Upload rendered deck artifact

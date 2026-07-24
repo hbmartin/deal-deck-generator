@@ -6,7 +6,15 @@ Defines base Card class and type-specific variants.
 from dataclasses import dataclass, field
 from typing import Literal
 
-type HeaderIcon = Literal["train", "bulb", "faucet", "route", "agave", "jicara"]
+type HeaderIcon = Literal[
+    "train",
+    "bulb",
+    "faucet",
+    "route",
+    "agave",
+    "jicara",
+    "river",
+]
 
 
 @dataclass
